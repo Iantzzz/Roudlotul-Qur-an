@@ -41,10 +41,6 @@
             "npm install --ignore-scripts",
             "npm run build"
         ],
-        "vercel": [
-            "@php artisan migrate --force || exit 0",
-            "@php artisan db:seed --class=AdminUserSeeder --force || exit 0"
-        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "@php artisan dev"
@@ -60,7 +56,9 @@
         ],
         "vercel": [
             "@php artisan package:discover --ansi",
-            "@php artisan filament:assets --ansi"
+            "@php artisan filament:assets --ansi",
+            "@php artisan migrate --force || exit 0",
+            "@php artisan db:seed --class=AdminUserSeeder --force || exit 0"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
