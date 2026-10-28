@@ -82,6 +82,12 @@ dan halaman 404 kustom tampil.
 3. Setelah data resmi satu halaman lengkap, hapus badge `x-temp-badge` pada
    halaman tersebut.
 
+## Deployment
+
+Panduan meng-online-kan situs (Laravel Cloud / hosting cPanel, termasuk
+build & deploy commands yang sudah disesuaikan dengan repo ini) ada di
+[`DEPLOY.md`](DEPLOY.md).
+
 ## Catatan git
 
 - Repo: https://github.com/Iantzzz/Roudlotul-Qur-an.git (branch `main`).
