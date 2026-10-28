@@ -84,9 +84,9 @@ dan halaman 404 kustom tampil.
 
 ## Deployment
 
-Panduan meng-online-kan situs (Laravel Cloud / hosting cPanel, termasuk
-build & deploy commands yang sudah disesuaikan dengan repo ini) ada di
-[`DEPLOY.md`](DEPLOY.md).
+Panduan meng-online-kan situs (Laravel Cloud / hosting cPanel / Vercel via
+runtime komunitas, termasuk build & deploy commands yang sudah disesuaikan
+dengan repo ini) ada di [`DEPLOY.md`](DEPLOY.md).
 
 ## Catatan git
 

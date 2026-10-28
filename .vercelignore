@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+/.git
+/.env
+.phpunit.result.cache
+/tests
+roudlotul-quran.zip
