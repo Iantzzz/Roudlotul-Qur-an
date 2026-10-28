@@ -101,9 +101,21 @@ https://github.com/juicyfx/vercel-php:
 - `env`: `APP_ENV=production`, `APP_DEBUG=false`, `LOG_CHANNEL=stderr`,
   `SESSION_DRIVER=array`, `CACHE_STORE=array`, `VIEW_COMPILED_PATH=/tmp/views`
   (filesystem serverless read-only; /tmp bersifat sementara).
-- `api/index.php`: memanggil `public/index.php` Laravel.
-- `.vercelignore`: mengecualikan `vendor`, `node_modules`, `.git`, `.env`,
-  `tests`, dan arsip zip.
+- `api/index.php`: memanggil `public/index.php` Laravel dan mempercayai header
+  HTTPS dari proxy loopback runtime, agar URL asset tidak memakai HTTP.
+- `.vercelignore`: mengecualikan dependensi lokal, file environment rahasia,
+  cache konfigurasi lokal, log, `tests`, dan arsip zip.
+
+Pengaturan project Vercel:
+
+1. **Root Directory**: root repository, tempat `vercel.json` berada.
+2. **Framework Preset**: **Other**; matikan override **Build Command** dan
+   **Output Directory**. Jangan isi `dist` atau `public/build`: konfigurasi
+   `builds` memakai runtime PHP dan asset statis di `public/`, bukan hasil
+   build situs Vite. Halaman publik memakai `public/css/site.css` dan
+   `public/js/site.js` langsung.
+3. **Node.js Version**: **22.x**, sesuai dukungan runtime komunitas.
+4. Isi environment variables di bawah, lalu deploy commit terbaru.
 
 Keterbatasan deployment Vercel (disengaja, demi ketertiban repo):
 
@@ -118,8 +130,12 @@ jangan lewat chat/file repo:
 
 | Variabel | Nilai |
 | --- | --- |
-| `APP_KEY` | jalankan `php artisan key:generate --show` di terminal lokal, salin langsung ke dashboard |
-| `APP_URL` | `https://<nama-project>.vercel.app` (atau domain akhir) |
+| `APP_KEY` | jalankan `cmd /c "php artisan key:generate --show"` di terminal lokal, salin langsung ke dashboard |
+| `APP_URL` | URL HTTPS yang ditampilkan Vercel pada menu Domains (atau domain akhir) |
+
+Tanpa `APP_KEY`, halaman menghasilkan HTTP 500 (`MissingAppKeyException`).
+Perintah `--show` hanya menampilkan key, tidak mengganti `.env` lokal.
+Pilih environment **Preview** juga bila ingin menguji preview deployment.
 
 Setelah keduanya diisi: Deployments → **Redeploy**. Perubahan env hanya berlaku
 setelah redeploy. Versi PHP lain bisa dipilih (`0.8.0` = 8.4, `0.9.0` = 8.5)

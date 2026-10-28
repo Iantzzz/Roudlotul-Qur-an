@@ -2,6 +2,12 @@
 /node_modules
 /.git
 /.env
+/.env.*
+!/.env.example
+/bootstrap/cache/*.php
+/storage/logs/**
+/public/hot
+/public/storage
 .phpunit.result.cache
 /tests
 roudlotul-quran.zip
