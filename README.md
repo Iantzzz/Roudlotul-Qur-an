@@ -1,58 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Situs Publik Roudlotul Qur'an
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Situs web publik untuk asrama Roudlotul Qur'an, dibangun dengan Laravel dan
+view Blade murni (CSS/JS statis tanpa proses build). Panel `/admin` berbasis
+Filament ada di dalam repo dan **tidak diubah** pada tahap ini.
 
-## About Laravel
+> **Status konten:** seluruh data resmi (alamat, kontak, jadwal, biaya,
+> nama program, foto dokumentasi) **belum tersedia** dan masih memakai
+> placeholder `[Sementara]` serta badge `x-temp-badge`. Jangan menuliskan
+> angka, tanggal, nama, atau pernyataan resmi yang belum dikonfirmasi
+> pengurus. Rincian kebutuhan konten dicatat di
+> [`CHECKLIST_KONTEN.md`](CHECKLIST_KONTEN.md).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Halaman publik
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Rute | Keterangan |
+| --- | --- |
+| `/` | Beranda: hero, fondasi, pilar, kegiatan, berita terbaru, galeri |
+| `/profil` | Profil singkat, sejarah, visi & misi, nilai-nilai (penanda sementara) |
+| `/kegiatan` | Kelompok program: ibadah, pendidikan, karakter, kemandirian |
+| `/galeri` | Grid foto + pratinjau lightbox (`<dialog>`) |
+| `/berita` | Daftar berita & pengumuman dengan filter kategori `?kategori=` |
+| `/berita/{slug}` | Detail artikel + berita terkait |
+| `/pendaftaran` | Alur, persyaratan, jadwal, biaya, FAQ (placeholder) |
+| `/kontak` | Detail kontak, formulir tampilan (nonaktif), placeholder peta |
+| halaman tidak ditemukan | 404 kustom (`resources/views/errors/404.blade.php`) |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Konten berita dan galeri saat ini berasal dari data contoh di
+`app/Http/Controllers/PublicPageController.php` (bukan database).
 
-## Learning Laravel
+## Teknologi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Laravel 12 dengan PHP 8.3.
+- CSS dan JS publik statis: `public/css/site.css` dan `public/js/site.js`.
+- Filament 3 untuk panel `/admin`.
+- Aksesibilitas: skip link, `aria-current` untuk navigasi aktif, lightbox
+  berbasis `<dialog>`, dukungan `prefers-reduced-motion`, serta tampilan
+  tetap utuh tanpa JavaScript.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Menjalankan lokal
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan serve   # http://127.0.0.1:8000
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Tahap ini tidak memerlukan database untuk tampilan publik: konten berita dan
+galeri berasal dari controller, bukan tabel. `php artisan migrate` hanya
+menyiapkan tabel bawaan Laravel.
 
-## Contributing
+## Pengujian
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan test
+```
 
-## Code of Conduct
+`tests/Feature/PublicPagesTest.php` mencakup: seluruh halaman publik merespons
+200, filter kategori berita berfungsi, slug tidak dikenal mengembalikan 404,
+dan halaman 404 kustom tampil.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Struktur penting
 
-## Security Vulnerabilities
+- `app/Http/Controllers/PublicPageController.php` — sumber data sementara
+  untuk seluruh halaman publik.
+- `config/site.php` — brand, navigasi, kontak placeholder, dan mapping gambar
+  beserta atribusi Unsplash.
+- `resources/views` — layout `layouts.public`, partial navbar/footer, dan
+  komponen (`x-page-hero`, `x-site-image`, `x-news-card`, dll.).
+- `public/css/site.css`, `public/js/site.js` — gaya serta interaksi nav,
+  header, lightbox, dan reveal.
+- `CHECKLIST_KONTEN.md` — daftar data resmi yang harus disiapkan pengurus
+  sebelum placeholder diganti.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Pedoman pengisian data resmi
 
-## License
+1. Ganti placeholder dan teks sementara di `config/site.php` serta view dengan
+   data resmi dari pengurus — satu per satu, jangan dikarang sendiri.
+2. Ganti gambar sementara di `public/images/site` (semua masih foto Unsplash;
+   atribusinya tercatat di `config/site.php`).
+3. Setelah data resmi satu halaman lengkap, hapus badge `x-temp-badge` pada
+   halaman tersebut.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Catatan git
+
+- Repo: https://github.com/Iantzzz/Roudlotul-Qur-an.git (branch `main`).
+- `.env`, `vendor`, `node_modules`, dan arsip `roudlotul-quran.zip` tidak
+  ikut ter-push.

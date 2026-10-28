@@ -1376,53 +1376,6 @@ h4 {
     line-height: 1.8;
 }
 
-.coming-card {
-    position: relative;
-    z-index: 2;
-    max-width: 760px;
-    margin: -6rem auto 0;
-    padding: clamp(2rem, 5.4vw, 3.6rem);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-xl);
-    background: var(--white);
-    box-shadow: var(--shadow-md);
-    text-align: center;
-}
-
-.coming-card__icon {
-    display: grid;
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 1.2rem;
-    place-items: center;
-    border: 1px solid var(--line-gold);
-    border-radius: 50%;
-    background: var(--cream-50);
-    color: var(--green-700);
-}
-
-.coming-card .temp-badge {
-    margin-inline: auto;
-}
-
-.coming-card h2 {
-    margin: 1.2rem 0 0.9rem;
-    color: var(--green-950);
-    font-size: clamp(2rem, 4vw, 3rem);
-}
-
-.coming-card p {
-    max-width: 600px;
-    margin-inline: auto;
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.8;
-}
-
-.coming-card .button-row {
-    justify-content: center;
-}
-
 /* ==========================================================================
    16. Halaman profil, program, dan galeri
    ========================================================================== */
@@ -2589,10 +2542,6 @@ a.social-link:hover {
         min-height: 340px;
     }
 
-    .coming-card {
-        margin-top: -4rem;
-    }
-
     .map-placeholder {
         align-items: flex-start;
         flex-direction: column;
@@ -2793,9 +2742,6 @@ a.social-link:hover {
         flex-direction: column;
     }
 
-    .coming-card {
-        padding-inline: 1.35rem;
-    }
 }
 
 /* ==========================================================================
