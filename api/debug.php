@@ -8,6 +8,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__.'/../vendor/autoload.php';
+
 $safe = static function (Throwable $e): string {
     $msg = preg_replace('/(pass|pwd)[^\s=&]*=[^\s&]*/i', '$1=***', $e->getMessage()) ?? $e->getMessage();
 
@@ -24,7 +26,6 @@ $report = [
 ];
 
 try {
-    require_once __DIR__.'/../vendor/autoload.php';
     $app = require_once __DIR__.'/../bootstrap/app.php';
     $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
     $pdo = Illuminate\Support\Facades\DB::connection()->getPdo();
