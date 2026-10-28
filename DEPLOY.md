@@ -92,17 +92,28 @@ konfigurasi MySQL wajib benar sebelum menyajikan halaman.
 Vercel tidak menjalankan PHP secara bawaan (build error
 `STATIC_BUILD_NO_OUT_DIR` = Vercel salah menganggap repo ini situs statis
 Vite). Repo ini sudah disiapkan dengan `vercel.json` pola resmi dari
-https://github.com/juicyfx/vercel-php:
+https://github.com/vercel-community/php:
 
-- `builds`: `api/index.php` memakai runtime `vercel-php@0.7.4` (PHP 8.3) dan
-  `public/**` memakai `@vercel/static`.
-- `routes`: asset `/css`, `/js`, `/images`, favicon diarahkan ke `public/`,
-  sisanya ke `api/index.php` → Laravel.
+- `builds`: satu build — `api/index.php` memakai runtime `vercel-php@0.7.4`
+  (PHP 8.3); `routes` catch-all mengarahkan seluruh permintaan ke sana.
+- `api/index.php` bertindak sebagai sistem asset + fallback Laravel:
+  - Asset yang masuk daftar (allowlist) dilayani langsung dari `public/`:
+    `/css/site.css`, `/css/filament/**`, `/js/site.js`, `/js/filament/**`,
+    `/images/**`, `/fonts/filament/**`, `favicon.ico`, `favicon-32x32.png`,
+    `apple-touch-icon.png`, dan `robots.txt` — dengan Content-Type yang
+    benar, ETag/If-None-Match (304), nosniff, Cache-Control publik, dan
+    tanpa cookie.
+  - Path di bawah prefix asset (`/css|js|images|fonts/…`) yang tidak masuk
+    daftar dijawab 404 badan kosong (termasuk traversal `..`, backslash,
+    byte NUL, double-encoding, dan skrip PHP) — tidak pernah diteruskan ke
+    Laravel.
+  - Permintaan lain (halaman, POST formulir) diteruskan ke Laravel dengan
+    metode HTTP apa pun; header HTTPS dari proxy loopback dipercayai agar
+    URL asset memakai https.
+  - Perilaku ini dijaga oleh `tests/Feature/VercelAssetsTest.php`.
 - `env`: `APP_ENV=production`, `APP_DEBUG=false`, `LOG_CHANNEL=stderr`,
-  `SESSION_DRIVER=array`, `CACHE_STORE=array`, `VIEW_COMPILED_PATH=/tmp/views`
+  `SESSION_DRIVER=cookie`, `CACHE_STORE=array`, `VIEW_COMPILED_PATH=/tmp/views`
   (filesystem serverless read-only; /tmp bersifat sementara).
-- `api/index.php`: memanggil `public/index.php` Laravel dan mempercayai header
-  HTTPS dari proxy loopback runtime, agar URL asset tidak memakai HTTP.
 - `.vercelignore`: mengecualikan dependensi lokal, file environment rahasia,
   cache konfigurasi lokal, log, `tests`, dan arsip zip.
 
@@ -117,13 +128,12 @@ Pengaturan project Vercel:
 3. **Node.js Version**: **22.x**, sesuai dukungan runtime komunitas.
 4. Isi environment variables di bawah, lalu deploy commit terbaru.
 
-Keterbatasan deployment Vercel (disengaja, demi ketertiban repo):
+Keterbatasan yang perlu diketahui sejak awal:
 
-1. `/admin` (Filament) **tidak didukung** di Vercel: butuh database dan asset
-   publik Filament yang diterbitkan lewat composer (tidak ikut naik ke
-   deployment Vercel). Panel admin tetap hidup di deployment resmi (Jalur A/B).
-2. Tidak ada database: fitur `Cache`/`RateLimiter` tidak dipakai halaman publik.
-3. Session dipakai mode `array` sehingga tidak menyimpan state di antara request.
+1. Database tidak bawaan: panel admin (`/admin`) baru hidup setelah database
+   dan env admin diisi (lihat bagian "Mengaktifkan panel admin" di bawah).
+2. Session memakai driver `cookie` (serverless tidak punya storage persist
+   antar instance).
 
 Yang **harus** diisi di dashboard Vercel (Environment Variables, Production),
 jangan lewat chat/file repo:
@@ -140,3 +150,39 @@ Pilih environment **Preview** juga bila ingin menguji preview deployment.
 Setelah keduanya diisi: Deployments → **Redeploy**. Perubahan env hanya berlaku
 setelah redeploy. Versi PHP lain bisa dipilih (`0.8.0` = 8.4, `0.9.0` = 8.5)
 dengan mengubah nomor runtime di `vercel.json`.
+
+### Mengaktifkan panel admin (`/admin`) di Vercel
+
+Repo sudah menata agar Filament jalan di deployment Vercel:
+
+1. Asset publik Filament (`public/css/filament`, `public/js/filament`,
+   `public/fonts/filament`) ikut ter-commit dan dilayani langsung oleh
+   `api/index.php` (allowlist asset). Bila Filament/composer diperbarui,
+   jalankan ulang `php artisan filament:assets` lalu commit perubahannya.
+2. Session memakai driver `cookie` (serverless tidak punya storage persist
+   antar instance).
+3. Script composer `vercel` dijalankan otomatis runtime saat build:
+   `migrate --force` diikuti seeder `AdminUserSeeder` (keduanya aman bila
+   database/env belum tersedia).
+
+Setup database + akun admin dari dashboard Vercel:
+
+1. Buat database dari **Vercel Marketplace** (mis. Neon/Postgres tier gratis).
+2. Isi Environment Variables (Production):
+   - `APP_KEY` — jalankan `php artisan key:generate --show` di terminal lokal,
+     salin langsung ke dashboard (jangan dikirim ke chat).
+   - `APP_URL` — `https://<nama-project>.vercel.app`.
+   - `DB_CONNECTION` — `pgsql`.
+   - `DB_URL` — `${DATABASE_URL}` (nama env yang disuntik marketplace bisa
+     berbeda; pakai nama yang muncul di halaman database).
+   - `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` — kredensial login admin.
+     Password di-hash saat build dan disinkronkan dari env pada tiap build.
+3. Deployments → **Redeploy**, lalu buka `/admin/login` dan login.
+
+Agar situs benar-benar bisa diakses publik: **Settings → Deployment
+Protection** → nonaktifkan proteksi *Vercel Authentication*; tanpa itu semua
+URL meminta login akun Vercel.
+
+Batasan yang tetap berlaku di Vercel: tidak ada file storage persist untuk
+unggahan, cache/scheduler tidak berjalan. Bila kebutuhannya bertambah,
+pindah ke Jalur A (Laravel Cloud) atau Jalur B (cPanel).

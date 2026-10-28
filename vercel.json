@@ -5,7 +5,8 @@
         { "src": "/public/**", "use": "@vercel/static" }
     ],
     "routes": [
-        { "src": "/(css|js|images)/(.*)", "dest": "/public/$1/$2" },
+        { "src": "/(css|js|fonts)/filament/(.*)", "dest": "/api/index.php" },
+        { "src": "/(css|js|images|fonts)/(.*)", "dest": "/public/$1/$2" },
         { "src": "/favicon.ico", "dest": "/public/favicon.ico" },
         { "src": "/favicon-32x32.png", "dest": "/public/favicon-32x32.png" },
         { "src": "/apple-touch-icon.png", "dest": "/public/apple-touch-icon.png" },
@@ -17,7 +18,7 @@
         "APP_ENV": "production",
         "APP_DEBUG": "false",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "array",
+        "SESSION_DRIVER": "cookie",
         "CACHE_STORE": "array",
         "VIEW_COMPILED_PATH": "/tmp/views",
         "APP_CONFIG_CACHE": "/tmp/config.php",
