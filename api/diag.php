@@ -47,6 +47,10 @@ try {
         'sslmode' => $cfg['sslmode'] ?? null,
     ];
 
+    // Tambah: saat tabel users tidak ada, jalankan migrasi + seed di SINI
+    // dan sertakan OUTPUT Artisan untuk melihat persis apa yang gagal.
+    $report['repair'] = rqRepairNow();
+
     $tables = array_map(
         static fn (object $row): string => (string) $row->table_name,
         Illuminate\Support\Facades\DB::select(
@@ -110,6 +114,54 @@ http_response_code(200);
 header('Content-Type: application/json');
 header('Cache-Control: no-store');
 echo json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+/**
+ * Jalankan migrasi + seeder pada DB runtime bila tabel `users` tidak ada,
+ * dan kembalikan output Artisan untuk telemetri.
+ *
+ * @return array<string, mixed>
+ */
+function rqRepairNow(): array
+{
+    $out = [];
+
+    try {
+        $missing = Illuminate\Support\Facades\DB::select(
+            "SELECT NOT EXISTS (
+                SELECT 1 FROM information_schema.tables
+                WHERE table_schema = 'public' AND table_name = 'users'
+            ) AS missing"
+        )[0]->missing ?? true;
+    } catch (Throwable $e) {
+        return ['probeError' => substr((string) $e, 0, 200)];
+    }
+
+    $out['usersMissingBefore'] = (bool) $missing;
+    if (! $missing) {
+        return $out;
+    }
+
+    try {
+        $code = Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $out['migrateExit'] = $code;
+        $out['migrateOutput'] = mb_substr(Illuminate\Support\Facades\Artisan::output(), 0, 1800);
+    } catch (Throwable $e) {
+        $out['migrateThrew'] = substr((string) $e, 0, 400);
+    }
+
+    try {
+        $code = Illuminate\Support\Facades\Artisan::call(
+            'db:seed',
+            ['--class' => 'Database\\Seeders\\AdminUserSeeder', '--force' => true],
+        );
+        $out['seedExit'] = $code;
+        $out['seedOutput'] = mb_substr(Illuminate\Support\Facades\Artisan::output(), 0, 400);
+    } catch (Throwable $e) {
+        $out['seedThrew'] = substr((string) $e, 0, 300);
+    }
+
+    return $out;
+}
 
 /**
  * Probe baca-saja ke endpoint DIRECT (bukan pooler). Melaporkan daftar
