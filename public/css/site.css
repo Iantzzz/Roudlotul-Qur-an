@@ -823,6 +823,7 @@ h4 {
 
 .split__image {
     width: 100%;
+    height: auto;
     aspect-ratio: 4 / 5;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
