@@ -1,12 +1,12 @@
 # Checklist Konten Roudlotul Qur'an
 
-Dokumen ini mencatat konten yang masih sementara dan data resmi yang perlu disiapkan. Jangan mengganti penanda `[SEMENTARA]` atau teks contoh sebelum data resmi dari pengurus tersedia.
+Dokumen ini mencatat konten yang masih sementara dan data resmi yang perlu disiapkan. Sejak 2026-10-29, identitas dan kegiatan resmi diambil dari dokumentasi akun resmi ribath (YouTube: @Roudlotul_Quran_Satu, Instagram: @ndalemardales, TikTok: @ribathroudlotulquran1) atas arahan pengguna; data yang belum terdokumentasi tetap memakai penanda `[SEMENTARA]`.
 
 ## 1. Identitas dan logo
 
-- [ ] Nama lengkap resmi asrama.
-- [ ] Ejaan resmi nama: `Roudlotul Qur'an` atau variasi lain.
-- [ ] Tagline resmi (jika ada).
+- [x] Nama lengkap resmi asrama: Ribath Roudlotul Qur'an 1.
+- [x] Ejaan resmi nama: `Roudlotul Qur'an`.
+- [x] Tagline resmi: Asrama Pendidikan Al-Qur'an.
 - [ ] Logo resmi: SVG, PNG transparan, dan versi satu warna.
 - [ ] Aturan warna dan penggunaan logo.
 - [ ] Favicon resmi.
@@ -15,7 +15,7 @@ Catatan: navbar, footer, halaman 404, favicon, dan apple-touch-icon kini memakai
 
 ## 2. Kontak dan lokasi
 
-- [ ] Alamat lengkap resmi.
+- [ ] Alamat lengkap resmi (alamat tingkat kecamatan sudah terpasang: lingkungan Ponpes Darul Ulum, Rejoso, Peterongan, Kabupaten Jombang; nama jalan/ nomor masih diperlukan).
 - [ ] Titik koordinat atau tautan Google Maps.
 - [ ] Nomor telepon.
 - [ ] Nomor WhatsApp resmi.
@@ -31,28 +31,28 @@ Semua data di atas saat ini memakai teks `[Belum tersedia]` di halaman publik. H
 - [ ] Sejarah resmi dan tahun berdiri.
 - [ ] Latar belakang berdirinya asrama.
 - [ ] Narasi sejarah singkat dan tonggak penting.
-- [ ] Nama pengasuh dan pengurus.
+- [x] Nama pengasuh: Agus Muhammad Izzudin, Lc., M.Pd. (dari dokumentasi kanal resmi; mohon konfirmasi pengurus).
 - [ ] Struktur organisasi.
 - [ ] Visi resmi.
 - [ ] Misi resmi (butir 1–4 atau sesuai rumusan resmi).
-- [ ] Nilai-nilai atau budaya asrama.
-- [ ] Teks ringkasan profil untuk halaman `/profil`.
-- [ ] Profil singkat untuk beranda.
+- [x] Motto: hadits "Sebaik-baik manusia adalah yang mempelajari Al-Qur'an dan mengajarkannya" (bio Instagram resmi).
+- [x] Teks ringkasan profil untuk halaman `/profil`.
+- [x] Profil singkat untuk beranda.
 - [ ] Jumlah santri, pengajar, dan tahun berjalan (jika ingin ditampilkan).
 
 Halaman `/profil` sudah memiliki struktur untuk profil singkat, sejarah, visi-misi, dan nilai. Semua isi resmi masih berupa placeholder `[ ... ]`; kartu nilai hanya contoh penataan dan bukan pernyataan resmi.
 
 ## 4. Program dan kegiatan
 
-- [ ] Daftar program resmi.
-- [ ] Nama dan deskripsi setiap kelompok kegiatan.
-- [ ] Urutan kelompok kegiatan yang ingin ditampilkan.
+- [x] Daftar program resmi (dirangkum dari dokumentasi sosial media resmi: tahfizh & setoran, khataman, ta'dhim Maulid, kajian Tafsir Jalalain, kajian kitab, haflah akhirussanah, LAPSIDU & P2KS, Liga Kamar, Hari Santri & Hari Guru, ziarah wali & manaqib, umrah, ru'yatul hilal).
+- [ ] Nama resmi setiap kelompok kegiatan versi pengurus (penamaan saat ini hasil rangkuman).
+- [x] Urutan kelompok kegiatan yang ingin ditampilkan.
 - [ ] Kurikulum tahfizh dan ilmu diniyah.
 - [ ] Target hafalan dan metode pembelajaran.
 - [ ] Jadwal harian santri.
 - [ ] Jadwal mingguan dan bulanan.
-- [ ] Nama, ringkasan, dan foto setiap kartu program.
-- [ ] Kegiatan unggulan.
+- [ ] Foto resmi setiap kartu program (masih memakai foto sementara).
+- [ ] Kegiatan unggulan versi pengurus.
 - [ ] Ekstrakurikuler.
 - [ ] Prestasi resmi dan tahunnya.
 - [ ] Ketentuan kegiatan yang boleh dipublikasikan.
@@ -75,10 +75,10 @@ Halaman `/pendaftaran` sudah memuat alur empat langkah, daftar dokumen, ketentua
 
 ## 6. Berita dan pengumuman
 
-- [ ] Minimal tiga berita resmi pertama.
-- [ ] Judul, tanggal, penulis, dan isi berita.
-- [ ] Foto utama berita dan hak penggunaannya.
-- [ ] Kategori berita.
+- [x] Minimal tiga berita resmi pertama (kabar nyata dari dokumentasi resmi: Hari Santri Nasional 2026, Ta'dhim Maulid 1448 H, Haflah Akhirussanah 2025, Pelantikan Pengurus, Nadhom Aqidatul Awam, Kajian Tafsir Jalalain).
+- [ ] Tanggal Gregorian lengkap untuk setiap kabar (sebagian masih dicatat per tahun/ bulan Hijriah).
+- [ ] Foto utama berita resmi dan hak penggunaannya (masih memakai foto sementara).
+- [x] Kategori berita (Kabar dan Artikel; kategori Pengumuman akan ditambahkan saat ada pengumuman resmi).
 - [ ] Pengumuman resmi yang sedang aktif.
 - [ ] Arsip berita lama.
 

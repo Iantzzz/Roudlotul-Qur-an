@@ -1,13 +1,13 @@
 @extends('layouts.public')
 
 @section('title', "Berita & Pengumuman | Roudlotul Qur'an")
-@section('description', "Daftar berita dan pengumuman contoh Roudlotul Qur'an. Seluruh isi masih sementara dan belum menjadi informasi resmi.")
+@section('description', "Daftar berita dan kabar resmi Ribath Roudlotul Qur'an 1.")
 
 @section('content')
     <x-page-hero
         title="Berita & Pengumuman"
         eyebrow="Kabar Asrama"
-        description="Daftar berita dan pengumuman disiapkan untuk menampilkan informasi resmi pada tahap berikutnya."
+        description="Kabar terbaru dari kehidupan Ribath Roudlotul Qur'an 1."
         image="quran_manuscript"
     />
 
@@ -15,9 +15,8 @@
         <div class="container">
             <x-section-heading
                 eyebrow="Berita Terbaru"
-                title="Kabar yang akan hadir dari Roudlotul Qur’an."
-                description="Seluruh kartu pada halaman ini masih berupa contoh. Judul, tanggal, penulis, dan isi resmi akan menggantikan data sementara."
-                :temporary="true"
+                title="Kabar dari Roudlotul Qur’an."
+                description="Berita berikut dirangkum dari dokumentasi resmi ribath di YouTube, Instagram, dan TikTok."
             />
 
             <nav class="news-filter" aria-label="Filter kategori berita">

@@ -1,13 +1,13 @@
 @extends('layouts.public')
 
 @section('title', "Program & Kegiatan | Roudlotul Qur'an")
-@section('description', "Gambaran program dan kegiatan Roudlotul Qur'an berdasarkan kelompok ibadah, pendidikan, pembinaan karakter, serta kemandirian. Konten masih berupa contoh.")
+@section('description', "Program dan kegiatan Ribath Roudlotul Qur'an 1: tahfizh, kajian, pembinaan karakter, dan tradisi kebersamaan santri.")
 
 @section('content')
     <x-page-hero
         title="Program & Kegiatan"
         eyebrow="Kehidupan Asrama"
-        description="Gambaran kegiatan dikelompokkan agar lebih mudah ditelusuri. Seluruh nama dan isi program masih berupa contoh."
+        description="Kegiatan rutin Ribath Roudlotul Qur'an 1 — dari tahfizh dan kajian hingga pembinaan karakter dan tradisi kebersamaan."
         image="library"
     />
 
@@ -16,8 +16,7 @@
             <x-section-heading
                 eyebrow="Program & Kegiatan"
                 title="Ruang belajar yang tertata dalam beberapa kelompok."
-                description="Susunan berikut hanya menggambarkan cara penataan halaman. Program, jadwal, dan kegiatan resmi akan ditambahkan setelah informasi dari pengurus tersedia."
-                :temporary="true"
+                description="Kegiatan berikut dirangkum dari dokumentasi resmi ribath di YouTube, Instagram, dan TikTok."
             />
 
             <div class="program-groups">

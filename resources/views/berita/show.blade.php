@@ -20,7 +20,9 @@
                     <span class="news-card__category">{{ $post['category'] }}</span>
                     <span>{{ $post['date'] }}</span>
                     <span>{{ $post['author'] }}</span>
-                    <x-temp-badge text="Konten sementara" />
+                    @if ($post['temporary'] ?? false)
+                        <x-temp-badge text="Konten sementara" />
+                    @endif
                 </div>
 
                 <x-site-image :name="$post['image']" class="article-image" loading="eager" />
@@ -32,10 +34,9 @@
                 </div>
 
                 <div class="article-note">
-                    <x-temp-badge />
                     <p>
-                        Isi berita ini adalah contoh tampilan. Informasi, tanggal,
-                        dan penulis resmi akan menggantikan teks sementara ini.
+                        Berita ini dirangkum dari dokumentasi resmi ribath di akun
+                        media sosial Roudlotul Qur'an.
                     </p>
                 </div>
 
@@ -53,9 +54,8 @@
             <div class="section-toolbar">
                 <x-section-heading
                     eyebrow="Berita Terkait"
-                    title="Contoh bacaan lain dari halaman berita."
-                    description="Kartu berikut dipilih dari data contoh berdasarkan kedekatan kategori. Seluruh isi belum resmi."
-                    :temporary="true"
+                    title="Bacaan lain dari halaman berita."
+                    description="Kartu berikut dipilih berdasarkan kedekatan kategori."
                 />
             </div>
 

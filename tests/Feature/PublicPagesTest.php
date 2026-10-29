@@ -14,7 +14,7 @@ class PublicPagesTest extends TestCase
             '/kegiatan',
             '/galeri',
             '/berita',
-            '/berita/contoh-pengumuman-jadwal-kegiatan-asrama',
+            '/berita/hari-santri-nasional-2026',
             '/pendaftaran',
             '/kontak',
         ];
@@ -26,11 +26,11 @@ class PublicPagesTest extends TestCase
 
     public function test_news_can_be_filtered_by_category(): void
     {
-        $this->get('/berita?kategori=pengumuman')
+        $this->get('/berita?kategori=kabar')
             ->assertOk()
-            ->assertSee('Contoh pengumuman jadwal kegiatan asrama')
-            ->assertSee('Contoh pengumuman informasi pendaftaran')
-            ->assertDontSee('Contoh kabar kegiatan kebersamaan santri');
+            ->assertSee('Selamat Hari Santri Nasional 2026')
+            ->assertSee("Ta'dhim Maulid Nabi 1448 H")
+            ->assertDontSee('Kajian Tafsir Jalalain Berlangsung Rutin');
     }
 
     public function test_unknown_news_slug_returns_not_found(): void

@@ -59,7 +59,6 @@
             <aside class="hero__aside" data-reveal>
                 <span class="hero__arabic" lang="ar" dir="rtl">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
                 <p>Dengan ilmu, iman, dan akhlak.</p>
-                <x-temp-badge text="Konten sementara" />
             </aside>
         </div>
 
@@ -105,15 +104,14 @@
                 <x-section-heading
                     eyebrow="Tentang Asrama"
                     title="Ruang bertumbuh dalam ilmu, iman, dan adab."
-                    description="Roudlotul Qur’an hadir sebagai ruang belajar yang menempatkan Al-Qur’an, adab, dan kebersamaan sebagai bagian penting dari keseharian."
-                    :temporary="true"
+                    description="Ribath Roudlotul Qur'an 1 menempatkan Al-Qur'an, adab, dan kebersamaan sebagai bagian penting dari keseharian santri."
                 />
 
                 <p>
-                    Melalui pembelajaran dan pendampingan, santri diarahkan untuk
-                    berkembang menjadi pribadi yang berilmu, mandiri, dan
-                    bertanggung jawab. Profil lengkap serta sejarah resmi asrama
-                    akan ditampilkan setelah informasi dari pengurus tersedia.
+                    Berada di lingkungan Pondok Pesantren Darul Ulum, Rejoso,
+                    Peterongan, Jombang, santri dibina melalui pembelajaran dan
+                    pendampingan untuk berkembang menjadi pribadi yang berilmu,
+                    mandiri, dan bertanggung jawab.
                 </p>
 
                 <ul class="check-list">
@@ -145,9 +143,8 @@
                 <x-section-heading
                     eyebrow="Pilar Pembinaan"
                     title="Empat fokus yang ingin kami rawat bersama."
-                    description="Susunan pilar berikut masih berupa contoh dan akan disesuaikan dengan program resmi asrama."
+                    description="Empat fokus pembinaan yang menjiwai keseharian santri ribath."
                     theme="dark"
-                    :temporary="true"
                 />
             </div>
 
@@ -175,8 +172,7 @@
                 <x-section-heading
                     eyebrow="Kehidupan Asrama"
                     title="Belajar, beribadah, dan bertumbuh bersama."
-                    description="Gambaran kegiatan di bawah ini masih berupa contoh. Program resmi akan diumumkan kemudian."
-                    :temporary="true"
+                    description="Potret kegiatan yang rutin berlangsung di ribath, dari tahfizh hingga liga kamar."
                 />
 
                 <a class="btn btn-outline section-toolbar__action" href="{{ route('kegiatan') }}">
@@ -201,8 +197,7 @@
                 <x-section-heading
                     eyebrow="Berita Terbaru"
                     title="Kabar dari Roudlotul Qur’an."
-                    description="Tiga kartu berikut adalah contoh tampilan berita. Isi dan tanggal resmi akan segera menggantikannya."
-                    :temporary="true"
+                    description="Kabar terbaru dari kehidupan ribath, dirangkum dari dokumentasi resmi."
                 />
 
                 <a class="btn btn-outline section-toolbar__action" href="{{ route('berita') }}">

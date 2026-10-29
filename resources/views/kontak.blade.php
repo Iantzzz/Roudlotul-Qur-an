@@ -1,13 +1,13 @@
 @extends('layouts.public')
 
 @section('title', "Kontak | Roudlotul Qur'an")
-@section('description', "Informasi kontak, kanal komunikasi, peta, dan formulir tampilan Roudlotul Qur'an. Data resmi masih berupa placeholder.")
+@section('description', "Alamat dan kanal media sosial resmi Ribath Roudlotul Qur'an 1 di lingkungan PP Darul Ulum, Rejoso, Jombang. Nomor telepon, email, dan formulir masih menunggu data resmi pengurus.")
 
 @section('content')
     <x-page-hero
         title="Kontak"
         eyebrow="Hubungi Kami"
-        description="Informasi alamat, telepon, email, dan kanal komunikasi resmi masih dalam proses pelengkapan."
+        description="Alamat dan kanal media sosial resmi sudah dicantumkan. Nomor telepon, email, dan formulir masih menunggu data dari pengurus."
         image="quran_open"
     />
 
@@ -15,9 +15,8 @@
         <div class="container">
             <x-section-heading
                 eyebrow="Informasi Kontak"
-                title="Kanal komunikasi yang akan tersedia."
-                description="Semua detail kontak pada halaman ini masih berupa placeholder. Formulir dan peta belum aktif."
-                :temporary="true"
+                title="Kanal komunikasi yang tersedia dan yang masih menunggu."
+                description="Alamat dan media sosial resmi sudah aktif. Telepon, email, formulir, dan peta belum ditampilkan sampai datanya diterima dari pengurus."
             />
 
             <div class="contact-layout">
@@ -93,7 +92,7 @@
                         </div>
                     </div>
 
-                    <x-temp-badge text="Kontak resmi belum tersedia" />
+                    <x-temp-badge text="Telepon & email resmi belum tersedia" />
                 </div>
 
                 <div class="profile-panel contact-form-panel" data-reveal>

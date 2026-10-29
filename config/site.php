@@ -3,14 +3,19 @@
 return [
     'brand' => [
         'name' => "Roudlotul Qur'an",
+        'official_name' => "Ribath Roudlotul Qur'an 1",
         'tagline' => "Asrama Pendidikan Al-Qur'an",
-        'description' => "Ruang belajar, menghafal Al-Qur'an, memperdalam ilmu, dan membangun akhlak dalam kebersamaan.",
+        'description' => "Ribath Roudlotul Qur'an 1 — asrama pendidikan Al-Qur'an di lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Jombang.",
+        'motto' => [
+            'arabic' => 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
+            'translation' => "Sebaik-baik manusia adalah yang mempelajari Al-Qur'an dan mengajarkannya.",
+        ],
         'monogram' => 'RQ',
         'logo' => 'images/site/logo-rq.png',
     ],
 
     'contact' => [
-        'address' => '[Alamat resmi asrama belum tersedia]',
+        'address' => 'Lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Kabupaten Jombang, Jawa Timur',
         'phone' => '[Nomor telepon belum tersedia]',
         'whatsapp' => '[Nomor WhatsApp belum tersedia]',
         'email' => '[Alamat email belum tersedia]',

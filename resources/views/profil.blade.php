@@ -1,13 +1,13 @@
 @extends('layouts.public')
 
 @section('title', "Profil Asrama | Roudlotul Qur'an")
-@section('description', "Profil, sejarah, visi, misi, dan nilai Roudlotul Qur'an. Sebagian informasi resmi masih dalam proses pelengkapan.")
+@section('description', "Profil Ribath Roudlotul Qur'an 1, asrama pendidikan Al-Qur'an di lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Jombang.")
 
 @section('content')
     <x-page-hero
         title="Profil Asrama"
         eyebrow="Mengenal Kami"
-        description="Halaman ini disiapkan untuk memuat profil, sejarah, visi, misi, dan nilai resmi asrama."
+        description="Ribath Roudlotul Qur'an 1 — asrama pendidikan Al-Qur'an di lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Jombang."
         image="calligraphy_gold"
     />
 
@@ -32,7 +32,7 @@
 
                 <div class="media-note">
                     <x-site-icon name="quote" :size="26" />
-                    <p>Profil resmi asrama sedang disiapkan.</p>
+                    <p>{{ config('site.brand.motto.translation') }}</p>
                     <span>Foto sementara</span>
                 </div>
             </div>
@@ -40,29 +40,37 @@
             <div class="split__content" data-reveal>
                 <x-section-heading
                     eyebrow="Profil Singkat"
-                    title="Ruang untuk mengenal asrama lebih dekat."
-                    description="Ringkasan profil resmi akan menjadi pengantar untuk memahami sejarah, arah pembinaan, dan nilai yang dirawat asrama."
-                    :temporary="true"
+                    title="Ribath Roudlotul Qur'an 1."
+                    description="Asrama pendidikan Al-Qur'an di lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Jombang."
                 />
 
                 <p>
-                    Roudlotul Qur’an adalah asrama pendidikan Al-Qur’an. Informasi
-                    mengenai pengasuh, tahun berdiri, jumlah santri, dan data resmi
-                    lainnya belum tersedia untuk dipublikasikan.
+                    Ribath Roudlotul Qur'an 1 adalah asrama pendidikan Al-Qur'an
+                    di lingkungan Pondok Pesantren Darul Ulum, Rejoso,
+                    Peterongan, Jombang. Melalui pembelajaran dan pendampingan,
+                    santri dibina untuk tumbuh berilmu, mandiri, dan berakhlak.
                 </p>
 
                 <dl class="profile-facts">
                     <div>
                         <dt>Nama</dt>
-                        <dd>{{ config('site.brand.name') }}</dd>
+                        <dd>{{ config('site.brand.official_name') }}</dd>
                     </div>
                     <div>
                         <dt>Jenis</dt>
                         <dd>{{ config('site.brand.tagline') }}</dd>
                     </div>
                     <div>
+                        <dt>Induk</dt>
+                        <dd>Pondok Pesantren Darul Ulum</dd>
+                    </div>
+                    <div>
+                        <dt>Lokasi</dt>
+                        <dd>Rejoso, Peterongan, Jombang</dd>
+                    </div>
+                    <div>
                         <dt>Pengasuh</dt>
-                        <dd>[Nama pengasuh resmi]</dd>
+                        <dd>Agus Muhammad Izzudin, Lc., M.Pd.</dd>
                     </div>
                     <div>
                         <dt>Tahun berdiri</dt>
@@ -188,9 +196,8 @@
                 <x-section-heading
                     eyebrow="Nilai-nilai"
                     title="Arah nilai yang ingin dirawat."
-                    description="Nilai resmi asrama belum tersedia. Empat kartu berikut hanya contoh penataan dan bukan pernyataan resmi."
+                    description="Nilai-nilai disarikan dari pesan pembinaan dan kegiatan yang dibagikan secara resmi oleh pengurus."
                     theme="dark"
-                    :temporary="true"
                 />
             </div>
 

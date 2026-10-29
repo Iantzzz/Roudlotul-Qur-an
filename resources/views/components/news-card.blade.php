@@ -23,7 +23,9 @@
         <p>{{ $post['excerpt'] }}</p>
 
         <div class="news-card__footer">
-            <x-temp-badge text="Contoh" />
+            @if ($post['temporary'] ?? false)
+                <x-temp-badge text="Contoh" />
+            @endif
             <a class="text-link" href="{{ route('berita.show', $post['slug']) }}">
                 Baca selengkapnya
                 <x-site-icon name="arrow-right" :size="17" />

@@ -78,6 +78,6 @@
 
     <div class="container footer-bottom">
         <p>&copy; {{ date('Y') }} {{ config('site.brand.name') }}. Hak cipta dilindungi.</p>
-        <p>Sebagian konten masih berupa contoh sementara.</p>
+        <p>Galeri, sejarah, visi-misi, dan pendaftaran masih menunggu data resmi.</p>
     </div>
 </footer>
