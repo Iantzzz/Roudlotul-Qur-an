@@ -18,9 +18,9 @@ return [
     ],
 
     'socials' => [
-        ['label' => 'Instagram', 'icon' => 'instagram', 'url' => null],
-        ['label' => 'Facebook', 'icon' => 'facebook', 'url' => null],
-        ['label' => 'YouTube', 'icon' => 'youtube', 'url' => null],
+        ['label' => 'Instagram', 'icon' => 'instagram', 'url' => 'https://www.instagram.com/ndalemardales/'],
+        ['label' => 'TikTok', 'icon' => 'tiktok', 'url' => 'https://www.tiktok.com/@ribathroudlotulquran1'],
+        ['label' => 'YouTube', 'icon' => 'youtube', 'url' => 'https://www.youtube.com/@Roudlotul_Quran_Satu'],
     ],
 
     'navigation' => [

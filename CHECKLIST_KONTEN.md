@@ -22,7 +22,7 @@ Catatan: navbar, footer, halaman 404, favicon, dan apple-touch-icon kini memakai
 - [ ] Alamat email resmi.
 - [ ] Jam layanan administrasi.
 - [ ] Nama dan kontak narahubung pendaftaran.
-- [ ] Akun Instagram, Facebook, YouTube, atau TikTok resmi.
+- [x] Akun resmi: Instagram, TikTok, dan YouTube (tautan aktif). Facebook dihapus.
 
 Semua data di atas saat ini memakai teks `[Belum tersedia]` di halaman publik. Halaman `/kontak` menampilkan placeholder tersebut, formulir yang dinonaktifkan, serta placeholder peta tanpa koordinat.
 

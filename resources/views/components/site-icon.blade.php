@@ -94,8 +94,10 @@
             <path d="M17.5 6.5h.01" />
             @break
 
-        @case('facebook')
-            <path d="M14 8h3V4h-3c-2.2 0-4 1.8-4 4v3H7v4h3v7h4v-7h3l1-4h-4V8Z" />
+        @case('tiktok')
+            <path d="M15.5 4c.5 2.3 2.3 4.2 4.5 4.5" />
+            <path d="M15.5 4v11" />
+            <circle cx="11" cy="15" r="4.5" />
             @break
 
         @case('youtube')

@@ -77,11 +77,18 @@
                         <span class="contact-socials__label">Media Sosial</span>
                         <div class="contact-socials__list">
                             @foreach (config('site.socials') as $social)
-                                <span class="social-link social-link--disabled">
-                                    <x-site-icon :name="$social['icon']" :size="18" />
-                                    {{ $social['label'] }}
-                                    <small>Segera</small>
-                                </span>
+                                @if ($social['url'])
+                                    <a class="social-link" href="{{ $social['url'] }}" rel="noopener noreferrer" target="_blank">
+                                        <x-site-icon :name="$social['icon']" :size="18" />
+                                        {{ $social['label'] }}
+                                    </a>
+                                @else
+                                    <span class="social-link social-link--disabled">
+                                        <x-site-icon :name="$social['icon']" :size="18" />
+                                        {{ $social['label'] }}
+                                        <small>Segera</small>
+                                    </span>
+                                @endif
                             @endforeach
                         </div>
                     </div>
