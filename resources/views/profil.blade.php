@@ -70,7 +70,7 @@
                     </div>
                     <div>
                         <dt>Pengasuh</dt>
-                        <dd>Agus Muhammad Izzudin, Lc., M.Pd.</dd>
+                        <dd>Drs. KH. Cholil Dahlan<br>Nyai Hj. Anisatus Sa'diyah</dd>
                     </div>
                     <div>
                         <dt>Tahun berdiri</dt>

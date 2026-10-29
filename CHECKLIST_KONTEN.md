@@ -31,7 +31,7 @@ Semua data di atas saat ini memakai teks `[Belum tersedia]` di halaman publik. H
 - [ ] Sejarah resmi dan tahun berdiri.
 - [ ] Latar belakang berdirinya asrama.
 - [ ] Narasi sejarah singkat dan tonggak penting.
-- [x] Nama pengasuh: Agus Muhammad Izzudin, Lc., M.Pd. (dari dokumentasi kanal resmi; mohon konfirmasi pengurus).
+- [x] Nama pengasuh: Drs. KH. Cholil Dahlan & Nyai Hj. Anisatus Sa'diyah (dikonfirmasi pengurus).
 - [ ] Struktur organisasi.
 - [ ] Visi resmi.
 - [ ] Misi resmi (butir 1–4 atau sesuai rumusan resmi).
