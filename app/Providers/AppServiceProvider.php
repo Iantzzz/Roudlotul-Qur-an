@@ -34,10 +34,12 @@ class AppServiceProvider extends ServiceProvider
      * (SQLSTATE 42P01 ketika login admin dicoba).
      *
      * Guard ini memastikan skema tersedia di database yang dipakai
-     * aplikasi saat ini: bila tabel `migrations` tidak ada, jalankan
-     * migrasi + seeder admin sekali per instans. Idempotent dan aman
-     * dijalankan berulang karena migrasi Laravel tercatat di tabel
-     * `migrations`.
+     * aplikasi saat ini: bila tabel `users` tidak ada (string penyebab
+     * SQLSTATE 42P01 saat login), jalankan migrasi + seeder admin sekali
+     * per instans. Idempotent dan aman dijalankan berulang karena
+     * migrasi Laravel tercatat di tabel `migrations`; bila satu instans
+     * terpotong (batas waktu serverless), instans berikutnya
+     * melanjutkan sisa migrasi.
      *
      * Hapus metode ini setelah integrasi Neon-Vercel dikonfigurasikan
      * agar build & runtime memakai branch database yang sama, atau
@@ -56,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
             $missing = DB::select(
                 "SELECT NOT EXISTS (
                     SELECT 1 FROM information_schema.tables
-                    WHERE table_schema = 'public' AND table_name = 'migrations'
+                    WHERE table_schema = 'public' AND table_name = 'users'
                 ) AS missing"
             )[0]->missing ?? true;
 
