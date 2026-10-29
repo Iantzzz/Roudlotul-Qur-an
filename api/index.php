@@ -58,6 +58,8 @@ const RQ_ASSET_ROOT_FILES = [
     '/favicon-32x32.png' => 'image/png',
     '/apple-touch-icon.png' => 'image/png',
     '/robots.txt' => 'text/plain',
+    '/manifest.json' => 'application/json',
+    '/sw.js' => 'application/javascript',
 ];
 
 const RQ_ASSET_ALLOWLIST = [

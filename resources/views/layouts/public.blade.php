@@ -27,6 +27,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     <link rel="icon" href="{{ asset('favicon-32x32.png') }}" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

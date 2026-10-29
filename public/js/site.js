@@ -62,6 +62,13 @@
         window.addEventListener('scroll', updateHeader, { passive: true });
     }
 
+    // PWA: daftarkan service worker agar situs bisa dipasang di layar depan HP.
+    if ('serviceWorker' in navigator && window.isSecureContext) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+    }
+
     const lightbox = document.querySelector('[data-lightbox]');
 
     if (lightbox) {
