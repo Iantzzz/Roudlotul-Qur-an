@@ -30,20 +30,22 @@ class AppServiceProvider extends ServiceProvider
      * SEMENTARA (perbaikan produksi Vercel):
      * Integrasi Neon-Vercel menjalankan migrasi build-time pada branch
      * database sementara yang dihapus setelah build, sehingga database
-     * yang benar-benar dipakai runtime bisa lengkap tanpa tabel
+     * yang benar-benar dipakai runtime tidak menerima hasilnya
      * (SQLSTATE 42P01 ketika login admin dicoba).
      *
-     * Guard ini memastikan skema tersedia di database yang dipakai
-     * aplikasi saat ini: bila tabel `users` tidak ada (string penyebab
-     * SQLSTATE 42P01 saat login), jalankan migrasi + seeder admin sekali
-     * per instans. Idempotent dan aman dijalankan berulang karena
-     * migrasi Laravel tercatat di tabel `migrations`; bila satu instans
-     * terpotong (batas waktu serverless), instans berikutnya
-     * melanjutkan sisa migrasi.
+     * Guard ini mengurus dua hal yang saling lepas, di database yang
+     * dipakai aplikasi saat ini:
+     *   1. Bila tabel `users` tidak ada → jalankan migrasi. Idempotent
+     *      dan aman dijalankan berulang (tercatat di tabel `migrations`);
+     *      bila satu instans terpotong batas waktu serverless, instans
+     *      berikutnya melanjutkan sisa migrasi.
+     *   2. Bila ADMIN_EMAIL & ADMIN_PASSWORD terisi tetapi row user
+     *      admin belum ada → jalankan seeder admin (idempotent,
+     *      updateOrCreate).
      *
-     * Hapus metode ini setelah integrasi Neon-Vercel dikonfigurasikan
-     * agar build & runtime memakai branch database yang sama, atau
-     * migrasi pindah ke kanal yang andal.
+     * Hapus/kecilkan metode ini setelah integrasi Neon-Vercel
+     * dikonfigurasikan agar build & runtime memakai branch database
+     * yang sama.
      */
     private function ensureDatabaseReady(): void
     {
@@ -55,16 +57,12 @@ class AppServiceProvider extends ServiceProvider
         $checked = true;
 
         try {
-            $missing = DB::select(
+            $usersTableMissing = (bool) (DB::select(
                 "SELECT NOT EXISTS (
                     SELECT 1 FROM information_schema.tables
                     WHERE table_schema = 'public' AND table_name = 'users'
                 ) AS missing"
-            )[0]->missing ?? true;
-
-            if (! $missing) {
-                return;
-            }
+            )[0]->missing ?? true);
         } catch (Throwable $e) {
             // Koneksi gagal bukan urusan guard ini; biarkan aplikasi
             // menangani error database seperti biasa.
@@ -72,14 +70,37 @@ class AppServiceProvider extends ServiceProvider
         }
 
         try {
-            Artisan::call('migrate', ['--force' => true]);
-            Artisan::call(
-                'db:seed',
-                ['--class' => 'Database\\Seeders\\AdminUserSeeder', '--force' => true],
-            );
-            Log::warning('auto-restore: migrasi + seeder dijalankan di runtime (database runtime tanpa tabel)');
+            if ($usersTableMissing) {
+                Artisan::call('migrate', ['--force' => true]);
+                Log::warning('auto-restore: migrasi dijalankan di runtime (tabel users tidak ada)');
+            }
+
+            $this->seedAdminIfNeeded();
         } catch (Throwable $e) {
-            Log::error('auto-restore: gagal memperbaiki skema database runtime', ['error' => mb_substr((string) $e, 0, 400)]);
+            Log::error('auto-restore: gagal memperbaiki database runtime', ['error' => mb_substr((string) $e, 0, 400)]);
         }
+    }
+
+    /**
+     * Buat user admin Filament bila env ADMIN_* terisi tetapi row user
+     * dengan email tersebut belum ada. Aman untuk dijalankan berulang.
+     */
+    private function seedAdminIfNeeded(): void
+    {
+        $email = trim((string) env('ADMIN_EMAIL', ''));
+        $password = (string) env('ADMIN_PASSWORD', '');
+
+        if ($email === '' || $password === '') {
+            return; // env memang belum diisi — seeder juga akan melewatinya
+        }
+
+        $exists = (bool) DB::table('users')->where('email', $email)->exists();
+
+        if ($exists) {
+            return;
+        }
+
+        Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\AdminUserSeeder', '--force' => true]);
+        Log::warning('auto-restore: user admin dibuat di runtime');
     }
 }
