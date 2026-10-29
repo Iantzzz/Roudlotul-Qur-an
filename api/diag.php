@@ -51,6 +51,10 @@ try {
     // dan sertakan OUTPUT Artisan untuk melihat persis apa yang gagal.
     $report['repair'] = rqRepairNow();
 
+    // Tambahan: provisi akun admin lewat proses terkontral ini (bukan per
+    // request). Idempotent — bila akun sudah ada, tidak ada yang diubah.
+    $report['provisionAdmin'] = rqProvisionAdmin();
+
     $tables = array_map(
         static fn (object $row): string => (string) $row->table_name,
         Illuminate\Support\Facades\DB::select(
@@ -184,6 +188,49 @@ function rqRepairNow(): array
         $out['seedOutput'] = mb_substr(Illuminate\Support\Facades\Artisan::output(), 0, 400);
     } catch (Throwable $e) {
         $out['seedThrew'] = substr((string) $e, 0, 300);
+    }
+
+    return $out;
+}
+
+/**
+ * Provisi akun admin melalui seeder resmi, HANYA bila env ADMIN_* lengkap.
+ * Tidak pernah memaparkan nilai kredensial; hanya boolean status.
+ *
+ * @return array<string, mixed>
+ */
+function rqProvisionAdmin(): array
+{
+    $email = trim((string) config('admin.email', ''));
+    $password = (string) config('admin.password', '');
+
+    $out = [
+        'hasEmail' => $email !== '',
+        'hasPassword' => $password !== '',
+    ];
+
+    if ($email === '' || $password === '') {
+        $out['action'] = 'skip: env admin belum lengkap';
+
+        return $out;
+    }
+
+    try {
+        $out['existsBefore'] = Illuminate\Support\Facades\DB::table('users')
+            ->where('email', $email)
+            ->exists();
+
+        $code = Illuminate\Support\Facades\Artisan::call(
+            'db:seed',
+            ['--class' => 'Database\\Seeders\\AdminUserSeeder', '--force' => true],
+        );
+        $out['seedExit'] = $code;
+        $out['output'] = mb_substr(Illuminate\Support\Facades\Artisan::output(), 0, 300);
+        $out['existsAfter'] = Illuminate\Support\Facades\DB::table('users')
+            ->where('email', $email)
+            ->exists();
+    } catch (Throwable $e) {
+        $out['error'] = substr((string) $e, 0, 300);
     }
 
     return $out;

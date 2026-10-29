@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->ensureDatabaseReady();
+        $this->ensureDatabaseSchemaReady();
     }
 
     /**
@@ -33,21 +33,21 @@ class AppServiceProvider extends ServiceProvider
      * yang benar-benar dipakai runtime tidak menerima hasilnya
      * (SQLSTATE 42P01 ketika login admin dicoba).
      *
-     * Guard ini mengurus dua hal yang saling lepas, di database yang
-     * dipakai aplikasi saat ini:
-     *   1. Bila tabel `users` tidak ada → jalankan migrasi. Idempotent
-     *      dan aman dijalankan berulang (tercatat di tabel `migrations`);
-     *      bila satu instans terpotong batas waktu serverless, instans
-     *      berikutnya melanjutkan sisa migrasi.
-     *   2. Bila ADMIN_EMAIL & ADMIN_PASSWORD terisi tetapi row user
-     *      admin belum ada → jalankan seeder admin (idempotent,
-     *      updateOrCreate).
+     * Guard ini HANYA memulihkan skema, idempotent: bila tabel `users`
+     * tidak ada, jalankan migrasi sekali per instans; bila satu instans
+     * terpotong (batas waktu serverless), instans berikutnya
+     * melanjutkan sisa migrasi. Bila skema sudah lengkap, guard hanya
+     * melakukan satu probe baca per instans lalu selesai — tidak ada
+     * penulisan database per request.
      *
-     * Hapus/kecilkan metode ini setelah integrasi Neon-Vercel
-     * dikonfigurasikan agar build & runtime memakai branch database
-     * yang sama.
+     * Pembuatan akun admin BUKAN tugas metode ini: berjalan lewat
+     * Database\Seeders\AdminUserSeeder dari proses terkontrol
+     * (endpoint diagnostik / composer build), bukan per HTTP request.
+     *
+     * Hapus metode ini setelah integrasi Neon-Vercel dikonfigurasikan
+     * agar build & runtime memakai branch database yang sama.
      */
-    private function ensureDatabaseReady(): void
+    private function ensureDatabaseSchemaReady(): void
     {
         static $checked = false;
 
@@ -69,38 +69,15 @@ class AppServiceProvider extends ServiceProvider
             return;
         }
 
-        try {
-            if ($usersTableMissing) {
-                Artisan::call('migrate', ['--force' => true]);
-                Log::warning('auto-restore: migrasi dijalankan di runtime (tabel users tidak ada)');
-            }
-
-            $this->seedAdminIfNeeded();
-        } catch (Throwable $e) {
-            Log::error('auto-restore: gagal memperbaiki database runtime', ['error' => mb_substr((string) $e, 0, 400)]);
-        }
-    }
-
-    /**
-     * Buat user admin Filament bila env ADMIN_* terisi tetapi row user
-     * dengan email tersebut belum ada. Aman untuk dijalankan berulang.
-     */
-    private function seedAdminIfNeeded(): void
-    {
-        $email = trim((string) env('ADMIN_EMAIL', ''));
-        $password = (string) env('ADMIN_PASSWORD', '');
-
-        if ($email === '' || $password === '') {
-            return; // env memang belum diisi — seeder juga akan melewatinya
-        }
-
-        $exists = (bool) DB::table('users')->where('email', $email)->exists();
-
-        if ($exists) {
+        if (! $usersTableMissing) {
             return;
         }
 
-        Artisan::call('db:seed', ['--class' => 'Database\\Seeders\\AdminUserSeeder', '--force' => true]);
-        Log::warning('auto-restore: user admin dibuat di runtime');
+        try {
+            Artisan::call('migrate', ['--force' => true]);
+            Log::warning('auto-restore: migrasi dijalankan di runtime (tabel users tidak ada)');
+        } catch (Throwable $e) {
+            Log::error('auto-restore: gagal memperbaiki skema database runtime', ['error' => mb_substr((string) $e, 0, 400)]);
+        }
     }
 }

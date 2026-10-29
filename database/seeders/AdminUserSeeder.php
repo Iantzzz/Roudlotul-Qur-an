@@ -8,15 +8,19 @@ use Illuminate\Support\Facades\Hash;
 
 /**
  * Membuat user admin Filament dari variabel lingkungan (ADMIN_*).
- * Dipakai pada deployment Vercel (script composer "vercel").
- * Aman dijalankan berulang: lewati bila env belum diisi atau email telah ada.
+ * Dipakai pada deployment Vercel (script composer "vercel") dan lewat
+ * endpoint diagnostik terkontrol.
+ *
+ * Idempotent: membuat akun hanya bila belum ada (firstOrCreate) dan
+ * TIDAK PERNAH menimpa password/nama akun yang sudah ada, sehingga
+ * menjalankan ulang tidak mengubah apa pun.
  */
 class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $email = (string) env('ADMIN_EMAIL', '');
-        $password = (string) env('ADMIN_PASSWORD', '');
+        $email = trim((string) config('admin.email', ''));
+        $password = (string) config('admin.password', '');
 
         if ($email === '' || $password === '') {
             $this->command?->line('ADMIN_EMAIL/ADMIN_PASSWORD belum diisi, seeder admin dilewati.');
@@ -24,12 +28,24 @@ class AdminUserSeeder extends Seeder
             return;
         }
 
-        User::query()->updateOrCreate(
+        $user = User::query()->firstOrCreate(
             ['email' => $email],
             [
-                'name' => (string) env('ADMIN_NAME', 'Admin'),
+                'name' => (string) config('admin.name', 'Admin'),
                 'password' => Hash::make($password),
             ],
+        );
+
+        if ($user->wasRecentlyCreated && $user->email_verified_at === null) {
+            // Panel admin memerlukan email terverifikasi; akun baru langsung
+            // ditandai terverifikasi karena dibuat oleh pemiliknya sendiri.
+            $user->forceFill(['email_verified_at' => now()])->save();
+        }
+
+        $this->command?->line(
+            $user->wasRecentlyCreated
+                ? "User admin dibuat untuk email tersebut."
+                : 'Akun admin sudah ada, tidak ada yang diubah.'
         );
     }
 }
