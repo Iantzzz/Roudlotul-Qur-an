@@ -55,7 +55,6 @@
             "@php artisan filament:upgrade"
         ],
         "vercel": [
-            "@php scripts/echo-db.php",
             "@php artisan package:discover --ansi",
             "@php artisan filament:assets --ansi",
             "@php artisan migrate --force || exit 0",
