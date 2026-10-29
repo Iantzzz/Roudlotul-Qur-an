@@ -1,9 +1,11 @@
 {
     "version": 2,
     "builds": [
-        { "src": "/api/index.php", "use": "vercel-php@0.7.4" }
+        { "src": "/api/index.php", "use": "vercel-php@0.7.4" },
+        { "src": "/api/diag.php", "use": "vercel-php@0.7.4" }
     ],
     "routes": [
+        { "src": "/diag", "dest": "/api/diag.php" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "env": {
