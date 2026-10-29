@@ -146,7 +146,33 @@ function rqRepairNow(): array
         $out['migrateExit'] = $code;
         $out['migrateOutput'] = mb_substr(Illuminate\Support\Facades\Artisan::output(), 0, 1800);
     } catch (Throwable $e) {
-        $out['migrateThrew'] = substr((string) $e, 0, 400);
+        $out['migrateThrew'] = substr((string) $e, 0, 500);
+        $prev = $e->getPrevious();
+        $out['migrateRoot'] = $prev === null ? null : substr($prev->getMessage(), 0, 400);
+    }
+
+    // Coba sekali lagi dengan koneksi ulang + endpoint DIRECT (tanpa
+    // PgBouncer/pooler) — bila berhasil di direct, masalahnya adalah pooler.
+    try {
+        $rawUrl = (string) (getenv('DATABASE_URL') ?: '');
+        $parts = parse_url($rawUrl) ?: [];
+        $host = is_array($parts) ? ($parts['host'] ?? null) : null;
+        if (is_string($host) && str_contains($host, '-pooler')) {
+            $directUrl = str_replace('-pooler.', '.', (string)$rawUrl);
+            $cfg = config('database.connections.pgsql') ?? [];
+            if (isset($cfg['url'])) {
+                config(['database.connections.pgsql.url' => $directUrl]);
+            }
+            Illuminate\Support\Facades\DB::purge('pgsql');
+            $code = Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            $out['directMigrateExit'] = $code;
+            $out['directMigrateOutput'] = mb_substr(Illuminate\Support\Facades\Artisan::output(), 0, 1200);
+            Illuminate\Support\Facades\DB::purge('pgsql');
+        }
+    } catch (Throwable $e) {
+        $out['directMigrateThrew'] = substr((string) $e, 0, 500);
+        $prev = $e->getPrevious();
+        $out['directMigrateRoot'] = $prev === null ? null : substr($prev->getMessage(), 0, 400);
     }
 
     try {
