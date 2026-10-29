@@ -27,13 +27,16 @@ if ($url !== '') {
     $database = ltrim($parsed['path'] ?? '', '/');
 }
 
+$pooler = str_contains($host, '-pooler');
+
 printf(
-    'BUILD_DB host=%s database=%s | dbUrl=%s databaseUrl=%s postgresUrl=%s | adminEmail=%s adminPassword=%s',
-    $host,
+    'BUILD_DB database=%s | dbUrl=%s databaseUrl=%s databaseUrlLen=%d postgresUrl=%s poolerHost=%s | adminEmail=%s adminPassword=%s',
     $database !== '' ? $database : '(kosong)',
     $env('DB_URL') !== '' ? 'ya' : 'tidak',
     $env('DATABASE_URL') !== '' ? 'ya' : 'tidak',
+    strlen($url),
     $env('POSTGRES_URL') !== '' ? 'ya' : 'tidak',
+    $pooler ? 'ya' : 'tidak',
     $env('ADMIN_EMAIL') !== '' ? 'ya' : 'tidak',
     $env('ADMIN_PASSWORD') !== '' ? 'ya' : 'tidak',
 );

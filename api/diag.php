@@ -55,6 +55,26 @@ try {
     );
     $report['tables'] = $tables;
 
+    // Tambah: bandingkan endpoint DIRECT (bukan pooler) memakai kredensial
+    // yang sama — untuk memastikan apakah build menulis ke database berbeda.
+    $rawUrl = (string) (getenv('DATABASE_URL') ?: '');
+    $report['databaseUrlLen'] = strlen($rawUrl);
+    if ($rawUrl !== '') {
+        $parts = parse_url($rawUrl) ?: [];
+        $host = is_array($parts) ? ($parts['host'] ?? null) : null;
+        if (is_string($host) && str_contains($host, '-pooler')) {
+            $report['poolerEndpoint'] = true;
+            $directHost = str_replace('-pooler.', '.', $host);
+            $dsn = sprintf(
+                'pgsql:host=%s;port=%s;dbname=%s;sslmode=require;connect_timeout=10',
+                $directHost,
+                $parts['port'] ?? '5432',
+                ltrim($parts['path'] ?? '', '/')
+            );
+            $report['directEndpoint'] = rqProbeDirect($dsn);
+        }
+    }
+
     $rowCount = static function (string $table) use ($conn): ?int {
         try {
             return (int) $conn->table($table)->count();
@@ -90,3 +110,24 @@ http_response_code(200);
 header('Content-Type: application/json');
 header('Cache-Control: no-store');
 echo json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+/**
+ * Probe baca-saja ke endpoint DIRECT (bukan pooler). Melaporkan daftar
+ * tabel di schema public — tanpa memaparkan kredensial.
+ *
+ * @return array{ok: true, publicTables: int, tables: list<string>}|array{ok: false, error: string}
+ */
+function rqProbeDirect(string $dsn): array
+{
+    try {
+        $pdo = new PDO($dsn);
+        $row = $pdo->query("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public'")->fetch(PDO::FETCH_NUM);
+        $names = $pdo->query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name LIMIT 30")->fetchAll(PDO::FETCH_COLUMN);
+
+        return ['ok' => true, 'publicTables' => (int) $row[0], 'tables' => $names];
+    } catch (Throwable $e) {
+        $msg = preg_replace('/(user|password)=[^;]*/i', '$1=***', $e->getMessage()) ?? $e->getMessage();
+
+        return ['ok' => false, 'error' => substr($msg, 0, 250)];
+    }
+}
