@@ -26,8 +26,21 @@
     <section class="section profile-section" id="profil-singkat">
         <div class="container split split--profile">
             <div class="split__media" data-reveal>
-                <div class="media-frame">
-                    <x-site-image name="quran_manuscript" class="split__image" />
+                <div
+                    class="media-frame split-slider"
+                    data-split-slider
+                    data-split-interval="4000"
+                    role="region"
+                    aria-roledescription="carousel"
+                    aria-label="Foto dokumentasi asrama"
+                >
+                    <div class="split-slider__track" data-split-track tabindex="0" aria-label="Foto dokumentasi — geser ke samping atau gunakan panah keyboard">
+                        @foreach (['quran_manuscript', 'mosque_light', 'calligraphy_gold'] as $splitImage)
+                            <x-site-image :name="$splitImage" class="split-slider__slide" />
+                        @endforeach
+                    </div>
+
+                    <div class="split-slider__dots" data-split-dots></div>
                 </div>
 
                 <div class="media-note">

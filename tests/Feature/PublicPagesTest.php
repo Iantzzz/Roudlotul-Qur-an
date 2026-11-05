@@ -57,4 +57,19 @@ class PublicPagesTest extends TestCase
                 ->assertSee('data-gallery-dots');
         }
     }
+
+    public function test_split_media_frames_render_the_photo_slider(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('data-split-slider')
+            ->assertSee('quran-detail.webp')
+            ->assertSee('courtyard.webp');
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('data-split-slider')
+            ->assertSee('mosque-light.webp')
+            ->assertSee('calligraphy-gold.webp');
+    }
 }

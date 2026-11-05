@@ -89,8 +89,21 @@
     <section class="section overview" id="tentang">
         <div class="container split">
             <div class="split__media" data-reveal>
-                <div class="media-frame">
-                    <x-site-image name="quran_open" class="split__image" />
+                <div
+                    class="media-frame split-slider"
+                    data-split-slider
+                    data-split-interval="4000"
+                    role="region"
+                    aria-roledescription="carousel"
+                    aria-label="Foto suasana asrama"
+                >
+                    <div class="split-slider__track" data-split-track tabindex="0" aria-label="Foto suasana — geser ke samping atau gunakan panah keyboard">
+                        @foreach (['quran_open', 'quran_detail', 'courtyard', 'library'] as $splitImage)
+                            <x-site-image :name="$splitImage" class="split-slider__slide" />
+                        @endforeach
+                    </div>
+
+                    <div class="split-slider__dots" data-split-dots></div>
                 </div>
 
                 <div class="media-note">

@@ -821,13 +821,81 @@ h4 {
     content: "";
 }
 
-.split__image {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
+/* Slider foto di dalam bingkai (.media-frame): tepian emas bergeser dan kartu
+   kutipan tetap diam, hanya foto di baliknya yang bergeser satu frame. */
+.split-slider {
+    position: relative;
+    overflow: hidden;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+.split-slider.is-dragging {
+    cursor: grabbing;
+}
+
+.split-slider__track {
+    display: flex;
+    height: 100%;
+}
+
+.split-slider__slide {
+    display: block;
+    flex: 0 0 100%;
+    width: 100%;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Berpindah foto secara halus; dimatikan untuk preferensi kurang gerak. */
+.split-slider__track {
+    transition: transform 640ms ease;
+    will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .split-slider__track {
+        transition: none;
+    }
+}
+
+.split-slider__dots {
+    position: absolute;
+    z-index: 2;
+    top: 1rem;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.42rem 0.62rem;
+    border-radius: 999px;
+    transform: translateX(-50%);
+    background: rgba(4, 25, 16, 0.55);
+}
+
+.split-slider__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: background 200ms ease, width 200ms ease;
+}
+
+.split-slider__dot.is-active {
+    width: 1.35rem;
+    background: var(--gold-400);
+}
+
+.split-slider__dot:focus-visible {
+    outline: 2px solid var(--gold-300);
+    outline-offset: 2px;
 }
 
 .media-note {
@@ -2558,7 +2626,7 @@ a.social-link:hover {
         max-width: 620px;
     }
 
-    .split__image {
+    .split-slider__slide {
         aspect-ratio: 5 / 4;
     }
 
