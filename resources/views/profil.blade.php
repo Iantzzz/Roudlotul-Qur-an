@@ -84,7 +84,7 @@
                     </div>
                     <div>
                         <dt>Pengasuh</dt>
-                        <dd>Drs. KH. Cholil Dahlan<br>Nyai Hj. Anisatus Sa'diyah</dd>
+                        <dd>Drs. KH. Cholil Dahlan<br>Ibu Nyai Hj. Anisatus Sa'diyah</dd>
                     </div>
                     <div>
                         <dt>Tahun berdiri</dt>
