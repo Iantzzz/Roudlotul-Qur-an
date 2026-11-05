@@ -24,35 +24,49 @@
                 :temporary="true"
             />
 
-            <div class="gallery-grid">
-                @foreach ($gallery as $item)
-                    @php
-                        $image = config('site.images.' . $item['image']);
-                    @endphp
+            <div class="gallery-carousel" data-gallery-carousel aria-roledescription="carousel" aria-label="Galeri foto">
+                <div class="gallery-track" data-gallery-track tabindex="0" aria-label="Daftar foto — geser ke samping atau gunakan tombol panah">
+                    @foreach ($gallery as $item)
+                        @php
+                            $image = config('site.images.' . $item['image']);
+                        @endphp
 
-                    <figure class="gallery-item" data-reveal>
-                        <button
-                            class="gallery-item__button"
-                            type="button"
-                            data-lightbox-trigger
-                            data-lightbox-src="{{ asset($image['path']) }}"
-                            data-lightbox-alt="{{ $image['alt'] }}"
-                            data-lightbox-caption="{{ $item['caption'] }}"
-                            aria-label="Perbesar foto: {{ $item['caption'] }}"
-                        >
-                            <x-site-image :name="$item['image']" class="gallery-item__image" />
+                        <figure class="gallery-item" data-reveal>
+                            <button
+                                class="gallery-item__button"
+                                type="button"
+                                data-lightbox-trigger
+                                data-lightbox-src="{{ asset($image['path']) }}"
+                                data-lightbox-alt="{{ $image['alt'] }}"
+                                data-lightbox-caption="{{ $item['caption'] }}"
+                                aria-label="Perbesar foto: {{ $item['caption'] }}"
+                            >
+                                <x-site-image :name="$item['image']" class="gallery-item__image" />
 
-                            <span class="gallery-item__zoom" aria-hidden="true">
-                                <x-site-icon name="expand" :size="18" />
-                            </span>
-                        </button>
+                                <span class="gallery-item__zoom" aria-hidden="true">
+                                    <x-site-icon name="expand" :size="18" />
+                                </span>
+                            </button>
 
-                        <figcaption>
-                            <span>{{ $item['caption'] }}</span>
-                            <small>Foto sementara</small>
-                        </figcaption>
-                    </figure>
-                @endforeach
+                            <figcaption>
+                                <span>{{ $item['caption'] }}</span>
+                                <small>Foto sementara</small>
+                            </figcaption>
+                        </figure>
+                    @endforeach
+                </div>
+
+                <div class="gallery-carousel__bar">
+                    <button class="gallery-carousel__button" type="button" data-gallery-prev aria-label="Slide sebelumnya">
+                        <x-site-icon name="arrow-left" :size="18" />
+                    </button>
+
+                    <div class="gallery-carousel__dots" data-gallery-dots></div>
+
+                    <button class="gallery-carousel__button" type="button" data-gallery-next aria-label="Slide berikutnya">
+                        <x-site-icon name="arrow-right" :size="18" />
+                    </button>
+                </div>
             </div>
         </div>
     </section>

@@ -44,4 +44,17 @@ class PublicPagesTest extends TestCase
             ->assertNotFound()
             ->assertSee('Halaman tidak ditemukan.');
     }
+
+    public function test_gallery_sections_render_the_carousel(): void
+    {
+        foreach (['/', '/galeri'] as $path) {
+            $this->get($path)
+                ->assertOk()
+                ->assertSee('data-gallery-carousel')
+                ->assertSee('data-gallery-track')
+                ->assertSee('data-gallery-prev')
+                ->assertSee('data-gallery-next')
+                ->assertSee('data-gallery-dots');
+        }
+    }
 }

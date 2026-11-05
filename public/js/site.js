@@ -130,6 +130,227 @@
         });
     }
 
+    // Galeri: carousel scroll-snap — slide otomatis ke samping tiap ±4 detik
+    // dan geser manual (swipe native di layar sentuh, drag mouse di desktop,
+    // tombol panah, serta titik indikator). Autoplay dijeda bila pengguna
+    // berinteraksi (dilanjutkan ±8 detik kemudian), saat hover, tab tersembunyi,
+    // lightbox pratinjau terbuka, atau carousel di luar layar. Total mati
+    // untuk preferensi prefers-reduced-motion — hanya navigasi manual.
+    document.querySelectorAll('[data-gallery-carousel]').forEach((root) => {
+        const track = root.querySelector('[data-gallery-track]');
+
+        if (!track || track.children.length < 2) {
+            return;
+        }
+
+        const items = Array.from(track.children);
+        const prevButton = root.querySelector('[data-gallery-prev]');
+        const nextButton = root.querySelector('[data-gallery-next]');
+        const dotsHost = root.querySelector('[data-gallery-dots]');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const autoplayDelay = Number(root.dataset.galleryInterval) || 4000;
+        const resumeDelay = 8000;
+        const lastIndex = items.length - 1;
+        let activeIndex = 0;
+        let lastInteraction = 0;
+        let inView = true;
+        let hovered = false;
+        let dragging = false;
+
+        // Offset tiap slide dihitung saat dibutuhkan agar tetap benar ketika
+        // jumlah kartu per layar berubah lewat media query (resize).
+        const slideOffsets = () => items.map((item) => item.offsetLeft - items[0].offsetLeft);
+
+        const nearestSlide = () => {
+            let best = 0;
+            let bestDistance = Infinity;
+
+            slideOffsets().forEach((offset, index) => {
+                const distance = Math.abs(offset - track.scrollLeft);
+
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    best = index;
+                }
+            });
+
+            return best;
+        };
+
+        const updateControls = () => {
+            if (prevButton) {
+                prevButton.disabled = activeIndex === 0;
+            }
+
+            if (nextButton) {
+                nextButton.disabled = activeIndex === lastIndex;
+            }
+
+            if (dotsHost) {
+                dotsHost.querySelectorAll('[data-gallery-dot]').forEach((dot, index) => {
+                    dot.classList.toggle('is-active', index === activeIndex);
+                });
+            }
+        };
+
+        const goTo = (target, smooth = true) => {
+            activeIndex = Math.max(0, Math.min(target, lastIndex));
+            track.scrollTo({
+                left: slideOffsets()[activeIndex],
+                behavior: smooth && !reducedMotion ? 'smooth' : 'auto',
+            });
+        };
+
+        const step = (direction) => {
+            if (direction > 0 && activeIndex === lastIndex) {
+                goTo(0, false); // putaran baru: kembali ke awal tanpa sapuan panjang
+            } else {
+                goTo(activeIndex + direction);
+            }
+        };
+
+        const stepWithHold = (direction) => {
+            lastInteraction = Date.now();
+            step(direction);
+        };
+
+        if (prevButton) {
+            prevButton.addEventListener('click', () => stepWithHold(-1));
+        }
+
+        if (nextButton) {
+            nextButton.addEventListener('click', () => stepWithHold(1));
+        }
+
+        if (dotsHost) {
+            items.forEach((_, index) => {
+                const dot = document.createElement('button');
+
+                dot.type = 'button';
+                dot.className = 'gallery-carousel__dot';
+                dot.dataset.galleryDot = '';
+                dot.setAttribute('aria-label', `Ke slide ${index + 1} dari ${items.length}`);
+                dot.addEventListener('click', () => {
+                    lastInteraction = Date.now();
+                    goTo(index);
+                });
+                dotsHost.appendChild(dot);
+            });
+        }
+
+        updateControls();
+
+        track.addEventListener('scroll', () => {
+            activeIndex = nearestSlide();
+            updateControls();
+        }, { passive: true });
+
+        track.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                stepWithHold(-1);
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                stepWithHold(1);
+            }
+        });
+
+        // Drag mouse di desktop: pointer hanya diambil setelah gerakan melewati
+        // ambang kecil, sehingga klik biasa tetap sampai ke tombol lightbox.
+        track.addEventListener('pointerdown', (event) => {
+            if (event.pointerType !== 'mouse' || event.button !== 0) {
+                return;
+            }
+
+            const startX = event.clientX;
+            const startLeft = track.scrollLeft;
+            let captured = false;
+            let moved = 0;
+            let ended = false;
+
+            lastInteraction = Date.now();
+
+            const onMove = (moveEvent) => {
+                moved = Math.abs(moveEvent.clientX - startX);
+
+                if (!captured && moved > 6) {
+                    captured = true;
+                    dragging = true;
+                    track.setPointerCapture(event.pointerId);
+                    track.style.scrollSnapType = 'none';
+                }
+
+                if (captured) {
+                    track.scrollLeft = startLeft - (moveEvent.clientX - startX);
+                    moveEvent.preventDefault();
+                }
+            };
+
+            const onEnd = () => {
+                if (ended) {
+                    return;
+                }
+
+                ended = true;
+                track.removeEventListener('pointermove', onMove);
+                lastInteraction = Date.now();
+
+                if (captured) {
+                    dragging = false;
+                    track.style.scrollSnapType = '';
+                    goTo(nearestSlide());
+                }
+
+                if (moved > 6) {
+                    // Tutup klik sisa drag agar lightbox tidak tiba-tiba terbuka.
+                    track.addEventListener('click', (clickEvent) => {
+                        clickEvent.preventDefault();
+                        clickEvent.stopPropagation();
+                    }, { capture: true, once: true });
+                }
+            };
+
+            track.addEventListener('pointermove', onMove);
+            track.addEventListener('pointerup', onEnd, { once: true });
+            track.addEventListener('pointercancel', onEnd, { once: true });
+        });
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                inView = entries[0].isIntersecting;
+            }).observe(root);
+        }
+
+        root.addEventListener('mouseenter', () => {
+            hovered = true;
+        });
+        root.addEventListener('mouseleave', () => {
+            hovered = false;
+        });
+        root.addEventListener('focusin', () => {
+            hovered = true;
+        });
+        root.addEventListener('focusout', () => {
+            hovered = false;
+        });
+
+        if (!reducedMotion) {
+            window.setInterval(() => {
+                const lightboxOpen = document.body.classList.contains('lightbox-open');
+
+                if (dragging || hovered || lightboxOpen || document.hidden || !inView) {
+                    return;
+                }
+
+                if (Date.now() - lastInteraction < resumeDelay) {
+                    return;
+                }
+
+                step(1);
+            }, autoplayDelay);
+        }
+    });
+
     const revealItems = document.querySelectorAll('[data-reveal]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
