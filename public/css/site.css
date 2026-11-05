@@ -804,6 +804,7 @@ h4 {
 
 .split__media {
     position: relative;
+    max-width: 480px;
     padding: 0 1.5rem 2.2rem 0;
 }
 
@@ -845,7 +846,7 @@ h4 {
     display: block;
     flex: 0 0 100%;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     user-select: none;
     -webkit-user-drag: none;
