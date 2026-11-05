@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\ManagementPeriod;
 use App\Models\User;
 use Database\Seeders\AdminUserSeeder;
 use Filament\Facades\Filament;
@@ -74,5 +75,54 @@ class AdminAccessTest extends TestCase
         $this->assertTrue(Hash::check('sandi-lama', $user->password));
         $this->assertNull($user->email_verified_at);
         $this->assertDatabaseCount('users', 1);
+    }
+
+    public function test_management_resource_page_renders_for_the_admin(): void
+    {
+        config([
+            'admin.email' => 'admin-uji@roudlot.test',
+            'admin.password' => 'sandi-uji-123',
+            'admin.name' => 'Admin Uji',
+        ]);
+
+        (new AdminUserSeeder)->run();
+        $admin = User::query()->where('email', 'admin-uji@roudlot.test')->firstOrFail();
+
+        $periode = ManagementPeriod::create([
+            'label' => 'Uji Kepengurusan 2025/2026',
+            'is_active' => true,
+            'urutan' => 1,
+        ]);
+
+        $periode->members()->create(['jabatan' => 'Pembina', 'nama' => 'Nama Anggota', 'urutan' => 1]);
+
+        // Halaman edit memuat Relation Manager anggota (lazy-load Livewire).
+        // Cukup pastikan halaman ter-render dan header datanya pas.
+        $this->actingAs($admin)
+            ->get("http://localhost/admin/kepengurusan/{$periode->id}/edit")
+            ->assertOk()
+            ->assertSee('Edit Periode Kepengurusan')
+            ->assertSee('Nama periode');
+
+        $this->actingAs($admin)
+            ->get('http://localhost/admin/kepengurusan')
+            ->assertOk()
+            ->assertSee('Uji Kepengurusan 2025/2026')
+            ->assertSee('Jumlah anggota');
+    }
+
+    public function test_management_resource_page_is_denied_for_non_admin_accounts(): void
+    {
+        config(['admin.email' => 'admin-uji@roudlot.test']);
+
+        $penyusup = User::create([
+            'name' => 'Bukan Admin',
+            'email' => 'bukan-admin@roudlot.test',
+            'password' => Hash::make('sandi-penyusup'),
+        ]);
+
+        $this->actingAs($penyusup)
+            ->get('http://localhost/admin/kepengurusan')
+            ->assertForbidden();
     }
 }

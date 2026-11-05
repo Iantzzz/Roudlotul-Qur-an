@@ -2,10 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\ManagementPeriod;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PublicPagesTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_public_pages_return_a_successful_response(): void
     {
         $paths = [
@@ -71,5 +75,42 @@ class PublicPagesTest extends TestCase
             ->assertSee('data-split-slider')
             ->assertSee('mosque-light.webp')
             ->assertSee('calligraphy-gold.webp');
+    }
+
+    public function test_profile_shows_management_placeholder_when_no_period_is_active(): void
+    {
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('Struktur Kepengurusan')
+            ->assertSee('Struktur belum dipublikasikan')
+            ->assertDontSee('management-grid');
+    }
+
+    public function test_profile_renders_only_the_active_period_and_its_members(): void
+    {
+        $active = ManagementPeriod::create([
+            'label' => '2025/2026',
+            'is_active' => true,
+            'urutan' => 1,
+        ]);
+
+        $active->members()->createMany([
+            ['jabatan' => 'Pembina', 'nama' => 'Nama Anggota Satu', 'urutan' => 1],
+            ['jabatan' => 'Ketua', 'nama' => 'Nama Anggota Dua', 'urutan' => 2],
+        ]);
+
+        ManagementPeriod::create([
+            'label' => '2024/2025',
+            'urutan' => 2,
+        ]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('Kepengurusan')
+            ->assertSee('2025/2026')
+            ->assertSee('Pembina')
+            ->assertSee('Nama Anggota Satu')
+            ->assertSee('Nama Anggota Dua')
+            ->assertDontSee('2024/2025');
     }
 }

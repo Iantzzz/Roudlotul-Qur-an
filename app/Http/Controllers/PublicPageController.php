@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ManagementPeriod;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -23,6 +24,7 @@ class PublicPageController extends Controller
     {
         return view('profil', [
             'values' => $this->profileValues(),
+            'kepengurusan' => ManagementPeriod::publicActive(),
         ]);
     }
 
@@ -199,7 +201,7 @@ class PublicPageController extends Controller
                 'number' => '01',
                 'icon' => 'quran',
                 'title' => "Kedekatan dengan Al-Qur'an",
-                'text' => "Tahfizh, setoran, dan murajaah menjadi bagian tak terpisahkan dari keseharian santri.",
+                'text' => 'Tahfizh, setoran, dan murajaah menjadi bagian tak terpisahkan dari keseharian santri.',
             ],
             [
                 'number' => '02',
@@ -370,7 +372,7 @@ class PublicPageController extends Controller
             [
                 'slug' => 'haflah-akhirussanah-2025',
                 'title' => "Haflah Akhirussanah Ribath Roudlotul Qur'an 2025",
-                'excerpt' => "Haflah akhirussanah menjadi apresiasi atas perjuangan belajar santri sepanjang tahun ajaran.",
+                'excerpt' => 'Haflah akhirussanah menjadi apresiasi atas perjuangan belajar santri sepanjang tahun ajaran.',
                 'body' => "Haflah Akhirussanah Ribath Roudlotul Qur'an 2025 telah berlangsung sebagai penutup tahun ajaran.\n\nHaflah menjadi momen apresiasi bagi santri atas perjuangan belajar, menghafal Al-Qur'an, dan membina akhlak sepanjang tahun, sekaligus silaturahmi keluarga besar ribath.\n\nDokumentasi aftermovie haflah tersedia di kanal YouTube resmi ribath.",
                 'category' => 'Kabar',
                 'date' => '2025',
@@ -380,7 +382,7 @@ class PublicPageController extends Controller
             [
                 'slug' => 'pelantikan-pengurus-ribath-roudlotul-quran-1',
                 'title' => "Pelantikan Pengurus Ribath Roudlotul Qur'an 1",
-                'excerpt' => "Pengurus baru dilantik untuk melanjutkan pelayanan pembinaan santri di ribath.",
+                'excerpt' => 'Pengurus baru dilantik untuk melanjutkan pelayanan pembinaan santri di ribath.',
                 'body' => "Pelantikan pengurus Ribath Roudlotul Qur'an 1 telah dilaksanakan untuk periode kepemimpinan yang baru.\n\nKepengurusan menjadi bagian penting dalam merawat keseharian santri, mulai dari pembinaan hafalan, kegiatan asrama, hingga penyelenggaraan berbagai acara tahunan.\n\nSemoga pengurus yang dilantik diberi kelancaran dalam mengabdi dan menjadi rahmat bagi seluruh warga ribath.",
                 'category' => 'Kabar',
                 'date' => '2025',

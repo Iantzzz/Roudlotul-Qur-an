@@ -18,6 +18,7 @@
                 <a href="#profil-singkat">Profil Singkat</a>
                 <a href="#sejarah">Sejarah</a>
                 <a href="#visi-misi">Visi &amp; Misi</a>
+                <a href="#kepengurusan">Kepengurusan</a>
                 <a href="#nilai">Nilai-nilai</a>
             </div>
         </div>
@@ -200,6 +201,44 @@
                     <x-temp-badge text="Misi belum tersedia" />
                 </article>
             </div>
+        </div>
+    </section>
+
+    <section class="section profile-section" id="kepengurusan">
+        <div class="container">
+            <div class="section-toolbar">
+                <x-section-heading
+                    eyebrow="Struktur Kepengurusan"
+                    title="Susunan pengurus yang bertugas saat ini."
+                    description="Struktur kepengurusan diperbarui tiap pergantian periode dan hanya diisi melalui panel admin; periode sebelumnya tetap tersimpan sebagai riwayat."
+                />
+            </div>
+
+            @if ($kepengurusan)
+                <p class="management-period">{{ $kepengurusan->label }}</p>
+
+                <div class="management-grid">
+                    @foreach ($kepengurusan->members as $member)
+                        <article class="management-card" data-reveal>
+                            <span class="management-card__role">{{ $member->jabatan }}</span>
+                            <p class="management-card__name">{{ $member->nama }}</p>
+                        </article>
+                    @endforeach
+                </div>
+            @else
+                <div class="profile-panel" data-reveal>
+                    <span class="profile-panel__icon" aria-hidden="true">
+                        <x-site-icon name="users" :size="24" />
+                    </span>
+
+                    <h3>Struktur Kepengurusan</h3>
+                    <p>
+                        Susunan pengurus akan diterbitkan setelah periode yang berjalan
+                        dipastikan oleh admin. Periode sebelumnya tetap tersimpan.
+                    </p>
+                    <x-temp-badge text="Struktur belum dipublikasikan" />
+                </div>
+            @endif
         </div>
     </section>
 
