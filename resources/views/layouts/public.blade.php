@@ -24,9 +24,9 @@
     <meta property="og:image" content="{{ asset('images/site/hero-arches.webp') }}">
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
-    <link rel="icon" href="{{ asset('favicon-32x32.png') }}" type="image/png" sizes="32x32">
-    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any">
+    <link rel="icon" href="{{ asset('favicon-32x32.png') }}?v=2" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}?v=2">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
