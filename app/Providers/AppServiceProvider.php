@@ -79,8 +79,37 @@ class AppServiceProvider extends ServiceProvider
         try {
             Artisan::call('migrate', ['--force' => true]);
             Log::warning('auto-restore: migrasi dijalankan di runtime (tabel inti tidak lengkap)');
+
+            return;
         } catch (Throwable $e) {
-            Log::error('auto-restore: gagal memperbaiki skema database runtime', ['error' => mb_substr((string) $e, 0, 400)]);
+            Log::error('auto-restore: migrasi via koneksi utama gagal', ['error' => mb_substr((string) $e, 0, 300)]);
+        }
+
+        // Neon menghadiri PgBouncer dalam mode transaction: satu statement DDL
+        // yang gagal membuat sisa transaksi terbuang ("In failed sql transaction").
+        // Ujicoba berikutnya berjangkat ke endpoint DIRECT tanpa pooler.
+        $rawUrl = (string) (getenv('DATABASE_URL') ?: '');
+        $parts = parse_url($rawUrl) ?: [];
+        $host = is_array($parts) ? ($parts['host'] ?? null) : null;
+
+        if (is_string($host) && str_contains($host, '-pooler')) {
+            $previousUrl = config('database.connections.pgsql.url');
+
+            config(['database.connections.pgsql.url' => str_replace('-pooler.', '.', $rawUrl)]);
+            DB::purge('pgsql');
+
+            try {
+                Artisan::call('migrate', ['--force' => true]);
+                Log::warning('auto-restore: migrasi berhasil via koneksi DIRECT (tanpa pooler)');
+            } catch (Throwable $e) {
+                Log::error('auto-restore: migrasi via DIRECT juga gagal', ['error' => mb_substr((string) $e, 0, 300)]);
+            } finally {
+                if ($previousUrl !== null) {
+                    config(['database.connections.pgsql.url' => $previousUrl]);
+                }
+
+                DB::purge('pgsql');
+            }
         }
     }
 }
