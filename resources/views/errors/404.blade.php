@@ -9,7 +9,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any">
     <link rel="icon" href="{{ asset('favicon-32x32.png') }}?v=2" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=5">
 </head>
 <body class="error-page">
     <main class="error-shell">

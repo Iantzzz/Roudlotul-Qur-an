@@ -846,6 +846,9 @@ h4 {
     display: block;
     flex: 0 0 100%;
     width: 100%;
+    /* Tinggi WAJIB auto: sifat presentasional height="..." pada <img>
+       membuat kotaknya tinggi 1300px dan mematikan aspect-ratio. */
+    height: auto;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     user-select: none;
