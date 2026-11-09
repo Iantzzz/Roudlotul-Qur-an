@@ -39,6 +39,7 @@ class SchemaVerifyCommand extends Command
             DB::select('SELECT 1');
         } catch (\Throwable $e) {
             $this->error('Koneksi database tidak dapat dibuat: '.mb_substr((string) $e->getMessage(), 0, 200));
+            $this->printBuildEnvHint($e);
 
             return self::FAILURE;
         }
@@ -95,6 +96,33 @@ class SchemaVerifyCommand extends Command
     private function add(string $name, bool $ok, ?string $note = null): void
     {
         $this->checks[] = ['name' => $name, 'ok' => $ok, 'note' => $note];
+    }
+
+    /**
+     * Saat koneksi gagal karena fase build tidak menerima env DB_* (ciri:
+     * driver jatuh ke sqlite default — tidak ada .env dan tidak ada
+     * DB_CONNECTION), tampilkan penanganan yang jelas: env DB_* perlu ditambahkan
+     * di Vercel dengan skop Build. Perintah tetap fail-closed (exit 1).
+     */
+    private function printBuildEnvHint(\Throwable $e): void
+    {
+        $default = (string) config('database.default');
+        $path = (string) (config("database.connections.{$default}.database") ?? '');
+
+        $looksLikeBuildWithoutEnv = $default === 'sqlite'
+            && ($path === '' || str_ends_with($path, 'database.sqlite'))
+            && ((string) env('DB_CONNECTION', '') === '')
+            && ((string) env('DB_DATABASE', '') === '');
+
+        if (! $looksLikeBuildWithoutEnv) {
+            return;
+        }
+
+        $this->newLine();
+        $this->warn('Fase build TIDAK menerima env DB_* sehingga Laravel jatuh ke driver sqlite default.');
+        $this->warn('Tambahkan DB_CONNECTION/DB_HOST/DB_PORT/DB_DATABASE/DB_USERNAME/DB_PASSWORD/DB_SSLMODE di');
+        $this->warn('dashboard Vercel (Settings → Environment Variables) dengan skop yang mencakup Build.');
+        $this->warn('Perintah ini tetap fail-closed: build berhenti sampai env tersedia dan skema siap.');
     }
 
     private function checkPendingMigrations(): void
