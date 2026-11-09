@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\ManagementPeriods\RelationManagers;
 
+use App\Models\ManagementUnit;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
@@ -15,8 +17,11 @@ use Filament\Tables\Table;
 
 /**
  * Kelola anggota satu periode langsung di dalam halaman periode.
- * Anggota tidak pernah dipakai ulang antarperiode, sehingga yang
- * diperlukan hanya Create/Edit/Delete tanpa asosiasi silang.
+ * Anggota tidak pernah dipakai ulang antarperiode. Setiap anggota
+ * dapat dipasangkan dengan wadah (unit) dari PERIODE YANG SAMA —
+ * kandidat wadah dibatasi pada periode pemilik halaman ini; pelanggaran
+ * lintas-periode ditolak lagi oleh hook model dan
+ * composite FK (PostgreSQL).
  */
 class MembersRelationManager extends RelationManager
 {
@@ -35,6 +40,26 @@ class MembersRelationManager extends RelationManager
                 TextInput::make('nama')
                     ->required()
                     ->maxLength(120),
+
+                Select::make('management_unit_id')
+                    ->label('Wadah (unit)')
+                    ->options(function (RelationManager $livewire): array {
+                        $periodId = (int) $livewire->ownerRecord->getKey();
+
+                        return ManagementUnit::query()
+                            ->where('management_period_id', $periodId)
+                            ->orderBy('urutan')
+                            ->orderBy('nama')
+                            ->get()
+                            ->mapWithKeys(fn (ManagementUnit $unit): array => [
+                                (string) $unit->getKey() => $unit->nama,
+                            ])
+                            ->all();
+                    })
+                    ->searchable()
+                    ->native(false)
+                    ->nullable()
+                    ->helperText('Wadah menentukan posisi anggota di bagan kepengurusan.'),
 
                 TextInput::make('urutan')
                     ->label('Urutan tampil')
@@ -64,6 +89,10 @@ class MembersRelationManager extends RelationManager
                 TextColumn::make('nama')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('unit.nama')
+                    ->label('Wadah')
+                    ->placeholder('Anggota Lain'),
             ])
             ->defaultSort('urutan')
             ->filters([

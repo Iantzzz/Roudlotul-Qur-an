@@ -57,8 +57,7 @@
         "vercel": [
             "@php artisan package:discover --ansi",
             "@php artisan filament:assets --ansi",
-            "@php artisan migrate --force || exit 0",
-            "@php artisan db:seed --class=AdminUserSeeder --force || exit 0"
+            "@php artisan schema:verify --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

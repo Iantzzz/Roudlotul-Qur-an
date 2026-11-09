@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <!-- Suite B: pengujian DATABASE-LEVEL PostgreSQL (composite FK,
+         cascade, trigger penjaga satu-periode) memakai branch test
+         Neon KHUSUS pengujian.
+
+         ATURAN PAKAI (interlock - WAJIB):
+         1. Kredensial TIDAK ditulis di file ini: isikan lewat env sesi
+            PowerShell sebelum memanggil PHPUnit (lihat dots), mis.:
+              $env:DB_HOST="rlq_test_xxx.exists.neon.tech"
+              $env:DB_PORT="5432"
+              $env:DB_DATABASE="rlq_test_2026_11"
+              $env:DB_USERNAME="tester"
+              $env:DB_PASSWORD="***"
+              $env:DB_GROUP_ENDPOINT="...pooler..." (opsional)
+         2. Nama database WAJIB berawalan "rlq_test_" (Neon branch test).
+            tests/Db/DbPgsqlTestCase menegakkan ini SEBELUM
+            RefreshDatabase dijalankan — bila tidak, run dihentikan.
+         3. JANGAN PERNAH memakai kredensial produksi untuk PHPUnit. -->
+    <testsuites>
+        <testsuite name="Db">
+            <directory>tests/Db</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>database/migrations</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_STORE" value="array"/>
+        <!-- Suite B: pgsql. Kredensial/host dari env sesi (tanpa `force`,
+             variabel yang sudah ada di sesi TIDAK ditimpa nilai default). -->
+        <env name="DB_CONNECTION" value="pgsql" force="true"/>
+        <env name="DB_HOST" value=""/>
+        <env name="DB_PORT" value="5432"/>
+        <env name="DB_DATABASE" value=""/>
+        <env name="DB_USERNAME" value=""/>
+        <env name="DB_PASSWORD" value=""/>
+        <env name="DB_URL" value=""/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="NIGHTWATCH_ENABLED" value="false"/>
+    </php>
+</phpunit>

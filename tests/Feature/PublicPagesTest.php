@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\ManagementPeriod;
+use App\Models\ManagementUnit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -83,7 +84,8 @@ class PublicPagesTest extends TestCase
             ->assertOk()
             ->assertSee('Struktur Kepengurusan')
             ->assertSee('Struktur belum dipublikasikan')
-            ->assertDontSee('management-grid');
+            ->assertDontSee('org-chart')
+            ->assertDontSee('org-period');
     }
 
     public function test_profile_renders_only_the_active_period_and_its_members(): void
@@ -104,13 +106,47 @@ class PublicPagesTest extends TestCase
             'urutan' => 2,
         ]);
 
+        // Periode aktif punya anggota tetapi belum punya unit pohon:
+        // seluruh anggota tampil pada satu wadah dinamis "Struktur {label}".
         $this->get('/profil')
             ->assertOk()
-            ->assertSee('Kepengurusan')
-            ->assertSee('2025/2026')
+            ->assertSee('org-chart')
+            ->assertSee('org-branch')
+            ->assertSee('Periode 2025/2026')
+            ->assertSee('Struktur 2025/2026')
             ->assertSee('Pembina')
             ->assertSee('Nama Anggota Satu')
             ->assertSee('Nama Anggota Dua')
-            ->assertDontSee('2024/2025');
+            ->assertDontSee('Periode 2024/2025');
+    }
+
+    public function test_profile_renders_saved_unit_tree_with_depth_classes(): void
+    {
+        $active = ManagementPeriod::create([
+            'label' => '2026/2027',
+            'is_active' => true,
+            'urutan' => 1,
+        ]);
+
+        $root = ManagementUnit::create([
+            'management_period_id' => (int) $active->getKey(),
+            'nama' => 'Pengasuh',
+            'urutan' => 1,
+        ]);
+
+        ManagementUnit::create([
+            'management_period_id' => (int) $active->getKey(),
+            'parent_id' => (int) $root->getKey(),
+            'nama' => 'Ketua Pembina',
+            'urutan' => 1,
+        ]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('org-chart')
+            ->assertSee('org-branch--depth-1', false)
+            ->assertSee('org-branch--depth-2', false)
+            ->assertSee('Pengasuh')
+            ->assertSee('Ketua Pembina');
     }
 }

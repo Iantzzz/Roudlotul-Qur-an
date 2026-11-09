@@ -35,15 +35,22 @@ class ManagementPeriod extends Model
         return $this->hasMany(ManagementMember::class)->orderBy('urutan')->orderBy('id');
     }
 
+    public function units(): HasMany
+    {
+        return $this->hasMany(ManagementUnit::class, 'management_period_id', 'id')
+            ->orderBy('urutan')
+            ->orderBy('id');
+    }
+
     /**
-     * Periode yang tampil di publik, siap dengan daftar anggotanya,
-     * atau null bila tidak ada yang ditandai aktif.
+     * Periode yang tampil di publik, siap dengan daftar anggota dan
+     * pohon unitnya, atau null bila tidak ada yang ditandai aktif.
      */
     public static function publicActive(): ?self
     {
         return static::query()
             ->where('is_active', true)
-            ->with('members')
+            ->with(['members', 'units.members'])
             ->orderBy('urutan')
             ->orderBy('id')
             ->first();

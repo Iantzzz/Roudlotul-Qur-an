@@ -215,15 +215,14 @@
             </div>
 
             @if ($kepengurusan)
-                <p class="management-period">{{ $kepengurusan->label }}</p>
+                <p class="org-period">Periode {{ $kepengurusan->label }}</p>
 
-                <div class="management-grid">
-                    @foreach ($kepengurusan->members as $member)
-                        <article class="management-card" data-reveal>
-                            <span class="management-card__role">{{ $member->jabatan }}</span>
-                            <p class="management-card__name">{{ $member->nama }}</p>
-                        </article>
-                    @endforeach
+                <div class="org-chart">
+                    @forelse ($struktur['roots'] ?? [] as $node)
+                        <x-management-node :node="$node" />
+                    @empty
+                        <p class="org-empty">Bagan belum diatur; admin menentukan struktur dari panel Filament.</p>
+                    @endforelse
                 </div>
             @else
                 <div class="profile-panel" data-reveal>

@@ -6,6 +6,7 @@ use App\Filament\Resources\ManagementPeriods\Pages\CreateManagementPeriod;
 use App\Filament\Resources\ManagementPeriods\Pages\EditManagementPeriod;
 use App\Filament\Resources\ManagementPeriods\Pages\ListManagementPeriods;
 use App\Filament\Resources\ManagementPeriods\RelationManagers\MembersRelationManager;
+use App\Filament\Resources\ManagementPeriods\RelationManagers\UnitsRelationManager;
 use App\Filament\Resources\ManagementPeriods\Schemas\ManagementPeriodForm;
 use App\Filament\Resources\ManagementPeriods\Tables\ManagementPeriodsTable;
 use App\Models\ManagementPeriod;
@@ -44,6 +45,7 @@ class ManagementPeriodResource extends Resource
     public static function getRelations(): array
     {
         return [
+            UnitsRelationManager::class,
             MembersRelationManager::class,
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ManagementPeriod;
+use App\Support\ManagementTree;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -22,9 +23,12 @@ class PublicPageController extends Controller
 
     public function profil(): View
     {
+        $kepengurusan = ManagementPeriod::publicActive();
+
         return view('profil', [
             'values' => $this->profileValues(),
-            'kepengurusan' => ManagementPeriod::publicActive(),
+            'kepengurusan' => $kepengurusan,
+            'struktur' => $kepengurusan !== null ? ManagementTree::build($kepengurusan) : null,
         ]);
     }
 
