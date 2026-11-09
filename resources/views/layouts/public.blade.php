@@ -36,7 +36,7 @@
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=8">
 
     <script>
         document.documentElement.classList.add('js');

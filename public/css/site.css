@@ -882,12 +882,16 @@ h4 {
 }
 
 .split-slider__dot {
+    /* Target sentuh >= 24px: areanya diregangkan lewat padding transparan,
+       aspek visual titik tetap kecil. */
+    box-sizing: content-box;
     width: 0.5rem;
     height: 0.5rem;
-    padding: 0;
+    padding: 0.5rem;
     border: 0;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.45);
+    background-clip: content-box;
     cursor: pointer;
     transition: background 200ms ease, width 200ms ease;
 }
@@ -895,6 +899,7 @@ h4 {
 .split-slider__dot.is-active {
     width: 1.35rem;
     background: var(--gold-400);
+    background-clip: content-box; /* shorthand di atas mereset clip; jaga area sentuh transparan */
 }
 
 .split-slider__dot:focus-visible {
@@ -1304,12 +1309,16 @@ h4 {
 }
 
 .gallery-carousel__dot {
+    /* Target sentuh >= 24px: areanya diregangkan lewat padding transparan,
+       aspek visual titik tetap kecil. */
+    box-sizing: content-box;
     width: 0.55rem;
     height: 0.55rem;
-    padding: 0;
+    padding: 0.5rem;
     border: 0;
     border-radius: 999px;
     background: rgba(13, 53, 37, 0.18);
+   background-clip: content-box;
     cursor: pointer;
     transition: background 200ms ease, width 200ms ease;
 }
@@ -1317,6 +1326,7 @@ h4 {
 .gallery-carousel__dot.is-active {
     width: 1.5rem;
     background: var(--gold-500);
+    background-clip: content-box; /* shorthand di atas mereset clip; jaga area sentuh transparan */
 }
 
 .gallery-carousel__dot:focus-visible {
@@ -2627,7 +2637,8 @@ a.social-link:hover {
     gap: 0.8rem;
     padding-block: 1.4rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.36);
+    /* rgba .50 = kontras 5,0:1 di atas var(--green-950); memenuhi WCAG AA untuk teks kecil */
+    color: rgba(255, 255, 255, 0.5);
     font-size: 0.65rem;
 }
 

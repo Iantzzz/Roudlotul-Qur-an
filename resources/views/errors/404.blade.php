@@ -9,11 +9,11 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any">
     <link rel="icon" href="{{ asset('favicon-32x32.png') }}?v=2" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=8">
 </head>
 <body class="error-page">
     <main class="error-shell">
-        <a class="brand" href="{{ route('home') }}" aria-label="{{ config('site.brand.name') }} — Beranda">
+        <a class="brand" href="{{ route('home') }}">
             <img
                 class="brand-logo"
                 src="{{ asset(config('site.brand.logo')) }}"

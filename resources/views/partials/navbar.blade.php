@@ -1,6 +1,6 @@
 <header class="site-header" data-header>
     <div class="container header-inner">
-        <a class="brand" href="{{ route('home') }}" aria-label="{{ config('site.brand.name') }} — Beranda">
+        <a class="brand" href="{{ route('home') }}">
             <img
                 class="brand-logo"
                 src="{{ asset(config('site.brand.logo')) }}"
