@@ -10,8 +10,6 @@
             class="hero__image"
             loading="eager"
             fetchpriority="high"
-            width="1600"
-            height="1000"
         />
 
         <div class="hero__overlay" aria-hidden="true"></div>

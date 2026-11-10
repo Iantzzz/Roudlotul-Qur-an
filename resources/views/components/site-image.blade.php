@@ -23,7 +23,9 @@
         @if ($fetchpriority !== 'auto') fetchpriority="{{ $fetchpriority }}" @endif
         @if ($imageWidth) width="{{ $imageWidth }}" @endif
         @if ($imageHeight) height="{{ $imageHeight }}" @endif
+        @if ($image['temporary'] ?? false)
         data-temporary-image="true"
+        @endif
         {{ $attributes->merge(['class' => 'site-image']) }}
     >
 @endif
