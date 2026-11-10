@@ -103,9 +103,12 @@ Halaman `/galeri` sudah menampilkan grid foto sementara dengan caption, hover, d
 
 Seluruh foto di bawah diunduh ke `public/images/site/` dan hanya untuk mengisi tampilan sementara. Semuanya berstatus **gambar sementara**, bukan dokumentasi resmi asrama.
 
+> Catatan: foto hero `hero-arches.webp` telah digantikan foto asli asrama
+> `IMG_20240406_050718.jpg` (900×1600, disalin dari dokumentasi yayasan), sehingga
+> tidak lagi masuk daftar sementara di bawah.
+
 | File | Fotografer | Sumber | Lisensi |
 |---|---|---|---|
-| `hero-arches.webp` | Mohammad O Siddiqui | https://unsplash.com/photos/inside-a-stunning-mosque-with-ornate-pillars-and-arches-4Kxsgs9J9D4 | Unsplash License |
 | `quran-open.webp` | Indra Projects | https://unsplash.com/photos/an-open-quran-with-prayer-beads-_ToMMa1MQ8U | Unsplash License |
 | `quran-detail.webp` | MATAQ Darul Ulum | https://unsplash.com/photos/a-close-up-of-an-open-book-with-arabic-writing-JSTOqD9_llo | Unsplash License |
 | `quran-manuscript.webp` | Hacı Elmas | https://unsplash.com/photos/an-open-book-with-arabic-writing-on-it-uyDdZgW3q-M | Unsplash License |

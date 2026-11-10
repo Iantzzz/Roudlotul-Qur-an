@@ -21,7 +21,7 @@
     <meta property="og:title" content="{{ $pageTitle }}">
     <meta property="og:description" content="{{ $pageDescription }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ asset('images/site/hero-arches.webp') }}">
+    <meta property="og:image" content="{{ asset('images/site/IMG_20240406_050718.jpg') }}">
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any">

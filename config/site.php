@@ -42,14 +42,11 @@ return [
     // FOTO SEMENTARA: seluruh gambar di bawah berasal dari Unsplash dan bukan foto resmi asrama.
     'images' => [
         'hero' => [
-            'path' => 'images/site/hero-arches.webp',
-            'alt' => 'Deretan lengkungan dan pilar masjid dengan ornamen emas',
-            'width' => 1600,
-            'height' => 1000,
-            'photographer' => 'Mohammad O Siddiqui',
-            'source' => 'https://unsplash.com/photos/inside-a-stunning-mosque-with-ornate-pillars-and-arches-4Kxsgs9J9D4',
-            'license' => 'Unsplash License',
-            'temporary' => true,
+            'path' => 'images/site/IMG_20240406_050718.jpg',
+            'alt' => "Gerbang masjid dan gedung asrama Roudlotul Qur'an pada senja hari",
+            'width' => 900,
+            'height' => 1600,
+            'temporary' => false,
         ],
         'quran_open' => [
             'path' => 'images/site/quran-open.webp',
