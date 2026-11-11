@@ -102,7 +102,7 @@ class ManagementCompositeFkDbTest extends DbPgsqlTestCase
         ]);
 
         // Hapus unit secara DB-level (ini yang ditegakkan FK).
-        DB::table('management_units')->whereKey($unit->getKey())->delete();
+        DB::table('management_units')->where('id', $unit->getKey())->delete();
 
         $this->assertDatabaseHas('management_members', [
             'id' => $member->getKey(),
@@ -111,7 +111,7 @@ class ManagementCompositeFkDbTest extends DbPgsqlTestCase
             'nama' => 'Sintetis Koord',
         ]);
 
-        $row = DB::table('management_members')->whereKey($member->getKey())->first();
+        $row = DB::table('management_members')->where('id', $member->getKey())->first();
 
         $this->assertNull($row->management_unit_id, 'Kolom management_unit_id harus SET NULL, bukan ikut terhapus.');
 
@@ -145,10 +145,10 @@ class ManagementCompositeFkDbTest extends DbPgsqlTestCase
             'urutan' => 1,
         ]);
 
-        DB::table('management_units')->whereKey($root->getKey())->delete();
+        DB::table('management_units')->where('id', $root->getKey())->delete();
 
-        $childRow = DB::table('management_units')->whereKey($child->getKey())->first();
-        $grandRow = DB::table('management_units')->whereKey($grandChild->getKey())->first();
+        $childRow = DB::table('management_units')->where('id', $child->getKey())->first();
+        $grandRow = DB::table('management_units')->where('id', $grandChild->getKey())->first();
 
         $this->assertNotNull($childRow, 'Unit anak harus selamat (SET NULL), tidak ikut terhapus.');
         $this->assertNull($childRow->parent_id, 'Anak langsung naik ke akar (parent_id NULL).');

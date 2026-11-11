@@ -31,6 +31,14 @@ abstract class DbPgsqlTestCase extends TestCase
 
     protected function setUp(): void
     {
+        // Bootstrap aplikasi + facade terlebih dahulu (TANPA memicu
+        // RefreshDatabase — itu dijalankan parent via setUpTraits setelah
+        // baris ini), sehingga interlock punya koneksi DB aktif yang
+        // bisa diverifikasi sebelum satu pun migrasi berjalan.
+        if (null === $this->app) {
+            $this->createApplication();
+        }
+
         // Interlock dijalankan SEBELUM apa pun dari parent —
         // termasuk RefreshDatabase yang dipicu setUpTraits().
         self::assertTestDatabaseInterlock();
@@ -47,7 +55,15 @@ abstract class DbPgsqlTestCase extends TestCase
     {
         self::assertTestDatabaseInterlock();
 
-        parent::refreshDatabase();
+        $this->beforeRefreshingDatabase();
+
+        if ($this->usingInMemoryDatabases()) {
+            $this->restoreInMemoryDatabase();
+        }
+
+        $this->refreshTestDatabase();
+
+        $this->afterRefreshingDatabase();
     }
 
     /**
