@@ -12,7 +12,7 @@
         title="Galeri Foto"
         eyebrow="Potret Suasana"
         description="Kumpulan foto sementara untuk menggambarkan suasana. Seluruh foto belum merupakan dokumentasi resmi asrama."
-        image="mosque_light"
+        image="galeri_hero"
     />
 
     <section class="section">

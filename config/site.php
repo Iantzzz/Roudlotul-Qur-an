@@ -135,6 +135,13 @@ return [
             'height' => 900,
             'temporary' => false,
         ],
+        'galeri_hero' => [
+            'path' => 'images/site/IMG_5152.jpg',
+            'alt' => 'Santri mengikuti doa bersama di asrama',
+            'width' => 1600,
+            'height' => 898,
+            'temporary' => false,
+        ],
         'books_row' => [
             'path' => 'images/site/books-row.webp',
             'alt' => 'Deretan buku lama berjilid rapi di rak',
