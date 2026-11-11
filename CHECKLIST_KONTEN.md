@@ -103,9 +103,10 @@ Halaman `/galeri` sudah menampilkan grid foto sementara dengan caption, hover, d
 
 Seluruh foto di bawah diunduh ke `public/images/site/` dan hanya untuk mengisi tampilan sementara. Semuanya berstatus **gambar sementara**, bukan dokumentasi resmi asrama.
 
-> Catatan: foto hero `hero-arches.webp` telah digantikan foto asli asrama
-> `IMG_20240406_050718.jpg` (900×1600, disalin dari dokumentasi yayasan), sehingga
-> tidak lagi masuk daftar sementara di bawah.
+> Catatan: dua foto hero kini foto asli asrama (dari dokumentasi yayasan) dan
+> tidak lagi masuk daftar sementara di bawah:
+> - `IMG_20240406_050718.jpg` — hero beranda, gerbang masjid & gedung asrama (900×1600)
+> - `IMG_20241017_052255.jpg` — hero halaman `/kegiatan`, kajian santri (1600×900)
 
 | File | Fotografer | Sumber | Lisensi |
 |---|---|---|---|

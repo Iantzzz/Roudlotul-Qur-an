@@ -128,6 +128,13 @@ return [
             'license' => 'Unsplash License',
             'temporary' => true,
         ],
+        'kegiatan_hero' => [
+            'path' => 'images/site/IMG_20241017_052255.jpg',
+            'alt' => "Santri duduk melingkar membaca mushaf Al-Qur'an saat kajian di asrama",
+            'width' => 1600,
+            'height' => 900,
+            'temporary' => false,
+        ],
         'books_row' => [
             'path' => 'images/site/books-row.webp',
             'alt' => 'Deretan buku lama berjilid rapi di rak',

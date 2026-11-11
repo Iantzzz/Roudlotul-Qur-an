@@ -8,7 +8,7 @@
         title="Program & Kegiatan"
         eyebrow="Kehidupan Asrama"
         description="Kegiatan rutin Ribath Roudlotul Qur'an 1 — dari tahfizh dan kajian hingga pembinaan karakter dan tradisi kebersamaan."
-        image="library"
+        image="kegiatan_hero"
     />
 
     <section class="section">
