@@ -106,7 +106,7 @@ Seluruh foto di bawah diunduh ke `public/images/site/` dan hanya untuk mengisi t
 > Catatan: dua foto hero kini foto asli asrama (dari dokumentasi yayasan) dan
 > tidak lagi masuk daftar sementara di bawah:
 > - `IMG_20240406_050718.jpg` — hero beranda, gerbang masjid & gedung asrama (900×1600)
-> - `IMG_20241017_052255.jpg` — hero halaman `/kegiatan`, kajian santri (1600×900)
+> - `IMG_5152.jpg` — hero halaman `/kegiatan`, santri berdoa bersama (1600×898)
 
 | File | Fotografer | Sumber | Lisensi |
 |---|---|---|---|

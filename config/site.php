@@ -129,10 +129,10 @@ return [
             'temporary' => true,
         ],
         'kegiatan_hero' => [
-            'path' => 'images/site/IMG_20241017_052255.jpg',
-            'alt' => "Santri duduk melingkar membaca mushaf Al-Qur'an saat kajian di asrama",
+            'path' => 'images/site/IMG_5152.jpg',
+            'alt' => 'Santri mengikuti doa bersama di asrama',
             'width' => 1600,
-            'height' => 900,
+            'height' => 898,
             'temporary' => false,
         ],
         'books_row' => [
