@@ -17,7 +17,17 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    // Koneksi default:
+    // 1) DB_CONNECTION eksplisit selalu menang (lokal = mysql, test = sqlite via
+    //    phpunit.xml).
+    // 2) Tanpa DB_CONNECTION, pilih driver mengikuti URL database yang ada
+    //    (build Vercel/Neon menyuntik DATABASE_URL tanpa DB_CONNECTION —
+    //    key "env" vercel.json hanya berlaku untuk runtime functions).
+    // 3) Tanpa URL sama sekali (fresh install), jatuh ke sqlite.
+    'default' => env(
+        'DB_CONNECTION',
+        (env('DB_URL') ?: env('DATABASE_URL') ?: env('POSTGRES_URL')) ? 'pgsql' : 'sqlite'
+    ),
 
     /*
     |--------------------------------------------------------------------------

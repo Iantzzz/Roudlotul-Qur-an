@@ -21,5 +21,11 @@
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
         "APP_ROUTES_CACHE": "/tmp/routes.php",
         "APP_SERVICES_CACHE": "/tmp/services.php"
+    },
+    "build": {
+        "env": {
+            "DB_CONNECTION": "pgsql",
+            "DB_SSLMODE": "require"
+        }
     }
 }
