@@ -420,28 +420,144 @@ class PublicPageController extends Controller
     {
         return [
             [
-                'image' => 'calligraphy_gold',
-                'caption' => 'Detail kaligrafi dan ornamen',
+                'image' => 'foto_1',
+                'caption' => 'Doa restu para asatidz',
             ],
             [
-                'image' => 'quran_detail',
-                'caption' => "Naskah Al-Qur'an dengan iluminasi",
+                'image' => 'foto_3',
+                'caption' => 'Salat berjamaah di masjid pesantren',
             ],
             [
-                'image' => 'courtyard',
-                'caption' => 'Suasana halaman bernuansa islami',
+                'image' => 'img_20240505_070755',
+                'caption' => 'Apel pagi di koridor asrama',
             ],
             [
-                'image' => 'library',
-                'caption' => 'Ruang baca dan koleksi kitab',
+                'image' => 'img_20240523_184853',
+                'caption' => 'Sholawat dan doa bersama',
             ],
             [
-                'image' => 'pattern_blue',
-                'caption' => 'Motif geometris pada dinding',
+                'image' => 'img_20240523_184915',
+                'caption' => 'Pembinaan kebersamaan di aula',
             ],
             [
-                'image' => 'mosque_light',
-                'caption' => 'Interior masjid dengan kaligrafi',
+                'image' => 'img_20240610_181356',
+                'caption' => 'Majelis kajian di aula',
+            ],
+            [
+                'image' => 'img_20240618_164445',
+                'caption' => "Belajar membaca Al-Qur'an",
+            ],
+            [
+                'image' => 'img_20240620_182642',
+                'caption' => 'Pengajian bersama di aula besar',
+            ],
+            [
+                'image' => 'img_20240621_204710',
+                'caption' => 'Belajar malam di ruang kelas',
+            ],
+            [
+                'image' => 'img_20240707_112042',
+                'caption' => 'Silaturahmi bersama wali santri',
+            ],
+            [
+                'image' => 'img_20240712_190401',
+                'caption' => 'Foto bersama di teras asrama',
+            ],
+            [
+                'image' => 'img_20241009_053832',
+                'caption' => 'Simak kitab bersama asatidz',
+            ],
+            [
+                'image' => 'img_20241009_065402',
+                'caption' => 'Makan bersama saat pembinaan',
+            ],
+            [
+                'image' => 'img_20241130_203337',
+                'caption' => 'Belajar kelompok di kelas',
+            ],
+            [
+                'image' => 'img_20260209_054845',
+                'caption' => 'Setoran dan murajaah kitab',
+            ],
+            [
+                'image' => 'img_20260209_070559',
+                'caption' => 'Apel pagi santri sekolah',
+            ],
+            [
+                'image' => 'img_20260212_070230',
+                'caption' => 'Barisan apel di masjid',
+            ],
+            [
+                'image' => 'img_20260212_070701',
+                'caption' => 'Hadiah bagi santri berprestasi',
+            ],
+            [
+                'image' => 'img_20260212_070752',
+                'caption' => 'Penghargaan di acara malam',
+            ],
+            [
+                'image' => 'img_20260214_193838',
+                'caption' => 'Ujian lisan bersama asatidz',
+            ],
+            [
+                'image' => 'img_20260214_194132',
+                'caption' => 'Pembacaan kitab di mimbar',
+            ],
+            [
+                'image' => 'img_20260217_202013',
+                'caption' => 'Panitia acara keagamaan',
+            ],
+            [
+                'image' => 'img_20260217_202029',
+                'caption' => 'Penyerahan brosur program',
+            ],
+            [
+                'image' => 'img_20260217_203858',
+                'caption' => 'Takzim dalam acara keagamaan',
+            ],
+            [
+                'image' => 'img_20260723_194642',
+                'caption' => 'Hadrah dan sholawat santri',
+            ],
+            [
+                'image' => 'img_20260724_202636',
+                'caption' => 'Kajian belajar di kelas',
+            ],
+            [
+                'image' => 'img_20260725_203052',
+                'caption' => 'Kajian kitab bersama ulama',
+            ],
+            [
+                'image' => 'img_20260725_203120',
+                'caption' => 'Kajian kitab di mushalla',
+            ],
+            [
+                'image' => 'img_20260808_055517',
+                'caption' => 'Belajar kitab malam hari',
+            ],
+            [
+                'image' => 'img_20260809_053909',
+                'caption' => 'Sorogan bersama asatidz',
+            ],
+            [
+                'image' => 'img_20260908_074754',
+                'caption' => 'Perlengkapan kegiatan santri',
+            ],
+            [
+                'image' => 'img_20260921_185806',
+                'caption' => 'Sambutan seminar ribath',
+            ],
+            [
+                'image' => 'img_20260921_190654',
+                'caption' => 'Seminar bersama dosen',
+            ],
+            [
+                'image' => 'img_20261014_094433',
+                'caption' => 'Pembacaan doa acara sekolah',
+            ],
+            [
+                'image' => 'img_20261019_051420',
+                'caption' => 'Membaca bersama santri',
             ],
         ];
     }

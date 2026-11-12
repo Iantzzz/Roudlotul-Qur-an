@@ -232,9 +232,8 @@
             <div class="section-toolbar">
                 <x-section-heading
                     eyebrow="Galeri"
-                    title="Potret suasana yang ingin kami hadirkan."
-                    description="Seluruh foto pada galeri ini adalah aset sementara dari Unsplash, bukan dokumentasi resmi asrama."
-                    :temporary="true"
+                    title="Potret keseharian santri di asrama."
+                    description="Seluruh foto merupakan dokumentasi asli kegiatan Ribath Roudlotul Qur'an 1."
                 />
 
                 <a class="btn btn-outline section-toolbar__action" href="{{ route('galeri') }}">
@@ -251,7 +250,7 @@
 
                             <figcaption>
                                 <span>{{ $item['caption'] }}</span>
-                                <small>Foto sementara</small>
+                                <small>Dokumentasi asrama</small>
                             </figcaption>
                         </figure>
                     @endforeach

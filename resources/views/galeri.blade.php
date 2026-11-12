@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', "Galeri Foto | Roudlotul Qur'an")
-@section('description', "Galeri foto sementara Roudlotul Qur'an dengan caption dan pratinjau lightbox. Foto resmi asrama akan ditambahkan kemudian.")
+@section('description', "Galeri foto dokumentasi Ribath Roudlotul Qur'an 1 — keseharian santri, tahfizh, kajian, dan kegiatan asrama.")
 
 @php
     $firstImage = config('site.images.' . $gallery[0]['image']);
@@ -11,7 +11,7 @@
     <x-page-hero
         title="Galeri Foto"
         eyebrow="Potret Suasana"
-        description="Kumpulan foto sementara untuk menggambarkan suasana. Seluruh foto belum merupakan dokumentasi resmi asrama."
+        description="Dokumentasi resmi keseharian santri: tahfizh, kajian, kegiatan, dan kebersamaan di asrama."
         image="galeri_hero"
     />
 
@@ -19,9 +19,8 @@
         <div class="container">
             <x-section-heading
                 eyebrow="Galeri"
-                title="Potret suasana yang ingin kami hadirkan."
-                description="Seluruh foto pada halaman ini adalah aset sementara dari Unsplash, bukan dokumentasi resmi asrama. Klik foto untuk melihat pratinjau."
-                :temporary="true"
+                title="Potret keseharian santri di asrama."
+                description="Seluruh foto merupakan dokumentasi asli kegiatan Ribath Roudlotul Qur'an 1. Klik foto untuk melihat pratinjau."
             />
 
             <div class="gallery-carousel" data-gallery-carousel aria-roledescription="carousel" aria-label="Galeri foto">
@@ -50,7 +49,7 @@
 
                             <figcaption>
                                 <span>{{ $item['caption'] }}</span>
-                                <small>Foto sementara</small>
+                                <small>Dokumentasi asrama</small>
                             </figcaption>
                         </figure>
                     @endforeach
@@ -84,7 +83,6 @@
         <div class="lightbox__bar">
             <div class="lightbox__meta">
                 <p class="lightbox__caption" id="lightbox-caption" data-lightbox-caption>{{ $gallery[0]['caption'] }}</p>
-                <x-temp-badge text="Foto sementara" />
             </div>
 
             <button class="lightbox__close" type="button" data-lightbox-close aria-label="Tutup pratinjau foto">

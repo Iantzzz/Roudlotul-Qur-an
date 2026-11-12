@@ -36,7 +36,7 @@
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=9">
 
     <script>
         document.documentElement.classList.add('js');
@@ -55,7 +55,7 @@
 
     @include('partials.footer')
 
-    <script src="{{ asset('js/site.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/site.js') }}?v=4" defer></script>
     @stack('scripts')
 </body>
 </html>

@@ -9,7 +9,7 @@
 
 @php
     $image = config("site.images.{$name}");
-    $imageAlt = $alt ?? ($image['alt'] ?? 'Foto sementara Roudlotul Qur’an');
+    $imageAlt = $alt ?? ($image['alt'] ?? "Dokumentasi Roudlotul Qur'an");
     $imageWidth = $width ?? ($image['width'] ?? null);
     $imageHeight = $height ?? ($image['height'] ?? null);
 @endphp

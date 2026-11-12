@@ -190,6 +190,14 @@
                 dotsHost.querySelectorAll('[data-gallery-dot]').forEach((dot, index) => {
                     dot.classList.toggle('is-active', index === activeIndex);
                 });
+
+                // Jaga titik aktif tetap terlihat saat jumlah foto banyak
+                // (wadah titik dapat digulir secara horizontal).
+                const activeDot = dotsHost.querySelector('[data-gallery-dot].is-active');
+
+                if (activeDot) {
+                    activeDot.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                }
             }
         };
 
