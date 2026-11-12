@@ -192,11 +192,26 @@
                 });
 
                 // Jaga titik aktif tetap terlihat saat jumlah foto banyak
-                // (wadah titik dapat digulir secara horizontal).
+                // (wadah titik dapat digulir secara horizontal). Gulir HANYA
+                // wadah titiknya — scrollIntoView tidak dipakai karena ikut
+                // menggulir halaman hingga galeri saat dibuka di layar HP.
                 const activeDot = dotsHost.querySelector('[data-gallery-dot].is-active');
 
-                if (activeDot) {
-                    activeDot.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                if (activeDot && dotsHost.scrollWidth > dotsHost.clientWidth) {
+                    const stripBox = dotsHost.getBoundingClientRect();
+                    const dotBox = activeDot.getBoundingClientRect();
+                    const fullyVisible = dotBox.left >= stripBox.left && dotBox.right <= stripBox.right;
+
+                    if (!fullyVisible) {
+                        const target = dotsHost.scrollLeft
+                            + (dotBox.left - stripBox.left)
+                            - (dotsHost.clientWidth - dotBox.width) / 2;
+
+                        dotsHost.scrollTo({
+                            left: Math.max(0, target),
+                            behavior: reducedMotion ? 'auto' : 'smooth',
+                        });
+                    }
                 }
             }
         };
