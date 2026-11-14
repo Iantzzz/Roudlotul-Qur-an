@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\ActivityGroup;
 use App\Models\GalleryItem;
 use App\Models\Greeting;
+use App\Models\SiteMedia;
 use App\Models\ManagementPeriod;
 use App\Models\ManagementUnit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -207,6 +208,65 @@ class PublicPagesTest extends TestCase
             ->assertOk()
             ->assertSee('<p>Paragraf satu uji.</p>', false)
             ->assertSee('<p>Paragraf dua uji.</p>', false);
+    }
+
+    public function test_deleting_content_releases_its_uploaded_media(): void
+    {
+        // Hapus record konten dengan unggahan: baris media ikut dirapikan
+        // (tidak tersisa yatim), sehingga route /media/{id} menjadi 404.
+        $media = SiteMedia::create([
+            'name' => 'uji-hapus.png',
+            'mime' => 'image/png',
+            'data' => base64_encode('biner-uji-hapus'),
+            'size' => 14,
+        ]);
+
+        $greeting = Greeting::create([
+            'name' => 'Pembina Hapus',
+            'role' => 'Pembina',
+            'body' => 'Sambutan uji hapus.',
+            'site_media_id' => (int) $media->getKey(),
+            'is_active' => true,
+        ]);
+
+        $this->get('/media/'.$media->getKey())->assertOk();
+
+        $greeting->delete();
+
+        $this->assertDatabaseMissing('site_media', ['id' => $media->getKey()]);
+        $this->get('/media/'.$media->getKey())->assertNotFound();
+    }
+
+    public function test_deleting_content_without_media_keeps_media_table_untouched(): void
+    {
+        $media = SiteMedia::create([
+            'name' => 'masih-dipakai.png',
+            'mime' => 'image/png',
+            'data' => base64_encode('biner-masih'),
+            'size' => 12,
+        ]);
+
+        $greeting = Greeting::create([
+            'name' => 'Pembina Tanpa Foto',
+            'role' => 'Pembina',
+            'body' => 'Tanpa foto.',
+            'site_media_id' => (int) $media->getKey(),
+            'is_active' => true,
+        ]);
+
+        Greeting::create([
+            'name' => 'Pembina Tanpa Media',
+            'role' => 'Pembina',
+            'body' => 'Tanpa media sama sekali.',
+            'is_active' => false,
+        ])->delete();
+
+        // Media tetap ada karena masih dirujuk sambutan pertama.
+        $this->assertDatabaseHas('site_media', ['id' => $media->getKey()]);
+
+        // Hapus yang masih merujuk: media pun terhapus.
+        $greeting->delete();
+        $this->assertDatabaseMissing('site_media', ['id' => $media->getKey()]);
     }
 
     public function test_activating_one_greeting_deactivates_the_other(): void

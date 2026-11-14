@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasSiteMediaImage;
+use App\Support\SiteMediaUploader;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Activity extends Model
 {
     use HasSiteMediaImage;
+
+    protected static function booted(): void
+    {
+        // Hapus kegiatan = lepas rujukan fotonya; rapikan media yatim.
+        static::deleted(function (self $activity): void {
+            SiteMediaUploader::deleteIfOrphan($activity->site_media_id);
+        });
+    }
 
     public function group(): BelongsTo
     {

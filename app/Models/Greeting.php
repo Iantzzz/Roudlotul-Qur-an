@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasSiteMediaImage;
+use App\Support\SiteMediaUploader;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +28,12 @@ class Greeting extends Model
                 ->whereKeyNot($greeting->getKey())
                 ->where('is_active', true)
                 ->update(['is_active' => false]));
+        });
+
+        // Menghapus sambutan melepas satu-satunya rujukan fotonya;
+        // rapikan baris media agar tidak menumpuk sebagai yatim.
+        static::deleted(function (self $greeting): void {
+            SiteMediaUploader::deleteIfOrphan($greeting->site_media_id);
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasSiteMediaImage;
+use App\Support\SiteMediaUploader;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,4 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 class GalleryItem extends Model
 {
     use HasSiteMediaImage;
+
+    protected static function booted(): void
+    {
+        // Hapus foto galeri = lepas rujukan fotonya; rapikan media yatim.
+        static::deleted(function (self $item): void {
+            SiteMediaUploader::deleteIfOrphan($item->site_media_id);
+        });
+    }
 }
