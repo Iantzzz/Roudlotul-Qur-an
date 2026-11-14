@@ -28,8 +28,14 @@
     </nav>
 
     @php
+        // Paragraf dipisah baris kosong; bila tidak ada baris kosong,
+        // setiap baris baru tetap dianggap batas paragraf.
+        $greetingRawBody = $greeting ? (string) $greeting->body : '';
+        $greetingHasBlankLine = (bool) preg_match('/(\r\n|\r|\n)\s*(\r\n|\r|\n)/', $greetingRawBody);
         $greetingParagraphs = $greeting
-            ? collect(preg_split('/\r\n|\r/', (string) $greeting->body))
+            ? collect($greetingHasBlankLine
+                ? preg_split('/(\r\n|\r|\n)\s*(\r\n|\r|\n)/', $greetingRawBody)
+                : preg_split('/\r\n|\r|\n/', $greetingRawBody))
                 ->map(fn (string $paragraph): string => trim($paragraph))
                 ->filter()
                 ->values()

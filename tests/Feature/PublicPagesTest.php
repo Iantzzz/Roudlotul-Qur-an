@@ -192,6 +192,23 @@ class PublicPagesTest extends TestCase
             ->assertSee('href="#sambutan"', false);
     }
 
+    public function test_sambutan_body_splits_paragraphs_on_lf_only_input(): void
+    {
+        // Textarea browser menyimpan baris baru sebagai LF murni; blank line
+        // dan baris tunggal sama-sama menghasilkan paragraf terpisah.
+        Greeting::create([
+            'name' => 'KH. Pembina Uji',
+            'role' => 'Pembina Asrama',
+            'body' => "Paragraf satu uji.\n\nParagraf dua uji.",
+            'is_active' => true,
+        ]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('<p>Paragraf satu uji.</p>', false)
+            ->assertSee('<p>Paragraf dua uji.</p>', false);
+    }
+
     public function test_activating_one_greeting_deactivates_the_other(): void
     {
         $first = Greeting::create([
