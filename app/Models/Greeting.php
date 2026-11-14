@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasSiteMediaImage;
 use App\Support\SiteMediaUploader;
+use App\Support\YouTube;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,8 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  * Sambutan pembina untuk halaman Profil. Tanpa sambutan bertanda aktif,
  * section sambutan otomatis tersembunyi di halaman publik. Persis satu
  * sambutan bertanda aktif — mengaktifkan satu menonaktifkan yang lain.
+ * Tautan video opsional dirender sebagai embed YouTube di bawah foto.
  */
-#[Fillable(['name', 'role', 'body', 'site_media_id', 'is_active'])]
+#[Fillable(['name', 'role', 'body', 'site_media_id', 'video_url', 'is_active'])]
 class Greeting extends Model
 {
     use HasSiteMediaImage;
@@ -43,5 +45,14 @@ class Greeting extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * URL embed YouTube untuk tampilan publik; null bila tautan kosong
+     * atau bukan tautan YouTube yang dikenali (halaman tanpa video).
+     */
+    public function getVideoEmbedUrlAttribute(): ?string
+    {
+        return YouTube::embedUrl($this->video_url);
     }
 }

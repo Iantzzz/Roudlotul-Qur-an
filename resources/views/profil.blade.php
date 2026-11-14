@@ -61,6 +61,20 @@
                             </div>
                         @endif
                     </div>
+
+                    @if ($greeting->video_embed_url)
+                        <div class="greeting__video">
+                            <iframe
+                                class="greeting__video-frame"
+                                src="{{ $greeting->video_embed_url }}"
+                                title="Video sambutan {{ $greeting->name }}"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen
+                            ></iframe>
+                        </div>
+                    @endif
                 </div>
 
                 <div class="split__content" data-reveal>

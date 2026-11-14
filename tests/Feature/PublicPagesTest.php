@@ -210,6 +210,64 @@ class PublicPagesTest extends TestCase
             ->assertSee('<p>Paragraf dua uji.</p>', false);
     }
 
+    public function test_sambutan_video_embed_supports_common_youtube_link_formats(): void
+    {
+        // Semua bentuk tautan yang mungkin ditempel admin menghasilkan embed sama.
+        $links = [
+            'https://youtu.be/ynJVEJJ38kw?si=wyf-RIx1WQ4anGN2',
+            'https://www.youtube.com/watch?v=ynJVEJJ38kw&list=PLabc123',
+            'https://youtube.com/shorts/ynJVEJJ38kw?feature=share',
+            'https://www.youtube.com/embed/ynJVEJJ38kw',
+            'https://www.youtube.com/live/ynJVEJJ38kw',
+            'youtu.be/ynJVEJJ38kw',
+            'ynJVEJJ38kw',
+        ];
+
+        foreach ($links as $link) {
+            $greeting = new Greeting(['video_url' => $link]);
+
+            $this->assertSame(
+                'https://www.youtube-nocookie.com/embed/ynJVEJJ38kw',
+                $greeting->video_embed_url,
+                "Format tautan gagal diparse: {$link}"
+            );
+        }
+    }
+
+    public function test_sambutan_video_renders_only_for_recognized_links(): void
+    {
+        $greeting = Greeting::create([
+            'name' => 'KH. Pembina Video',
+            'role' => 'Pembina Asrama',
+            'body' => 'Sambutan dengan video uji.',
+            'video_url' => 'https://youtu.be/ynJVEJJ38kw?si=wyf-RIx1WQ4anGN2',
+            'is_active' => true,
+        ]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('youtube-nocookie.com/embed/ynJVEJJ38kw', false)
+            ->assertSee('allowfullscreen', false)
+            ->assertSee('Video sambutan KH. Pembina Video', false);
+
+        // Tautan di luar YouTube tidak merender blok video apa pun.
+        $greeting->update(['video_url' => 'https://example.com/video-asing']);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('Sambutan dengan video uji.')
+            ->assertDontSee('youtube-nocookie', false)
+            ->assertDontSee('greeting__video', false);
+
+        // Kosong: section tetap tampil, tanpa blok video.
+        $greeting->update(['video_url' => null]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('Sambutan dengan video uji.')
+            ->assertDontSee('greeting__video', false);
+    }
+
     public function test_deleting_content_releases_its_uploaded_media(): void
     {
         // Hapus record konten dengan unggahan: baris media ikut dirapikan

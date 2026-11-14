@@ -2717,6 +2717,23 @@ a.social-link:hover {
     font-size: 0.92rem;
 }
 
+/* Video sambutan pembina: blok 16:9 di bawah foto pada kolom media. */
+.greeting__video {
+    margin-top: 1.2rem;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 9;
+    background:
+        linear-gradient(160deg, var(--green-900) 0%, var(--green-950) 100%);
+}
+
+.greeting__video-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 /* ==========================================================================
    19. Animasi saat halaman digulir
    ========================================================================== */

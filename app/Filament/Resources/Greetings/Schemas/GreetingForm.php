@@ -42,6 +42,13 @@ class GreetingForm
                     ->helperText('Foto maksimal 3 MB dan disimpan di database situs agar tahan deploymen. Biarkan kosong bila tidak memakai foto.')
                     ->columnSpanFull(),
 
+                TextInput::make('video_url')
+                    ->label('Tautan video (opsional)')
+                    ->placeholder('https://youtu.be/xxxxxxxxxxx')
+                    ->maxLength(500)
+                    ->helperText('Tempel tautan YouTube pembina (youtu.be, watch?v=, shorts, atau embed); video tampil di bawah foto. Kosongkan bila tidak memakai video.')
+                    ->columnSpanFull(),
+
                 Toggle::make('is_active')
                     ->label('Tampilkan di halaman Profil')
                     ->helperText('Hanya satu sambutan yang tampil; mengaktifkan ini otomatis menonaktifkan sambutan lain. Tanpa sambutan aktif, section Sambutan tersembunyi dari publik.')
