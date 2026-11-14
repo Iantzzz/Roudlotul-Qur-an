@@ -47,6 +47,18 @@ return [
             'report' => false,
         ],
 
+        /**
+         * Disk khusus unggahan sementara Livewire/Filament. Root mengikuti
+         * env LIVEWIRE_TMP_ROOT agar dapat diarahkan ke /tmp di Vercel
+         * (filesystem aplikasi read-only saat runtime).
+         */
+        'livewire-tmp' => [
+            'driver' => 'local',
+            'root' => env('LIVEWIRE_TMP_ROOT', storage_path('app/private/livewire-tmp')),
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
