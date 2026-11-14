@@ -15,6 +15,9 @@
         <div class="container page-anchor-nav__inner">
             <span class="page-anchor-nav__label">Bagian</span>
             <div class="page-anchor-nav__links">
+                @if ($greeting)
+                    <a href="#sambutan">Sambutan</a>
+                @endif
                 <a href="#profil-singkat">Profil Singkat</a>
                 <a href="#sejarah">Sejarah</a>
                 <a href="#visi-misi">Visi &amp; Misi</a>
@@ -23,6 +26,57 @@
             </div>
         </div>
     </nav>
+
+    @php
+        $greetingParagraphs = $greeting
+            ? collect(preg_split('/\r\n|\r/', (string) $greeting->body))
+                ->map(fn (string $paragraph): string => trim($paragraph))
+                ->filter()
+                ->values()
+            : collect();
+    @endphp
+
+    @if ($greeting)
+        <section class="section section--cream profile-section" id="sambutan">
+            <div class="container split split--profile">
+                <div class="split__media" data-reveal>
+                    <div class="media-frame greeting__frame">
+                        @if ($greeting->site_media_id)
+                            <img
+                                class="greeting__photo"
+                                src="{{ route('media.show', $greeting->site_media_id) }}"
+                                alt="Foto {{ $greeting->name }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        @else
+                            <div class="greeting__photo greeting__photo--placeholder" aria-hidden="true">
+                                <x-site-icon name="quote" :size="36" />
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="split__content" data-reveal>
+                    <x-section-heading
+                        eyebrow="Sambutan"
+                        title="Pesan pembina untuk santri."
+                    />
+
+                    <blockquote class="greeting__quote">
+                        @foreach ($greetingParagraphs as $paragraph)
+                            <p>{{ $paragraph }}</p>
+                        @endforeach
+                    </blockquote>
+
+                    <footer class="greeting__identity">
+                        <strong>{{ $greeting->name }}</strong>
+                        <span>{{ $greeting->role }}</span>
+                    </footer>
+                </div>
+            </div>
+        </section>
+    @endif
 
     <section class="section profile-section" id="profil-singkat">
         <div class="container split split--profile">

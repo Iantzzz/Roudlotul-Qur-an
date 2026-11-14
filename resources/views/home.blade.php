@@ -243,10 +243,21 @@
             </div>
 
             <div class="gallery-carousel" data-gallery-carousel aria-roledescription="carousel" aria-label="Galeri foto">
+                @if (count($gallery))
                 <div class="gallery-track" data-gallery-track tabindex="0" aria-label="Daftar foto — geser ke samping atau gunakan tombol panah">
                     @foreach ($gallery as $item)
                         <figure class="gallery-item" data-reveal>
-                            <x-site-image :name="$item['image']" class="gallery-item__image" />
+                            @if (! empty($item['media_id']))
+                                <img
+                                    class="gallery-item__image site-image"
+                                    src="{{ route('media.show', $item['media_id']) }}"
+                                    alt="{{ $item['caption'] }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            @else
+                                <x-site-image :name="$item['image']" class="gallery-item__image" />
+                            @endif
 
                             <figcaption>
                                 <span>{{ $item['caption'] }}</span>
@@ -267,6 +278,7 @@
                         <x-site-icon name="arrow-right" :size="18" />
                     </button>
                 </div>
+                @endif
             </div>
         </div>
     </section>

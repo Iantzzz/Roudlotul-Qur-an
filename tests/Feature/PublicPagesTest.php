@@ -2,6 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Activity;
+use App\Models\ActivityGroup;
+use App\Models\GalleryItem;
+use App\Models\Greeting;
 use App\Models\ManagementPeriod;
 use App\Models\ManagementUnit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,6 +56,14 @@ class PublicPagesTest extends TestCase
 
     public function test_gallery_sections_render_the_carousel(): void
     {
+        // Galeri kini DB-backed: minimal satu butir agar carousel dan
+        // lightbox dirender (database test mulai dari kosong).
+        GalleryItem::create([
+            'caption' => 'Foto uji galeri',
+            'image_key' => 'quran_open',
+            'sort' => 1,
+        ]);
+
         foreach (['/', '/galeri'] as $path) {
             $this->get($path)
                 ->assertOk()
@@ -148,5 +160,88 @@ class PublicPagesTest extends TestCase
             ->assertSee('org-branch--depth-2', false)
             ->assertSee('Pengasuh')
             ->assertSee('Ketua Pembina');
+    }
+
+    public function test_sambutan_section_only_renders_for_active_greeting(): void
+    {
+        // Tanpa sambutan: section tersembunyi (termasuk dari navigasi anchor).
+        $this->get('/profil')
+            ->assertOk()
+            ->assertDontSee('id="sambutan"', false)
+            ->assertDontSee('href="#sambutan"', false);
+
+        // Sambutan non-aktif tetap tersembunyi.
+        $inactive = Greeting::create([
+            'name' => 'KH. Pembina Uji',
+            'role' => 'Pembina Asrama',
+            'body' => 'Salam santri uji.',
+            'is_active' => false,
+        ]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertDontSee('Salam santri uji.');
+
+        // Mengaktifkan sambutan: section tampil dengan isinya.
+        $inactive->update(['is_active' => true]);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('Salam santri uji.')
+            ->assertSee('KH. Pembina Uji')
+            ->assertSee('href="#sambutan"', false);
+    }
+
+    public function test_activating_one_greeting_deactivates_the_other(): void
+    {
+        $first = Greeting::create([
+            'name' => 'Pertama',
+            'role' => 'Pembina',
+            'body' => 'Sambutan pertama.',
+            'is_active' => true,
+        ]);
+
+        $second = Greeting::create([
+            'name' => 'Kedua',
+            'role' => 'Pembina',
+            'body' => 'Sambutan kedua.',
+            'is_active' => true,
+        ]);
+
+        $this->assertTrue((bool) $second->fresh()->is_active);
+        $this->assertFalse((bool) $first->fresh()->is_active);
+    }
+
+    public function test_kegiatan_and_home_render_db_backed_content(): void
+    {
+        $group = ActivityGroup::create([
+            'title' => 'Kelompok Uji',
+            'description' => 'Kelompok untuk pengujian.',
+            'sort' => 9,
+        ]);
+
+        $group->activities()->create([
+            'label' => 'Uji kelompok',
+            'title' => 'Kegiatan Uji Kelompok',
+            'text' => 'Teks uji kegiatan kelompok.',
+            'image_key' => 'library',
+            'sort' => 1,
+        ]);
+
+        Activity::create([
+            'label' => 'Kartu uji',
+            'title' => 'Kegiatan Kartu Beranda',
+            'text' => 'Teks uji kartu beranda.',
+            'image_key' => 'courtyard',
+            'is_featured' => true,
+            'sort' => 9,
+        ]);
+
+        $this->get('/')->assertOk()->assertSee('Kegiatan Kartu Beranda');
+
+        $this->get('/kegiatan')
+            ->assertOk()
+            ->assertSee('Kelompok Uji')
+            ->assertSee('Kegiatan Uji Kelompok');
     }
 }

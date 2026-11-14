@@ -5,7 +5,18 @@
 
 <article class="activity-card">
     <div class="activity-card__media">
-        <x-site-image :name="$activity['image']" class="activity-card__image" />
+        @if (! empty($activity['media_id']))
+            <img
+                class="activity-card__image site-image"
+                src="{{ route('media.show', $activity['media_id']) }}"
+                alt="{{ $activity['title'] }}"
+                loading="lazy"
+                decoding="async"
+            >
+        @else
+            <x-site-image :name="$activity['image']" class="activity-card__image" />
+        @endif
+
         <span class="activity-card__number" aria-hidden="true">{{ $activity['number'] }}</span>
     </div>
 

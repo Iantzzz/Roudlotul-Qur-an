@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/media/{media}', [MediaController::class, 'show'])->name('media.show');
 
 Route::controller(PublicPageController::class)->group(function () {
     Route::get('/', 'home')->name('home');
