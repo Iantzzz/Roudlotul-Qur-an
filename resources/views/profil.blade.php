@@ -8,7 +8,7 @@
         title="Profil Asrama"
         eyebrow="Mengenal Kami"
         description="Ribath Roudlotul Qur'an 1 — asrama pendidikan Al-Qur'an di lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Jombang."
-        image="calligraphy_gold"
+        image="profil_hero"
     />
 
     <nav class="page-anchor-nav" aria-label="Bagian halaman profil">

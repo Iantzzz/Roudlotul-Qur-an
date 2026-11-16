@@ -142,6 +142,13 @@ return [
             'height' => 898,
             'temporary' => false,
         ],
+        'profil_hero' => [
+            'path' => 'images/site/img-20240526-173717.webp',
+            'alt' => "Koridor antarbangunan asrama Roudlotul Qur'an pada malam hari dengan langit senja magenta",
+            'width' => 900,
+            'height' => 1600,
+            'temporary' => false,
+        ],
         'books_row' => [
             'path' => 'images/site/books-row.webp',
             'alt' => 'Deretan buku lama berjilid rapi di rak',
