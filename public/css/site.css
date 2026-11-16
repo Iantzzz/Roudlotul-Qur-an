@@ -1745,12 +1745,17 @@ h4 {
 }
 
 .org-chart {
+    /* Wadah tingkat akar sejajar (kolom di desktop, tumpuk di HP).
+       align-items:start membuat tinggi tiap kartu mengikuti isinya. */
     display: grid;
-    gap: clamp(1.05rem, 2.2vw, 1.6rem);
-    max-width: 960px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    align-items: start;
+    gap: clamp(1.05rem, 2.2vw, 1.5rem);
+    max-width: 1080px;
 }
 
 .org-branch {
+    position: relative;
     padding: clamp(1.15rem, 2.4vw, 1.6rem) clamp(1.15rem, 2.4vw, 1.7rem) clamp(1.3rem, 2.5vw, 1.8rem);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
@@ -1781,14 +1786,35 @@ h4 {
     font-size: 0.86rem;
 }
 
+/* Baris anggota berbentuk chip lembut: titik emas + jabatan kecil
+   + nama display. Divider garis lama diganti latar krem membulat. */
 .org-member {
-    margin-top: 0.85rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid var(--line);
+    position: relative;
+    margin-top: 0.75rem;
+    padding: 0.72rem 0.9rem 0.8rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--cream-50);
+    transition: border-color var(--transition);
+}
+
+.org-member:hover {
+    border-color: var(--line-gold);
+}
+
+.org-member::before {
+    content: "";
+    position: absolute;
+    top: 1.02rem;
+    left: 0.62rem;
+    width: 0.32rem;
+    height: 0.32rem;
+    border-radius: 999px;
+    background: var(--gold-400);
 }
 
 .org-member:first-of-type {
-    margin-top: 1.05rem;
+    margin-top: 1rem;
 }
 
 .org-member__role {
@@ -1808,19 +1834,45 @@ h4 {
     line-height: 1.3;
 }
 
-/* Tingkat anak: wadah bertingkat dengan garis penghubung emas tipis —
-   garis HANYA melukiskan hubungan parent-child yang benar-benar tersimpan. */
+/* Tingkat anak: kartu krem lembut tersambung garis emas dengan titik
+   penghubung di setiap cabang — garis HANYA melukiskan hubungan
+   parent-child yang benar-benar tersimpan. */
 .org-children {
     display: grid;
-    gap: 0.9rem;
+    gap: 0.8rem;
     margin-top: 1.15rem;
-    padding-left: clamp(0.85rem, 2vw, 1.25rem);
+    padding-left: clamp(0.9rem, 2vw, 1.2rem);
     border-left: 2px solid var(--line-gold);
 }
 
-/* Wadah tingkat akar: penekanan paling kuat. */
+/* Titik emas pada garis penghubung, tepat di sisi tiap kartu anak. */
+.org-children > .org-branch::before {
+    content: "";
+    position: absolute;
+    top: 1.45rem;
+    left: calc(-1 * clamp(0.9rem, 2vw, 1.2rem) - 6px);
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--gold-400);
+}
+
+/* Wadah tingkat akar: penekanan paling kuat + aksen emas di atas. */
 .org-branch--depth-1 {
+    border-top: 3px solid var(--gold-400);
     box-shadow: var(--shadow-md);
+}
+
+/* Kartu anak berlatar krem agar tersarang terlihat jelas namun lembut;
+   chip anggota di dalamnya kembali putih supaya kontras. */
+.org-branch--depth-2,
+.org-branch--depth-3,
+.org-branch--depth-4,
+.org-branch--depth-5,
+.org-branch--depth-6 {
+    padding-block: clamp(0.9rem, 2vw, 1.2rem);
+    background: var(--cream-50);
+    box-shadow: none;
 }
 
 .org-branch--depth-2 .org-branch__nama { font-size: 1.18rem; }
@@ -1829,12 +1881,12 @@ h4 {
 .org-branch--depth-5 .org-branch__nama,
 .org-branch--depth-6 .org-branch__nama { font-size: 1.03rem; }
 
-.org-branch--depth-2,
-.org-branch--depth-3,
-.org-branch--depth-4,
-.org-branch--depth-5,
-.org-branch--depth-6 {
-    padding-block: clamp(0.9rem, 2vw, 1.2rem);
+.org-branch--depth-2 .org-member,
+.org-branch--depth-3 .org-member,
+.org-branch--depth-4 .org-member,
+.org-branch--depth-5 .org-member,
+.org-branch--depth-6 .org-member {
+    background: var(--white);
 }
 
 .org-branch--fallback {
@@ -1863,6 +1915,7 @@ h4 {
 
 @media (max-width: 720px) {
     .org-chart {
+        grid-template-columns: 1fr;
         max-width: none;
     }
 
@@ -1871,6 +1924,13 @@ h4 {
         border-top: 2px solid var(--line-gold);
         padding-left: 0;
         padding-top: 0.95rem;
+    }
+
+    /* Di ponsel garis penghubung jadi horizontal; titik emas pindah
+       ke atas kartu anak, menempel pada garis tersebut. */
+    .org-children > .org-branch::before {
+        left: 1.2rem;
+        top: calc(-0.95rem - 5px);
     }
 
     .org-member__nama {
