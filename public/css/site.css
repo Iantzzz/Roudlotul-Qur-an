@@ -1541,6 +1541,21 @@ h4 {
         linear-gradient(0deg, rgba(5, 29, 19, 0.8), rgba(5, 29, 19, 0) 65%);
 }
 
+/* Hero profil: foto koridor asrama malam hari. Framing diangkat agar
+   perspektif koridor dan langit senja magenta ikut terlihat; overlay
+   sisi kanan dilegakan khusus di desktop karena teks hanya berada di kiri. */
+.page-hero--profil .page-hero__image {
+    object-position: center 35%;
+}
+
+@media (min-width: 721px) {
+    .page-hero--profil .page-hero__overlay {
+        background:
+            linear-gradient(90deg, rgba(5, 29, 19, 0.94), rgba(7, 37, 25, 0.3)),
+            linear-gradient(0deg, rgba(5, 29, 19, 0.8), rgba(5, 29, 19, 0) 65%);
+    }
+}
+
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;

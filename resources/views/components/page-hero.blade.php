@@ -7,7 +7,7 @@
     'parentRoute' => null,
 ])
 
-<section class="page-hero">
+<section {{ $attributes->merge(['class' => 'page-hero']) }}>
     <x-site-image :name="$image" class="page-hero__image" loading="eager" fetchpriority="high" />
 
     <div class="page-hero__overlay" aria-hidden="true"></div>
