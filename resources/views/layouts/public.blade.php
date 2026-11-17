@@ -1,6 +1,10 @@
 @php
     $pageTitle = html_entity_decode(trim($__env->yieldContent('title', config('site.brand.name'))), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     $pageDescription = html_entity_decode(trim($__env->yieldContent('description', config('site.brand.description'))), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    // Versi aset dari hash konten: berubah tepat saat file berubah (mtime
+    // dinormalisasi platform deploy seperti Vercel, sehingga filemtime konstan).
+    $cssVersion = substr(md5_file(public_path('css/site.css')), 0, 10);
+    $jsVersion = substr(md5_file(public_path('js/site.js')), 0, 10);
 @endphp
 
 <!DOCTYPE html>
@@ -36,7 +40,7 @@
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) ?: 1 }}">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ $cssVersion }}">
 
     <script>
         document.documentElement.classList.add('js');
@@ -55,7 +59,7 @@
 
     @include('partials.footer')
 
-    <script src="{{ asset('js/site.js') }}?v={{ filemtime(public_path('js/site.js')) ?: 1 }}" defer></script>
+    <script src="{{ asset('js/site.js') }}?v={{ $jsVersion }}" defer></script>
     @stack('scripts')
 </body>
 </html>
