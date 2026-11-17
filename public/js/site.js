@@ -86,14 +86,21 @@
             }
         };
 
+        // Escape (cancel native dialog) di Chrome kadang tidak memicu event
+        // 'close' — bersihkan juga pada 'cancel'. Keduanya idempotent.
+        const cleanupLightboxState = () => {
+            document.body.classList.remove('lightbox-open');
+            restoreTriggerFocus();
+        };
+
         const closeLightbox = () => {
             if (lightbox.open && typeof lightbox.close === 'function') {
                 lightbox.close();
             } else {
                 lightbox.removeAttribute('open');
-                document.body.classList.remove('lightbox-open');
-                restoreTriggerFocus();
             }
+
+            cleanupLightboxState();
         };
 
         triggers.forEach((trigger) => {
@@ -124,10 +131,9 @@
             }
         });
 
-        lightbox.addEventListener('close', () => {
-            document.body.classList.remove('lightbox-open');
-            restoreTriggerFocus();
-        });
+        lightbox.addEventListener('cancel', cleanupLightboxState);
+
+        lightbox.addEventListener('close', cleanupLightboxState);
     }
 
     // Galeri: carousel scroll-snap — slide otomatis ke samping tiap ±4 detik
