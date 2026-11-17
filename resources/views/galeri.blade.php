@@ -86,7 +86,7 @@
                     </div>
                 </div>
             @else
-                <p class="gallery-empty">Belum ada foto galeri yang dipublikasikan.</p>
+                <p class="section-empty">Belum ada foto galeri yang dipublikasikan.</p>
             @endif
         </div>
     </section>

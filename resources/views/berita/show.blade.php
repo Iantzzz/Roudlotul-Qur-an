@@ -60,11 +60,15 @@
             </div>
 
             <div class="news-grid">
-                @foreach ($related as $relatedPost)
+                @forelse ($related as $relatedPost)
                     <div data-reveal>
                         <x-news-card :post="$relatedPost" />
                     </div>
-                @endforeach
+                @empty
+                    <p class="section-empty">
+                        Belum ada berita terkait yang bisa ditampilkan.
+                    </p>
+                @endforelse
             </div>
         </div>
     </section>

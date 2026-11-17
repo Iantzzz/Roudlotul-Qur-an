@@ -193,11 +193,16 @@
             </div>
 
             <div class="activity-grid">
-                @foreach ($activities as $activity)
+                @forelse ($activities as $activity)
                     <div data-reveal>
                         <x-activity-card :activity="$activity" />
                     </div>
-                @endforeach
+                @empty
+                    <p class="section-empty">
+                        Potret kegiatan akan tampil di sini setelah data
+                        diisi melalui panel admin.
+                    </p>
+                @endforelse
             </div>
         </div>
     </section>
@@ -218,11 +223,15 @@
             </div>
 
             <div class="news-grid">
-                @foreach ($news as $post)
+                @forelse ($news as $post)
                     <div data-reveal>
                         <x-news-card :post="$post" />
                     </div>
-                @endforeach
+                @empty
+                    <p class="section-empty">
+                        Belum ada berita yang dipublikasikan.
+                    </p>
+                @endforelse
             </div>
         </div>
     </section>

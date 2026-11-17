@@ -1992,6 +1992,24 @@ h4 {
     pointer-events: none;
 }
 
+/* Pesan keadaan kosong (galeri, kegiatan, berita) saat data belum diisi
+   melalui panel admin — panel dashed sederhana, menyatu dengan bahasa
+   visual situs dan tetap informatif bagi pengunjung. */
+.section-empty {
+    grid-column: 1 / -1;
+    padding: 2.4rem 1.4rem;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-md);
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.section-empty--compact {
+    padding: 1.2rem 1rem;
+    font-size: 0.84rem;
+    text-align: left;
+}
 .gallery-item__zoom {
     position: absolute;
     z-index: 2;

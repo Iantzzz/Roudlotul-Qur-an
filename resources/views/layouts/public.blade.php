@@ -36,7 +36,7 @@
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v=14">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) ?: 1 }}">
 
     <script>
         document.documentElement.classList.add('js');
@@ -55,7 +55,7 @@
 
     @include('partials.footer')
 
-    <script src="{{ asset('js/site.js') }}?v=5" defer></script>
+    <script src="{{ asset('js/site.js') }}?v={{ filemtime(public_path('js/site.js')) ?: 1 }}" defer></script>
     @stack('scripts')
 </body>
 </html>

@@ -20,7 +20,7 @@
             />
 
             <div class="program-groups">
-                @foreach ($programGroups as $group)
+                @forelse ($programGroups as $group)
                     <section class="program-group" id="{{ $group['id'] }}" aria-label="{{ $group['title'] }}">
                         <x-section-heading
                             :eyebrow="$group['eyebrow']"
@@ -29,14 +29,23 @@
                         />
 
                         <div class="activity-grid">
-                            @foreach ($group['activities'] as $activity)
+                            @forelse ($group['activities'] as $activity)
                                 <div data-reveal>
                                     <x-activity-card :activity="$activity" :show-link="false" />
                                 </div>
-                            @endforeach
+                            @empty
+                                <p class="section-empty section-empty--compact">
+                                    Kegiatan untuk kelompok ini belum diisi melalui panel admin.
+                                </p>
+                            @endforelse
                         </div>
                     </section>
-                @endforeach
+                @empty
+                    <p class="section-empty">
+                        Belum ada kelompok program yang dipublikasikan.
+                        Daftar kegiatan diisi melalui panel admin.
+                    </p>
+                @endforelse
             </div>
         </div>
     </section>

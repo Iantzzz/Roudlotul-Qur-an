@@ -42,11 +42,15 @@
             </nav>
 
             <div class="news-grid">
-                @foreach ($posts as $post)
+                @forelse ($posts as $post)
                     <div data-reveal>
                         <x-news-card :post="$post" />
                     </div>
-                @endforeach
+                @empty
+                    <p class="section-empty">
+                        Belum ada berita yang dipublikasikan.
+                    </p>
+                @endforelse
             </div>
         </div>
     </section>
