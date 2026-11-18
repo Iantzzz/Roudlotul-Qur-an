@@ -42,6 +42,15 @@
 
     <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ $cssVersion }}">
 
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    {{-- Font Awesome untuk ikon tombol WhatsApp mengambang --}}
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    >
+
     <script>
         document.documentElement.classList.add('js');
     </script>
@@ -58,6 +67,8 @@
     </main>
 
     @include('partials.footer')
+
+    @include('partials.whatsapp-float')
 
     <script src="{{ asset('js/site.js') }}?v={{ $jsVersion }}" defer></script>
     @stack('scripts')

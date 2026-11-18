@@ -61,12 +61,12 @@
                         @if ($social['url'])
                             <a class="social-link" href="{{ $social['url'] }}" rel="noopener noreferrer" target="_blank">
                                 <x-site-icon :name="$social['icon']" :size="18" />
-                                {{ $social['label'] }}
+                                <span class="social-link__label">{{ $social['label'] }}</span>
                             </a>
                         @else
                             <span class="social-link social-link--disabled">
                                 <x-site-icon :name="$social['icon']" :size="18" />
-                                {{ $social['label'] }}
+                                <span class="social-link__label">{{ $social['label'] }}</span>
                                 <small>Segera</small>
                             </span>
                         @endif
