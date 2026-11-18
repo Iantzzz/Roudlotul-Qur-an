@@ -2810,13 +2810,13 @@ a.social-link:hover {
     font-size: 0.65rem;
 }
 
-/* Tombol WhatsApp mengambang — gaya web Unair: lingkaran hijau di kiri-bawah,
+/* Tombol WhatsApp mengambang — lingkaran hijau di kanan-bawah,
    tampil pada semua ukuran layar. Nomor dituliskan lewat aria-label & title. */
 .wa-float {
     position: fixed;
     z-index: 90;
     bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-    left: 1rem;
+    right: 1rem;
     display: grid;
     width: 52px;
     height: 52px;
@@ -3340,26 +3340,34 @@ a.social-link:hover {
     }
 
     .site-footer {
-        padding-top: 2.5rem;
+        padding-top: 2rem;
+        /* Tanpa clearance tombol WA: tombol kini di kanan-bawah dan copyright
+           dijaga lewat padding-right pada .footer-bottom. */
+        padding-bottom: 1.25rem;
     }
 
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding-bottom: 2rem;
+        gap: 1.2rem;
+        padding-bottom: 1.4rem;
     }
 
     .footer-brand {
         padding-bottom: 0;
     }
 
+    /* Badge "Situs dalam penyempurnaan" disembunyikan di mobile agar footer ringkas. */
+    .footer-brand .temp-badge {
+        display: none;
+    }
+
     .footer-brand > p {
-        margin: 0.9rem 0;
+        margin: 0.7rem 0;
         line-height: 1.6;
     }
 
     .footer-column h2 {
-        margin-bottom: 0.65rem;
+        margin-bottom: 0.5rem;
     }
 
     .footer-links {
@@ -3368,14 +3376,16 @@ a.social-link:hover {
     }
 
     .footer-contact {
-        gap: 0.55rem;
+        gap: 0.45rem;
     }
 
     .footer-bottom {
         align-items: flex-start;
         flex-direction: column;
         gap: 0.4rem;
-        padding-block: 1.1rem;
+        padding-block: 0.85rem;
+        /* Jaga copyright tetap di kiri zona tombol WhatsApp (kanan-bawah). */
+        padding-right: 3.5rem;
     }
 
     /* Teks penunda data resmi disembunyikan di mobile agar footer lebih ringkas. */
@@ -3420,7 +3430,7 @@ a.social-link:hover {
 
     .wa-float {
         bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-        left: 0.75rem;
+        right: 0.75rem;
         width: 46px;
         height: 46px;
     }
@@ -3431,9 +3441,10 @@ a.social-link:hover {
 
 }
 
-/* Tablet & laptop kecil: container menempel ke sisi kiri, beri ruang
-   agar tombol WhatsApp mengambang tidak menutupi teks footer-bottom. */
-@media (max-width: 1260px) {
+/* Tablet & laptop kecil: beri ruang agar tombol WhatsApp mengambang tidak
+   menutupi teks footer-bottom. Mobile tidak memerlukannya — copyright cukup
+   dijaga lewat padding-right pada .footer-bottom di blok <=640px. */
+@media (min-width: 641px) and (max-width: 1260px) {
     .site-footer {
         padding-bottom: 4.25rem;
     }
