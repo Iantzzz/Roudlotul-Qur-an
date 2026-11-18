@@ -80,8 +80,9 @@
 
                 <div class="split__content" data-reveal>
                     <x-section-heading
-                        eyebrow="Sambutan"
-                        title="Pesan pembina untuk santri."
+                        eyebrow="Sambutan Pengasuh"
+                        title="Membentuk Generasi Qur’ani yang Berilmu dan Berakhlak"
+                        description="Sambutan dari pengasuh untuk seluruh santri dan keluarga besar Roudlotul Qur’an."
                     />
 
                     <blockquote class="greeting__quote">
