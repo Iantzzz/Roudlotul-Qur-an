@@ -3122,7 +3122,11 @@ a.social-link:hover {
     }
 
     .hero__inner {
-        padding-top: calc(var(--header-height) + 2rem);
+        /* Header sticky sudah memakan tingginya sendiri di alur dokumen,
+           sehingga --header-height tidak perlu ditambahkan lagi di sini;
+           menyisakan jarak 1rem agar teks tidak terlalu rendah di mobile
+           namun tetap tidak menempel ke header. */
+        padding-top: 1rem;
         padding-bottom: 3.5rem;
     }
 
