@@ -16,6 +16,8 @@
         "SESSION_DRIVER": "cookie",
         "CACHE_STORE": "array",
         "VIEW_COMPILED_PATH": "/tmp/views",
+        "LIVEWIRE_TEMPORARY_FILE_UPLOAD_DISK": "livewire-tmp",
+        "LIVEWIRE_TMP_ROOT": "/tmp/livewire-tmp",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",

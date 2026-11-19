@@ -49,7 +49,7 @@ class ActivityForm
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(3072)
                     ->storeFiles(false)
-                    ->helperText('Foto maksimal 3 MB, disimpan di database situs. Biarkan kosong untuk tetap memakai foto saat ini.')
+                    ->helperText('Foto maksimal 3 MB, disimpan di database situs. Perputaran ikon saat proses preview itu normal; tunggu hingga thumbnail tampil sebelum menekan Simpan. Biarkan kosong untuk tetap memakai foto saat ini.')
                     ->columnSpanFull(),
 
                 Checkbox::make('clear_photo')

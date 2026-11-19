@@ -39,7 +39,7 @@ class GreetingForm
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(3072)
                     ->storeFiles(false)
-                    ->helperText('Foto maksimal 3 MB dan disimpan di database situs agar tahan deploymen. Biarkan kosong bila tidak memakai foto.')
+                    ->helperText('Foto maksimal 3 MB, disimpan di database situs agar tahan deploymen. Perputaran ikon saat proses preview itu normal; tunggu hingga thumbnail tampil sebelum menekan Simpan. Kosongkan bila tidak memakai foto.')
                     ->columnSpanFull(),
 
                 TextInput::make('video_url')

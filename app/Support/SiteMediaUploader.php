@@ -7,6 +7,7 @@ use App\Models\GalleryItem;
 use App\Models\Greeting;
 use App\Models\SiteMedia;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Menerima unggahan foto dari panel admin dan menyimpannya sebagai baris
@@ -17,10 +18,21 @@ final class SiteMediaUploader
 {
     public static function store(UploadedFile $file): int
     {
+        $realPath = (string) $file->getRealPath();
+        $raw = ($realPath !== '' && is_file($realPath)) ? @file_get_contents($realPath) : false;
+
+        if ($raw === false || $raw === '') {
+            // File temp tidak ada (mis. instance serverless berbeda) — jangan
+            // simpan base64 kosong; tampilkan pesan yang jelas di kolom foto.
+            throw ValidationException::withMessages([
+                'photo' => 'Foto gagal diproses — mohon pilih ulang foto lalu Simpan kembali.',
+            ]);
+        }
+
         $media = SiteMedia::create([
             'name' => (string) ($file->getClientOriginalName() ?: 'unggahan'),
             'mime' => (string) $file->getMimeType(),
-            'data' => base64_encode((string) file_get_contents((string) $file->getRealPath())),
+            'data' => base64_encode($raw),
             'size' => (int) $file->getSize(),
         ]);
 

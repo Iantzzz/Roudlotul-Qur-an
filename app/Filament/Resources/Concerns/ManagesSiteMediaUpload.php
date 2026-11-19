@@ -6,6 +6,7 @@ use App\Support\SiteMediaUploader;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Dipakai halaman Create/Edit resource konten yang menyimpan foto sebagai
@@ -45,6 +46,13 @@ trait ManagesSiteMediaUpload
         unset($data['photo'], $data['clear_photo']);
 
         if ($photo instanceof UploadedFile) {
+            // Di serverless file temp bisa hilang (mis. pindah instance) —
+            // tampilkan pesan yang jelas di kolom foto alih-alih layar error.
+            if (! $photo->exists()) {
+                throw ValidationException::withMessages([
+                    'photo' => 'Foto gagal diproses — mohon pilih ulang foto lalu Simpan kembali.',
+                ]);
+            }
             $data['site_media_id'] = SiteMediaUploader::store($photo);
         } elseif ($clear) {
             $data['site_media_id'] = null;
