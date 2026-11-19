@@ -15,4 +15,5 @@ Route::controller(PublicPageController::class)->group(function () {
     Route::get('/berita/{slug}', 'beritaShow')->name('berita.show');
     Route::get('/pendaftaran', 'pendaftaran')->name('pendaftaran');
     Route::get('/kontak', 'kontak')->name('kontak');
+    Route::get('/sitemap.xml', 'sitemap')->name('sitemap');
 });

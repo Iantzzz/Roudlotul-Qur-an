@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://www.roudlotul-quran.web.id/sitemap.xml

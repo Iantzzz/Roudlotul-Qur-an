@@ -10,6 +10,7 @@ use App\Models\ManagementPeriod;
 use App\Support\ManagementTree;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class PublicPageController extends Controller
@@ -111,6 +112,45 @@ class PublicPageController extends Controller
     public function kontak(): View
     {
         return view('kontak');
+    }
+
+    public function sitemap(): Response
+    {
+        $pages = [
+            ['url' => route('home'), 'changefreq' => 'weekly', 'priority' => '1.0'],
+            ['url' => route('profil'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['url' => route('kegiatan'), 'changefreq' => 'weekly', 'priority' => '0.8'],
+            ['url' => route('galeri'), 'changefreq' => 'weekly', 'priority' => '0.8'],
+            ['url' => route('berita'), 'changefreq' => 'weekly', 'priority' => '0.8'],
+            ['url' => route('pendaftaran'), 'changefreq' => 'monthly', 'priority' => '0.9'],
+            ['url' => route('kontak'), 'changefreq' => 'yearly', 'priority' => '0.6'],
+        ];
+
+        foreach ($this->news() as $item) {
+            $pages[] = [
+                'url' => route('berita.show', $item['slug']),
+                'changefreq' => 'monthly',
+                'priority' => '0.7',
+            ];
+        }
+
+        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+
+        foreach ($pages as $page) {
+            $xml .= "    <url>\n";
+            $xml .= '        <loc>'.htmlspecialchars($page['url'], ENT_XML1 | ENT_QUOTES, 'UTF-8')."</loc>\n";
+            $xml .= '        <changefreq>'.$page['changefreq']."</changefreq>\n";
+            $xml .= '        <priority>'.$page['priority']."</priority>\n";
+            $xml .= "    </url>\n";
+        }
+
+        $xml .= "</urlset>\n";
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
     }
 
     private function foundations(): array
