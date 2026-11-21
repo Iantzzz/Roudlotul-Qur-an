@@ -14,7 +14,7 @@
         "APP_DEBUG": "false",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
-        "CACHE_STORE": "array",
+        "CACHE_STORE": "database",
         "VIEW_COMPILED_PATH": "/tmp/views",
         "LIVEWIRE_TEMPORARY_FILE_UPLOAD_DISK": "livewire-tmp",
         "LIVEWIRE_TMP_ROOT": "/tmp/livewire-tmp",

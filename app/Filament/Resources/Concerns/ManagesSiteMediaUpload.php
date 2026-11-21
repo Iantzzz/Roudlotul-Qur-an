@@ -32,8 +32,6 @@ trait ManagesSiteMediaUpload
 
     protected function afterSave(): void
     {
-        parent::afterSave();
-
         SiteMediaUploader::deleteIfOrphan($this->previousMediaId);
         $this->previousMediaId = null;
     }
