@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Greetings\Schemas;
 
+use App\Support\SocialVideo;
+use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -43,10 +45,17 @@ class GreetingForm
                     ->columnSpanFull(),
 
                 TextInput::make('video_url')
-                    ->label('Tautan video (opsional)')
-                    ->placeholder('https://youtu.be/xxxxxxxxxxx')
+                    ->label('Tautan video / media sosial (opsional)')
+                    ->placeholder('https://youtu.be/xxxxxxxxxxx atau https://www.instagram.com/reel/xxxxxxxxx/')
                     ->maxLength(500)
-                    ->helperText('Tempel tautan YouTube pembina (youtu.be, watch?v=, shorts, atau embed); video tampil di bawah foto. Kosongkan bila tidak memakai video.')
+                    ->rule(function (): Closure {
+                        return function (string $attribute, mixed $value, Closure $fail): void {
+                            if (filled($value) && SocialVideo::parse((string) $value) === null) {
+                                $fail('Tautan video tidak valid. Tempel tautan lengkap, misalnya https://youtu.be/... atau https://www.instagram.com/reel/...');
+                            }
+                        };
+                    })
+                    ->helperText('Tempel tautan YouTube, Instagram, TikTok, Facebook, atau Vimeo. Platform lain tetap tampil sebagai tombol tautan. Kosongkan bila tidak memakai video.')
                     ->columnSpanFull(),
 
                 Toggle::make('is_active')

@@ -109,6 +109,14 @@
             <path d="m10 9 5 3-5 3V9Z" />
             @break
 
+        @case('play')
+            <path d="m8 5 11 7-11 7V5Z" />
+            @break
+
+        @case('facebook')
+            <path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1Z" />
+            @break
+
         @case('check')
             <path d="m5 12 4 4L19 6" />
             @break

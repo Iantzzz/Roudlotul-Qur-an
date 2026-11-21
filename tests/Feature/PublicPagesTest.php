@@ -6,9 +6,9 @@ use App\Models\Activity;
 use App\Models\ActivityGroup;
 use App\Models\GalleryItem;
 use App\Models\Greeting;
-use App\Models\SiteMedia;
 use App\Models\ManagementPeriod;
 use App\Models\ManagementUnit;
+use App\Models\SiteMedia;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -234,7 +234,7 @@ class PublicPagesTest extends TestCase
         }
     }
 
-    public function test_sambutan_video_renders_only_for_recognized_links(): void
+    public function test_sambutan_video_renders_embeds_and_external_fallbacks(): void
     {
         $greeting = Greeting::create([
             'name' => 'KH. Pembina Video',
@@ -250,14 +250,25 @@ class PublicPagesTest extends TestCase
             ->assertSee('allowfullscreen', false)
             ->assertSee('Video sambutan KH. Pembina Video', false);
 
-        // Tautan di luar YouTube tidak merender blok video apa pun.
+        // Instagram juga dirender sebagai embed, bukan diabaikan.
+        $greeting->update(['video_url' => 'https://www.instagram.com/p/Df-mRDgT0nR/']);
+
+        $this->get('/profil')
+            ->assertOk()
+            ->assertSee('instagram.com/p/Df-mRDgT0nR/embed/', false)
+            ->assertSee('greeting__video--portrait', false)
+            ->assertDontSee('youtube-nocookie', false);
+
+        // Platform tanpa embed resmi tetap tampil sebagai tombol tautan.
         $greeting->update(['video_url' => 'https://example.com/video-asing']);
 
         $this->get('/profil')
             ->assertOk()
             ->assertSee('Sambutan dengan video uji.')
-            ->assertDontSee('youtube-nocookie', false)
-            ->assertDontSee('greeting__video', false);
+            ->assertSee('greeting__video-link', false)
+            ->assertSee('https://example.com/video-asing', false)
+            ->assertSee('Tonton video di example.com', false)
+            ->assertDontSee('greeting__video-frame', false);
 
         // Kosong: section tetap tampil, tanpa blok video.
         $greeting->update(['video_url' => null]);

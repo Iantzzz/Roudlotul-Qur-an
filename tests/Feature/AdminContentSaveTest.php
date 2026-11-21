@@ -62,4 +62,43 @@ class AdminContentSaveTest extends TestCase
             'body' => 'Isi baru',
         ]);
     }
+
+    public function test_greeting_video_accepts_social_media_links(): void
+    {
+        $greeting = Greeting::create([
+            'name' => 'Nama Lama',
+            'role' => 'Jabatan Lama',
+            'body' => 'Isi lama',
+            'is_active' => true,
+        ]);
+
+        Livewire::test(EditGreeting::class, ['record' => $greeting->getRouteKey()])
+            ->fillForm([
+                'video_url' => 'https://www.instagram.com/reel/C1a2b3c4d5e/',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('greetings', [
+            'id' => $greeting->id,
+            'video_url' => 'https://www.instagram.com/reel/C1a2b3c4d5e/',
+        ]);
+    }
+
+    public function test_greeting_video_rejects_invalid_links(): void
+    {
+        $greeting = Greeting::create([
+            'name' => 'Nama Lama',
+            'role' => 'Jabatan Lama',
+            'body' => 'Isi lama',
+            'is_active' => true,
+        ]);
+
+        Livewire::test(EditGreeting::class, ['record' => $greeting->getRouteKey()])
+            ->fillForm([
+                'video_url' => 'bukan url',
+            ])
+            ->call('save')
+            ->assertHasFormErrors(['video_url']);
+    }
 }

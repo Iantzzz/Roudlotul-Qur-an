@@ -63,18 +63,33 @@
                         @endif
                     </div>
 
-                    @if ($greeting->video_embed_url)
-                        <div class="greeting__video">
-                            <iframe
-                                class="greeting__video-frame"
-                                src="{{ $greeting->video_embed_url }}"
-                                title="Video sambutan {{ $greeting->name }}"
-                                loading="lazy"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen
-                            ></iframe>
-                        </div>
+                    @php($video = $greeting->video)
+
+                    @if ($video)
+                        @if ($video['embed_url'])
+                            <div class="greeting__video greeting__video--{{ $video['aspect'] }}">
+                                <iframe
+                                    class="greeting__video-frame"
+                                    src="{{ $video['embed_url'] }}"
+                                    title="Video sambutan {{ $greeting->name }}"
+                                    loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                        @else
+                            <a
+                                class="btn btn-outline greeting__video-link"
+                                href="{{ $video['url'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <x-site-icon :name="$video['icon']" :size="18" />
+                                <span>Tonton video di {{ $video['label'] }}</span>
+                                <x-site-icon name="arrow-up-right" :size="16" />
+                            </a>
+                        @endif
                     @endif
                 </div>
 

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasSiteMediaImage;
 use App\Support\SiteMediaUploader;
-use App\Support\YouTube;
+use App\Support\SocialVideo;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * Sambutan pembina untuk halaman Profil. Tanpa sambutan bertanda aktif,
  * section sambutan otomatis tersembunyi di halaman publik. Persis satu
  * sambutan bertanda aktif — mengaktifkan satu menonaktifkan yang lain.
- * Tautan video opsional dirender sebagai embed YouTube di bawah foto.
+ * Tautan video/media sosial opsional dirender sebagai embed di bawah foto,
+ * atau sebagai tombol tautan bila platformnya tidak mendukung embed.
  */
 #[Fillable(['name', 'role', 'body', 'site_media_id', 'video_url', 'is_active'])]
 class Greeting extends Model
@@ -48,11 +49,29 @@ class Greeting extends Model
     }
 
     /**
-     * URL embed YouTube untuk tampilan publik; null bila tautan kosong
-     * atau bukan tautan YouTube yang dikenali (halaman tanpa video).
+     * Data video sambutan untuk tampilan publik; null bila tautan kosong
+     * atau tidak valid.
+     *
+     * @return array{
+     *     platform: string,
+     *     label: string,
+     *     icon: string,
+     *     embed_url: ?string,
+     *     aspect: string,
+     *     url: string
+     * }|null
+     */
+    public function getVideoAttribute(): ?array
+    {
+        return SocialVideo::parse($this->video_url);
+    }
+
+    /**
+     * URL embed untuk tampilan publik; null bila tautan kosong, tidak valid,
+     * atau platformnya tidak mendukung embed (halaman memakai tombol tautan).
      */
     public function getVideoEmbedUrlAttribute(): ?string
     {
-        return YouTube::embedUrl($this->video_url);
+        return SocialVideo::embedUrl($this->video_url);
     }
 }

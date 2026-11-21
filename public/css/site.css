@@ -2900,7 +2900,9 @@ a.social-link:hover {
     font-size: 0.92rem;
 }
 
-/* Video sambutan pembina: blok 16:9 di bawah foto pada kolom media. */
+/* Video sambutan pembina: blok media di bawah foto pada kolom media.
+   Rasio menyesuaikan platform: YouTube/Vimeo/Facebook 16:9, post Instagram
+   4:5, Reels/TikTok 9:16 (lebarnya dibatasi agar tidak terlalu tinggi). */
 .greeting__video {
     margin-top: 1.2rem;
     overflow: hidden;
@@ -2910,11 +2912,37 @@ a.social-link:hover {
         linear-gradient(160deg, var(--green-900) 0%, var(--green-950) 100%);
 }
 
+.greeting__video--portrait {
+    max-width: 420px;
+    margin-inline: auto;
+    aspect-ratio: 4 / 5;
+}
+
+.greeting__video--vertical {
+    max-width: 340px;
+    margin-inline: auto;
+    aspect-ratio: 9 / 16;
+}
+
 .greeting__video-frame {
     display: block;
     width: 100%;
     height: 100%;
     border: 0;
+}
+
+/* Platform tanpa embed resmi (mis. X/Twitter, LinkedIn) tetap tampil
+   sebagai tombol tautan yang membuka tab baru. */
+.greeting__video-link {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 1.2rem;
+    text-align: left;
+}
+
+.greeting__video-link span {
+    flex: 1;
 }
 
 /* ==========================================================================
