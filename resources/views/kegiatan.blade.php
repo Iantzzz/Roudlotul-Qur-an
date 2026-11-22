@@ -85,7 +85,7 @@
                 <section class="program-frequency" id="pendidikan">
                     <div class="frequency-header">
                         <div class="frequency-icon">
-                            <x-site-icon name="book-open" :size="24" />
+                            <x-site-icon name="book" :size="24" />
                         </div>
                         <div>
                             <h2 class="frequency-title">Setiap minggu</h2>
@@ -151,10 +151,10 @@
                 </section>
 
                 {{-- Setiap Bulan --}}
-                <section class="program-frequency" id="kebaktian">
+                <section class="program-frequency" id="bulanan">
                     <div class="frequency-header">
                         <div class="frequency-icon">
-                            <x-site-icon name="calendar-check" :size="24" />
+                            <x-site-icon name="calendar" :size="24" />
                         </div>
                         <div>
                             <h2 class="frequency-title">Setiap bulan</h2>
@@ -193,7 +193,7 @@
                 <section class="program-frequency" id="tahunan">
                     <div class="frequency-header">
                         <div class="frequency-icon">
-                            <x-site-icon name="trophy" :size="24" />
+                            <x-site-icon name="sparkle" :size="24" />
                         </div>
                         <div>
                             <h2 class="frequency-title">Setiap tahun</h2>
@@ -213,7 +213,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">Isra' Mi'raj</span>
                             </div>
@@ -221,7 +221,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">Maulid Nabi</span>
                             </div>
@@ -229,7 +229,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">Nuzul Qur'an</span>
                             </div>
@@ -237,7 +237,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">Haflah Akhirussanah</span>
                             </div>
@@ -245,7 +245,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">Haul Masyayikh</span>
                             </div>
@@ -253,7 +253,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">Hari Santri Nasional</span>
                             </div>
@@ -261,7 +261,7 @@
                         <li class="activity-item">
                             <span class="activity-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                            </div>
+                            </span>
                             <div>
                                 <span class="activity-label">HUT Kemerdekaan RI</span>
                             </div>

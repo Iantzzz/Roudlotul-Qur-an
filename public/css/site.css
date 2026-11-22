@@ -3658,7 +3658,7 @@ a.social-link:hover {
     }
 }
 
-.frequency-frequency {
+.program-frequency {
     background: var(--white);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -3666,7 +3666,7 @@ a.social-link:hover {
     transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
-.frequency-frequency:hover {
+.program-frequency:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
 }
@@ -3690,7 +3690,7 @@ a.social-link:hover {
     color: var(--green-500);
 }
 
-.frequency-frequency:hover .frequency-icon svg {
+.program-frequency:hover .frequency-icon svg {
     color: var(--gold-500);
 }
 
@@ -3750,11 +3750,11 @@ a.social-link:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .frequency-frequency {
+    .program-frequency {
         transition: none;
     }
 
-    .frequency-frequency:hover {
+    .program-frequency:hover {
         transform: none;
         box-shadow: var(--shadow-sm);
     }
