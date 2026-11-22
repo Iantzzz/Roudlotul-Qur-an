@@ -3763,6 +3763,26 @@ a.social-link:hover {
     line-height: 1.3;
 }
 
+.frequency-ig {
+    padding: 0.75rem 1.25rem 1.25rem;
+    border-top: 1px solid var(--line);
+}
+
+.frequency-ig-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--green-700);
+    text-decoration: none;
+    transition: color 180ms ease;
+}
+
+.frequency-ig-link:hover {
+    color: var(--gold-500);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .program-frequency {
         transition: none;

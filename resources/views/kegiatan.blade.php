@@ -79,6 +79,13 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="frequency-ig">
+                        <a href="https://www.instagram.com/ndalemardales/" target="_blank" rel="noopener noreferrer" class="frequency-ig-link">
+                            <x-site-icon name="instagram" :size="16" />
+                            <span>Lihat dokumentasi di Instagram</span>
+                            <x-site-icon name="arrow-up-right" :size="14" />
+                        </a>
+                    </div>
                 </section>
 
                 {{-- Setiap Minggu --}}
@@ -148,6 +155,13 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="frequency-ig">
+                        <a href="https://www.instagram.com/ndalemardales/" target="_blank" rel="noopener noreferrer" class="frequency-ig-link">
+                            <x-site-icon name="instagram" :size="16" />
+                            <span>Lihat dokumentasi di Instagram</span>
+                            <x-site-icon name="arrow-up-right" :size="14" />
+                        </a>
+                    </div>
                 </section>
 
                 {{-- Setiap Bulan --}}
@@ -187,6 +201,13 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="frequency-ig">
+                        <a href="https://www.instagram.com/ndalemardales/" target="_blank" rel="noopener noreferrer" class="frequency-ig-link">
+                            <x-site-icon name="instagram" :size="16" />
+                            <span>Lihat dokumentasi di Instagram</span>
+                            <x-site-icon name="arrow-up-right" :size="14" />
+                        </a>
+                    </div>
                 </section>
 
                 {{-- Setiap Tahun --}}
@@ -267,6 +288,13 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="frequency-ig">
+                        <a href="https://www.instagram.com/ndalemardales/" target="_blank" rel="noopener noreferrer" class="frequency-ig-link">
+                            <x-site-icon name="instagram" :size="16" />
+                            <span>Lihat dokumentasi di Instagram</span>
+                            <x-site-icon name="arrow-up-right" :size="14" />
+                        </a>
+                    </div>
                 </section>
 
             </div>
