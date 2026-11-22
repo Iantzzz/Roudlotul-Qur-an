@@ -22,7 +22,13 @@ class InstagramPosterController extends Controller
     public function show(string $code): Response
     {
         $cacheKey = 'instagram-poster:l:'.$code;
-        $binary = Cache::get($cacheKey);
+        $binary = null;
+
+        try {
+            $binary = Cache::get($cacheKey);
+        } catch (Throwable) {
+            $binary = null;
+        }
 
         if (! is_string($binary) || $binary === '') {
             $binary = $this->fetch($code);

@@ -9,7 +9,6 @@ Route::get('/media/{media}', [MediaController::class, 'show'])->name('media.show
 
 Route::get('/instagram-poster/{code}', [InstagramPosterController::class, 'show'])
     ->where('code', '[A-Za-z0-9_-]+')
-    ->middleware('throttle:60,1')
     ->name('instagram.poster');
 
 Route::controller(PublicPageController::class)->group(function () {
