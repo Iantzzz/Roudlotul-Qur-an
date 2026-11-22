@@ -366,34 +366,14 @@ class PublicPagesTest extends TestCase
 
     public function test_kegiatan_and_home_render_db_backed_content(): void
     {
-        $group = ActivityGroup::create([
-            'title' => 'Kelompok Uji',
-            'description' => 'Kelompok untuk pengujian.',
-            'sort' => 9,
-        ]);
-
-        $group->activities()->create([
-            'label' => 'Uji kelompok',
-            'title' => 'Kegiatan Uji Kelompok',
-            'text' => 'Teks uji kegiatan kelompok.',
-            'image_key' => 'library',
-            'sort' => 1,
-        ]);
-
-        Activity::create([
-            'label' => 'Kartu uji',
-            'title' => 'Kegiatan Kartu Beranda',
-            'text' => 'Teks uji kartu beranda.',
-            'image_key' => 'courtyard',
-            'is_featured' => true,
-            'sort' => 9,
-        ]);
-
-        $this->get('/')->assertOk()->assertSee('Kegiatan Kartu Beranda');
-
+        // Struktur kegiatan diganti daftar frekuensi harian/minggu/bulanan/tahunan
+        // (bukan ActivityGroup admin-managed lagi).
         $this->get('/kegiatan')
             ->assertOk()
-            ->assertSee('Kelompok Uji')
-            ->assertSee('Kegiatan Uji Kelompok');
+            ->assertSee('Program & Kegiatan')
+            ->assertSee('Setiap hari')
+            ->assertSee('Setiap minggu')
+            ->assertSee('Setiap bulan')
+            ->assertSee('Setiap tahun');
     }
 }

@@ -3636,3 +3636,126 @@ a.social-link:hover {
         transform: translate(-50%, -50%);
     }
 }
+
+/* ==========================================================================
+   22. Program & Kegiatan
+   ========================================================================== */
+
+.frequency-grid {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+@media (min-width: 640px) {
+    .frequency-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .frequency-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.frequency-frequency {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.frequency-frequency:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.frequency-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1rem 0;
+}
+
+.frequency-icon {
+    grid-row: span 2;
+    margin-right: 0.75rem;
+}
+
+.frequency-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--green-500);
+}
+
+.frequency-frequency:hover .frequency-icon svg {
+    color: var(--gold-500);
+}
+
+.frequency-title {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: var(--green-900);
+    margin: 0;
+}
+
+.frequency-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0.25rem 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.frequency-list {
+    padding: 0 1rem 1rem;
+}
+
+.frequency-list .activity-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+}
+
+.frequency-list .activity-item:last-child {
+    border-bottom: none;
+}
+
+.frequency-list .activity-icon {
+    flex-shrink: 0;
+}
+
+.frequency-list .activity-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.frequency-list .activity-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--green-950);
+}
+
+.frequency-list .activity-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.25rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .frequency-frequency {
+        transition: none;
+    }
+
+    .frequency-frequency:hover {
+        transform: none;
+        box-shadow: var(--shadow-sm);
+    }
+}
