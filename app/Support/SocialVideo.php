@@ -5,9 +5,11 @@ namespace App\Support;
 /**
  * Menormalkan tautan video/media sosial menjadi data siap render.
  *
- * Platform yang di-embed langsung: YouTube, Instagram, TikTok, Facebook,
- * dan Vimeo. Platform lain (mis. X/Twitter atau LinkedIn) tetap dikembalikan
- * sebagai tautan keluar agar tidak hilang dari halaman publik.
+ * Platform yang di-embed langsung: YouTube, TikTok, Facebook, dan Vimeo.
+ * Instagram dirender sebagai kartu poster yang membuka postingan di tab baru:
+ * embed resminya menutupi tombol putar dengan CTA "Lihat lainnya di Instagram"
+ * dan tidak mendukung autoplay. Platform lain (mis. X/Twitter atau LinkedIn)
+ * tetap dikembalikan sebagai tautan keluar agar tidak hilang dari halaman.
  */
 class SocialVideo
 {
@@ -20,7 +22,9 @@ class SocialVideo
      *     icon: string,
      *     embed_url: ?string,
      *     aspect: string,
-     *     url: string
+     *     url: string,
+     *     mode: string,
+     *     poster_url: ?string
      * }|null
      */
     public static function parse(?string $input): ?array
@@ -171,6 +175,8 @@ class SocialVideo
             "https://www.instagram.com/{$embedType}/{$code}/embed/",
             $aspect,
             $url,
+            'facade',
+            route('instagram.poster', ['code' => $code]),
         );
     }
 
@@ -345,8 +351,16 @@ class SocialVideo
     /**
      * @return array<string, mixed>
      */
-    private static function result(string $platform, string $label, string $icon, ?string $embedUrl, string $aspect, string $url): array
-    {
+    private static function result(
+        string $platform,
+        string $label,
+        string $icon,
+        ?string $embedUrl,
+        string $aspect,
+        string $url,
+        ?string $mode = null,
+        ?string $posterUrl = null,
+    ): array {
         return [
             'platform' => $platform,
             'label' => $label,
@@ -354,6 +368,8 @@ class SocialVideo
             'embed_url' => $embedUrl,
             'aspect' => $aspect,
             'url' => $url,
+            'mode' => $mode ?? ($embedUrl === null ? 'link' : 'embed'),
+            'poster_url' => $posterUrl,
         ];
     }
 

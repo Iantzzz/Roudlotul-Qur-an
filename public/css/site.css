@@ -2931,6 +2931,133 @@ a.social-link:hover {
     border: 0;
 }
 
+/* Instagram tidak memakai iframe: kartu poster dengan tombol putar sendiri.
+   Embed resmi Instagram menaruh CTA "Lihat lainnya di Instagram" tepat di atas
+   tombol putar, sehingga video tidak bisa diputar dan tampilannya rusak. */
+.greeting__video--facade {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    margin: 1.2rem auto 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    aspect-ratio: auto;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 55%),
+        linear-gradient(160deg, var(--green-900) 0%, var(--green-950) 100%);
+    box-shadow: var(--shadow-md);
+    color: #fff;
+    isolation: isolate;
+}
+
+.greeting__video-media {
+    position: relative;
+    z-index: 0;
+    display: block;
+}
+
+.greeting__video-fallback {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.55rem;
+    padding-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+/* Bila poster gagal dimuat, beri tinggi cadangan agar kartu tidak runtuh. */
+.greeting__video--facade.is-fallback .greeting__video-media {
+    aspect-ratio: 4 / 5;
+}
+
+.greeting__video-poster {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.greeting__video--facade:hover .greeting__video-poster {
+    transform: scale(1.025);
+}
+
+.greeting__video-shade {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(4, 20, 14, 0.88) 0%,
+        rgba(4, 20, 14, 0.22) 34%,
+        transparent 62%
+    );
+    pointer-events: none;
+}
+
+.greeting__video-play {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    color: var(--green-950);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+    transform: translate(-50%, -50%);
+    transition: transform 300ms ease, background-color 300ms ease;
+}
+
+.greeting__video-play-icon {
+    margin-left: 3px;
+    fill: currentColor;
+    stroke: none;
+}
+
+.greeting__video--facade:hover .greeting__video-play {
+    background: var(--gold-300);
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+.greeting__video-caption {
+    position: absolute;
+    z-index: 3;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.greeting__video-caption span {
+    flex: 1;
+}
+
+.greeting__video--facade:focus-visible {
+    outline: 2px solid var(--gold-300);
+    outline-offset: 3px;
+}
+
 /* Platform tanpa embed resmi (mis. X/Twitter, LinkedIn) tetap tampil
    sebagai tombol tautan yang membuka tab baru. */
 .greeting__video-link {
@@ -3499,5 +3626,13 @@ a.social-link:hover {
     .js [data-reveal] {
         opacity: 1;
         transform: none;
+    }
+
+    .greeting__video--facade:hover .greeting__video-poster {
+        transform: none;
+    }
+
+    .greeting__video--facade:hover .greeting__video-play {
+        transform: translate(-50%, -50%);
     }
 }

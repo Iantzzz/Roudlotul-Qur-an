@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * section sambutan otomatis tersembunyi di halaman publik. Persis satu
  * sambutan bertanda aktif — mengaktifkan satu menonaktifkan yang lain.
  * Tautan video/media sosial opsional dirender sebagai embed di bawah foto,
- * atau sebagai tombol tautan bila platformnya tidak mendukung embed.
+ * sebagai kartu poster (Instagram), atau sebagai tombol tautan bila
+ * platformnya tidak mendukung embed.
  */
 #[Fillable(['name', 'role', 'body', 'site_media_id', 'video_url', 'is_active'])]
 class Greeting extends Model
@@ -58,7 +59,9 @@ class Greeting extends Model
      *     icon: string,
      *     embed_url: ?string,
      *     aspect: string,
-     *     url: string
+     *     url: string,
+     *     mode: string,
+     *     poster_url: ?string
      * }|null
      */
     public function getVideoAttribute(): ?array

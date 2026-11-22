@@ -1,10 +1,16 @@
 <?php
 
+use App\Http\Controllers\InstagramPosterController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/media/{media}', [MediaController::class, 'show'])->name('media.show');
+
+Route::get('/instagram-poster/{code}', [InstagramPosterController::class, 'show'])
+    ->where('code', '[A-Za-z0-9_-]+')
+    ->middleware('throttle:60,1')
+    ->name('instagram.poster');
 
 Route::controller(PublicPageController::class)->group(function () {
     Route::get('/', 'home')->name('home');

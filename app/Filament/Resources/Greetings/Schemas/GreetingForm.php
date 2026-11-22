@@ -55,7 +55,7 @@ class GreetingForm
                             }
                         };
                     })
-                    ->helperText('Tempel tautan YouTube, Instagram, TikTok, Facebook, atau Vimeo. Platform lain tetap tampil sebagai tombol tautan. Kosongkan bila tidak memakai video.')
+                    ->helperText('Tempel tautan YouTube, Instagram, TikTok, Facebook, atau Vimeo. Instagram tampil sebagai kartu video dan dibuka di tab baru. Platform lain tetap tampil sebagai tombol tautan. Kosongkan bila tidak memakai video.')
                     ->columnSpanFull(),
 
                 Toggle::make('is_active')

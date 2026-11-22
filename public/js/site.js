@@ -587,3 +587,20 @@
 
     revealItems.forEach((item) => observer.observe(item));
 })();
+
+/* Kartu video sosial (mis. Instagram): bila poster gagal dimuat, tampilkan
+   lapisan pengganti agar kartu tidak runtuh dan tetap bisa diklik. */
+document.addEventListener('error', (event) => {
+    const target = event.target;
+
+    if (!(target instanceof HTMLImageElement) || !target.classList.contains('greeting__video-poster')) {
+        return;
+    }
+
+    const card = target.closest('.greeting__video--facade');
+
+    if (card) {
+        card.classList.add('is-fallback');
+        target.remove();
+    }
+}, true);

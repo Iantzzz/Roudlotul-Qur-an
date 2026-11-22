@@ -66,7 +66,43 @@
                     @php($video = $greeting->video)
 
                     @if ($video)
-                        @if ($video['embed_url'])
+                        @if ($video['mode'] === 'facade' && $video['poster_url'])
+                            <a
+                                class="greeting__video greeting__video--facade"
+                                href="{{ $video['url'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Tonton video sambutan {{ $greeting->name }} di {{ $video['label'] }} (membuka tab baru)"
+                            >
+                                <span class="greeting__video-media">
+                                    <span class="greeting__video-fallback" aria-hidden="true">
+                                        <x-site-icon :name="$video['icon']" :size="38" />
+                                        <span>{{ $video['label'] }}</span>
+                                    </span>
+
+                                    <img
+                                        class="greeting__video-poster"
+                                        src="{{ $video['poster_url'] }}"
+                                        alt=""
+                                        loading="lazy"
+                                        decoding="async"
+                                        referrerpolicy="no-referrer"
+                                    >
+                                </span>
+
+                                <span class="greeting__video-shade" aria-hidden="true"></span>
+
+                                <span class="greeting__video-play" aria-hidden="true">
+                                    <x-site-icon name="play" :size="26" class="greeting__video-play-icon" />
+                                </span>
+
+                                <span class="greeting__video-caption">
+                                    <x-site-icon :name="$video['icon']" :size="15" />
+                                    <span>Tonton di {{ $video['label'] }}</span>
+                                    <x-site-icon name="arrow-up-right" :size="14" />
+                                </span>
+                            </a>
+                        @elseif ($video['embed_url'])
                             <div class="greeting__video greeting__video--{{ $video['aspect'] }}">
                                 <iframe
                                     class="greeting__video-frame"

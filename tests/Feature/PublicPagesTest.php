@@ -250,13 +250,19 @@ class PublicPagesTest extends TestCase
             ->assertSee('allowfullscreen', false)
             ->assertSee('Video sambutan KH. Pembina Video', false);
 
-        // Instagram juga dirender sebagai embed, bukan diabaikan.
+        // Instagram dirender sebagai kartu poster yang membuka postingan di
+        // tab baru; iframe resminya tidak dipakai karena CTA "Lihat lainnya"
+        // menutupi tombol putar.
         $greeting->update(['video_url' => 'https://www.instagram.com/p/Df-mRDgT0nR/']);
 
         $this->get('/profil')
             ->assertOk()
-            ->assertSee('instagram.com/p/Df-mRDgT0nR/embed/', false)
-            ->assertSee('greeting__video--portrait', false)
+            ->assertSee('greeting__video--facade', false)
+            ->assertSee('/instagram-poster/Df-mRDgT0nR', false)
+            ->assertSee('href="https://www.instagram.com/p/Df-mRDgT0nR/"', false)
+            ->assertSee('Tonton di Instagram', false)
+            ->assertDontSee('instagram.com/p/Df-mRDgT0nR/embed/', false)
+            ->assertDontSee('greeting__video-frame', false)
             ->assertDontSee('youtube-nocookie', false);
 
         // Platform tanpa embed resmi tetap tampil sebagai tombol tautan.

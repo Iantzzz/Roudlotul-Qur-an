@@ -24,27 +24,31 @@ class SocialVideoTest extends TestCase
 
             $this->assertNotNull($video, "Tautan gagal diparse: {$link}");
             $this->assertSame('youtube', $video['platform'], "Platform salah: {$link}");
+            $this->assertSame('embed', $video['mode'], "Mode salah: {$link}");
             $this->assertSame('https://www.youtube-nocookie.com/embed/ynJVEJJ38kw', $video['embed_url'], "Embed salah: {$link}");
+            $this->assertNull($video['poster_url']);
             $this->assertSame('landscape', $video['aspect']);
         }
     }
 
-    public function test_instagram_links_resolve_to_embed(): void
+    public function test_instagram_links_resolve_to_facade_with_poster(): void
     {
         $cases = [
-            ['https://www.instagram.com/p/Df-mRDgT0nR/', 'https://www.instagram.com/p/Df-mRDgT0nR/embed/', 'portrait'],
-            ['https://www.instagram.com/reel/C1a2b3c4d5e/', 'https://www.instagram.com/reel/C1a2b3c4d5e/embed/', 'vertical'],
-            ['https://www.instagram.com/reels/C1a2b3c4d5e/', 'https://www.instagram.com/reel/C1a2b3c4d5e/embed/', 'vertical'],
-            ['https://www.instagram.com/tv/C1a2b3c4d5e/', 'https://www.instagram.com/tv/C1a2b3c4d5e/embed/', 'landscape'],
+            ['https://www.instagram.com/p/Df-mRDgT0nR/', 'https://www.instagram.com/p/Df-mRDgT0nR/embed/', 'portrait', 'https://www.instagram.com/p/Df-mRDgT0nR/media/?size=m'],
+            ['https://www.instagram.com/reel/C1a2b3c4d5e/', 'https://www.instagram.com/reel/C1a2b3c4d5e/embed/', 'vertical', 'https://www.instagram.com/p/C1a2b3c4d5e/media/?size=m'],
+            ['https://www.instagram.com/reels/C1a2b3c4d5e/', 'https://www.instagram.com/reel/C1a2b3c4d5e/embed/', 'vertical', 'https://www.instagram.com/p/C1a2b3c4d5e/media/?size=m'],
+            ['https://www.instagram.com/tv/C1a2b3c4d5e/', 'https://www.instagram.com/tv/C1a2b3c4d5e/embed/', 'landscape', 'https://www.instagram.com/p/C1a2b3c4d5e/media/?size=m'],
         ];
 
-        foreach ($cases as [$link, $embed, $aspect]) {
+        foreach ($cases as [$link, $embed, $aspect, $poster]) {
             $video = SocialVideo::parse($link);
 
             $this->assertNotNull($video, "Tautan gagal diparse: {$link}");
             $this->assertSame('instagram', $video['platform']);
+            $this->assertSame('facade', $video['mode']);
             $this->assertSame($embed, $video['embed_url']);
             $this->assertSame($aspect, $video['aspect']);
+            $this->assertSame(route('instagram.poster', ['code' => basename(parse_url($link, PHP_URL_PATH))]), $video['poster_url']);
         }
     }
 
@@ -61,6 +65,7 @@ class SocialVideoTest extends TestCase
 
             $this->assertNotNull($video, "Tautan gagal diparse: {$link}");
             $this->assertSame('tiktok', $video['platform']);
+            $this->assertSame('embed', $video['mode']);
             $this->assertSame('https://www.tiktok.com/embed/v2/7234567890123456789', $video['embed_url']);
             $this->assertSame('vertical', $video['aspect']);
         }
@@ -107,7 +112,9 @@ class SocialVideoTest extends TestCase
             $video = SocialVideo::parse($link);
 
             $this->assertNotNull($video, "Tautan valid seharusnya tidak null: {$link}");
+            $this->assertSame('link', $video['mode']);
             $this->assertNull($video['embed_url']);
+            $this->assertNull($video['poster_url']);
             $this->assertSame($link, $video['url']);
         }
     }
