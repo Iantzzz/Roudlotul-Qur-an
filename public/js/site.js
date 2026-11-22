@@ -299,13 +299,20 @@
 
             lastInteraction = Date.now();
 
+            // Tangkap pointer sejak awal agar pointermove tetap fire
+            // meskipun jari bergerak keluar elemen (penting di mobile).
+            try {
+                track.setPointerCapture(event.pointerId);
+            } catch (e) {
+                // ignore
+            }
+
             const onMove = (moveEvent) => {
                 moved = Math.abs(moveEvent.clientX - startX);
 
                 if (!captured && moved > 6) {
                     captured = true;
                     dragging = true;
-                    track.setPointerCapture(event.pointerId);
                     track.style.scrollSnapType = 'none';
                 }
 
@@ -345,10 +352,22 @@
         });
 
         if ('IntersectionObserver' in window) {
-            new IntersectionObserver((entries) => {
+            const io = new IntersectionObserver((entries) => {
                 inView = entries[0].isIntersecting;
-            }).observe(root);
+            }, { threshold: 0.05 });
+            io.observe(root);
+        } else {
+            inView = true;
         }
+
+        // Reset hover state saat touch agar auto-slide tidak macet di mobile.
+        root.addEventListener('touchstart', () => { hovered = false; }, { passive: true });
+        root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+        root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+
+        root.addEventListener('touchstart', () => { hovered = false; }, { passive: true });
+        root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+        root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
 
         root.addEventListener('mouseenter', () => {
             hovered = true;
@@ -457,6 +476,10 @@
 
         moveTo(0, false);
 
+        root.addEventListener('touchstart', () => { hovered = false; }, { passive: true });
+        root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+        root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+
         root.addEventListener('mouseenter', () => {
             hovered = true;
         });
@@ -497,6 +520,14 @@
 
             lastInteraction = Date.now();
 
+            // Tangkap pointer sejak awal agar pointermove tetap fire
+            // meskipun jari bergerak keluar elemen (penting di mobile).
+            try {
+                root.setPointerCapture(event.pointerId);
+            } catch (e) {
+                // ignore
+            }
+
             const onMove = (moveEvent) => {
                 deltaX = moveEvent.clientX - startX;
 
@@ -504,7 +535,6 @@
                     captured = true;
                     dragging = true;
                     root.classList.add('is-dragging');
-                    root.setPointerCapture(event.pointerId);
                     track.style.transition = 'none';
                 }
 
@@ -541,9 +571,12 @@
         });
 
         if ('IntersectionObserver' in window) {
-            new IntersectionObserver((entries) => {
+            const io = new IntersectionObserver((entries) => {
                 inView = entries[0].isIntersecting;
-            }).observe(root);
+            }, { threshold: 0.05 });
+            io.observe(root);
+        } else {
+            inView = true;
         }
 
         if (!reducedMotion) {
@@ -581,8 +614,8 @@
             }
         });
     }, {
-        rootMargin: '0px 0px -8% 0px',
-        threshold: 0.12,
+        rootMargin: '0px 0px -4% 0px',
+        threshold: 0.08,
     });
 
     revealItems.forEach((item) => observer.observe(item));

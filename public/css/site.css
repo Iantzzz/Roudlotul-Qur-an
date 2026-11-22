@@ -69,7 +69,7 @@ body.nav-open {
 }
 
 main {
-    overflow: clip;
+    overflow-x: hidden;
 }
 
 img {
@@ -830,7 +830,7 @@ h4 {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     cursor: grab;
-    touch-action: pan-y;
+    touch-action: none;
 }
 
 .split-slider.is-dragging {
