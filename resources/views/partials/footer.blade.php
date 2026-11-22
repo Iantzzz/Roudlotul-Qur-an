@@ -40,7 +40,13 @@
                 </li>
                 <li>
                     <x-site-icon name="phone" :size="18" />
-                    <span>{{ config('site.contact.phone') }}</span>
+                    @if (str_starts_with((string) config('site.contact.phone'), '['))
+                        <span>{{ config('site.contact.phone') }}</span>
+                    @else
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', (string) config('site.contact.phone')) }}">
+                            {{ config('site.contact.phone') }}
+                        </a>
+                    @endif
                 </li>
                 <li>
                     <x-site-icon name="mail" :size="18" />
