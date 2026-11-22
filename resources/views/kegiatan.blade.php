@@ -154,7 +154,10 @@
                 <section class="program-frequency" id="bulanan">
                     <div class="frequency-header">
                         <div class="frequency-icon">
-                            <x-site-icon name="clock" :size="24" /></h2>
+                            <x-site-icon name="clock" :size="24" />
+                        </div>
+                        <div>
+                            <h2 class="frequency-title">Setiap bulan</h2>
                             <p class="frequency-desc">Kegiatan bulanan</p>
                         </div>
                     </div>
