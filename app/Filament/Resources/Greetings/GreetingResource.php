@@ -9,11 +9,11 @@ use App\Filament\Resources\Greetings\Schemas\GreetingForm;
 use App\Filament\Resources\Greetings\Tables\GreetingsTable;
 use App\Models\Greeting;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class GreetingResource extends Resource
 {

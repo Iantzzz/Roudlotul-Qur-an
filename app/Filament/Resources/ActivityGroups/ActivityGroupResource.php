@@ -9,11 +9,11 @@ use App\Filament\Resources\ActivityGroups\Schemas\ActivityGroupForm;
 use App\Filament\Resources\ActivityGroups\Tables\ActivityGroupsTable;
 use App\Models\ActivityGroup;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ActivityGroupResource extends Resource
 {

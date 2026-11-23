@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ManagementPeriods\Tables;
 
+use App\Filament\Resources\ManagementPeriods\Pages\ListManagementPeriods;
 use App\Models\ManagementPeriod;
 use App\Support\ManagementCloner;
 use Filament\Actions\Action;
@@ -11,7 +12,6 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
-use App\Filament\Resources\ManagementPeriods\Pages\ListManagementPeriods;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
