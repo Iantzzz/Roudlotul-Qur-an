@@ -299,20 +299,21 @@
 
             lastInteraction = Date.now();
 
-            // Tangkap pointer sejak awal agar pointermove tetap fire
-            // meskipun jari bergerak keluar elemen (penting di mobile).
-            try {
-                track.setPointerCapture(event.pointerId);
-            } catch (e) {
-                // ignore
-            }
-
             const onMove = (moveEvent) => {
                 moved = Math.abs(moveEvent.clientX - startX);
 
                 if (!captured && moved > 6) {
                     captured = true;
                     dragging = true;
+
+                    // Ambil pointer setelah ambang agar klik tombol lightbox
+                    // tetap sampai sebelum drag dimulai.
+                    try {
+                        track.setPointerCapture(event.pointerId);
+                    } catch (e) {
+                        // ignore
+                    }
+
                     track.style.scrollSnapType = 'none';
                 }
 
@@ -360,23 +361,29 @@
             inView = true;
         }
 
-        // Reset hover state saat touch agar auto-slide tidak macet di mobile.
-        root.addEventListener('touchstart', () => { hovered = false; }, { passive: true });
-        root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
-        root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
-
-        root.addEventListener('touchstart', () => { hovered = false; }, { passive: true });
-        root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
-        root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
-
-        root.addEventListener('mouseenter', () => {
-            hovered = true;
-        });
-        root.addEventListener('mouseleave', () => {
+        // Reset hover saat sentuh. Event mouse sintetis setelah touchend tidak
+        // boleh mengunci auto-slide di perangkat yang tidak punya mouseleave.
+        root.addEventListener('touchstart', () => {
             hovered = false;
+            lastInteraction = Date.now();
+        }, { passive: true });
+        root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+        root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
+
+        // Hanya pointer mouse yang dianggap hover; sentuhan juga memicu
+        // pointerenter dengan pointerType "touch" dan harus diabaikan.
+        root.addEventListener('pointerenter', (event) => {
+            if (event.pointerType === 'mouse') {
+                hovered = true;
+            }
         });
-        root.addEventListener('focusin', () => {
-            hovered = true;
+        root.addEventListener('pointerleave', (event) => {
+            if (event.pointerType === 'mouse') {
+                hovered = false;
+            }
+        });
+        root.addEventListener('focusin', (event) => {
+            hovered = event.target.matches(':focus-visible');
         });
         root.addEventListener('focusout', () => {
             hovered = false;
@@ -476,18 +483,29 @@
 
         moveTo(0, false);
 
-        root.addEventListener('touchstart', () => { hovered = false; }, { passive: true });
+        // Reset hover saat sentuh. Event mouse sintetis setelah touchend tidak
+        // boleh mengunci auto-slide di perangkat yang tidak punya mouseleave.
+        root.addEventListener('touchstart', () => {
+            hovered = false;
+            lastInteraction = Date.now();
+        }, { passive: true });
         root.addEventListener('touchend', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
         root.addEventListener('touchcancel', () => { hovered = false; lastInteraction = Date.now(); }, { passive: true });
 
-        root.addEventListener('mouseenter', () => {
-            hovered = true;
+        // Hanya pointer mouse yang dianggap hover; sentuhan juga memicu
+        // pointerenter dengan pointerType "touch" dan harus diabaikan.
+        root.addEventListener('pointerenter', (event) => {
+            if (event.pointerType === 'mouse') {
+                hovered = true;
+            }
         });
-        root.addEventListener('mouseleave', () => {
-            hovered = false;
+        root.addEventListener('pointerleave', (event) => {
+            if (event.pointerType === 'mouse') {
+                hovered = false;
+            }
         });
-        root.addEventListener('focusin', () => {
-            hovered = true;
+        root.addEventListener('focusin', (event) => {
+            hovered = event.target.matches(':focus-visible');
         });
         root.addEventListener('focusout', () => {
             hovered = false;
@@ -520,14 +538,6 @@
 
             lastInteraction = Date.now();
 
-            // Tangkap pointer sejak awal agar pointermove tetap fire
-            // meskipun jari bergerak keluar elemen (penting di mobile).
-            try {
-                root.setPointerCapture(event.pointerId);
-            } catch (e) {
-                // ignore
-            }
-
             const onMove = (moveEvent) => {
                 deltaX = moveEvent.clientX - startX;
 
@@ -535,6 +545,15 @@
                     captured = true;
                     dragging = true;
                     root.classList.add('is-dragging');
+
+                    // Ambil pointer setelah ambang agar klik titik indikator
+                    // tetap sampai sebelum drag dimulai.
+                    try {
+                        root.setPointerCapture(event.pointerId);
+                    } catch (e) {
+                        // ignore
+                    }
+
                     track.style.transition = 'none';
                 }
 

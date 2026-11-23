@@ -7,7 +7,7 @@
  * gagal. Permintaan lintas asal (mis. Google Fonts) dan metode selain GET
  * diteruskan apa adanya supaya perilaku normal tidak berubah.
  */
-const RUNTIME_CACHE = 'rq-runtime-v2';
+const RUNTIME_CACHE = 'rq-runtime-v3';
 
 self.addEventListener('install', () => {
     self.skipWaiting();

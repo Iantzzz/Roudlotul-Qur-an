@@ -69,7 +69,7 @@ body.nav-open {
 }
 
 main {
-    overflow-x: hidden;
+    overflow: clip;
 }
 
 img {
@@ -830,7 +830,7 @@ h4 {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     cursor: grab;
-    touch-action: none;
+    touch-action: pan-y;
 }
 
 .split-slider.is-dragging {
@@ -1237,8 +1237,9 @@ h4 {
     display: flex;
     gap: var(--gallery-gap);
     overflow-x: auto;
+    overflow-y: hidden;
     overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
     user-select: none;
     -webkit-overflow-scrolling: touch;
