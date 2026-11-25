@@ -16,13 +16,19 @@ return [
 
     'contact' => [
         'address' => 'Lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Kabupaten Jombang, Jawa Timur',
-        'phone' => '0815 6644 6332',
-        'whatsapp' => '0815 6644 6332',
+        'phone' => '+62 858-9512-7566',
+        'whatsapp' => '+62 858-9512-7566',
         'email' => null,
         'hours' => 'Setiap hari, 08.00–16.00 WIB',
     ],
 
     'registration_contacts' => [
+        [
+            'name' => 'Ust. Arfiyan',
+            'role' => 'Narahubung Utama',
+            'phone' => '+62 858-9512-7566',
+            'wa' => '6285895127566',
+        ],
         [
             'name' => 'Ust. Miftah',
             'role' => 'Narahubung Pendaftaran',

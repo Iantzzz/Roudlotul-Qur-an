@@ -84,7 +84,7 @@
                     <span class="eyebrow">Narahubung Pendaftaran</span>
                     <h2>Narahubung pendaftaran.</h2>
                     <p>
-                        Dua narahubung berikut siap membantu informasi pendaftaran
+                        Narahubung berikut siap membantu informasi pendaftaran
                         santri baru dan kegiatan asrama.
                     </p>
 

@@ -1,4 +1,4 @@
-{{-- Tombol WhatsApp mengambang: mengarah ke narahubung pendaftaran pertama. --}}
+{{-- Tombol WhatsApp mengambang: mengarah ke narahubung utama (kontak pertama). --}}
 <a class="wa-float"
    href="https://wa.me/{{ config('site.registration_contacts.0.wa') }}"
    target="_blank"
