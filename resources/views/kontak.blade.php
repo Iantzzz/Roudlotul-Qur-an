@@ -1,13 +1,13 @@
 @extends('layouts.public')
 
 @section('title', "Kontak | Roudlotul Qur'an")
-@section('description', "Alamat dan kanal media sosial resmi Ribath Roudlotul Qur'an 1 di lingkungan PP Darul Ulum, Rejoso, Jombang. Nomor telepon, email, dan formulir masih menunggu data resmi pengurus.")
+@section('description', "Narahubung pendaftaran, alamat asrama, dan kanal media sosial resmi Ribath Roudlotul Qur'an 1 di lingkungan Pondok Pesantren Darul Ulum, Rejoso, Jombang.")
 
 @section('content')
     <x-page-hero
         title="Kontak"
         eyebrow="Hubungi Kami"
-        description="Alamat dan kanal media sosial resmi sudah dicantumkan. Nomor telepon, email, dan formulir masih menunggu data dari pengurus."
+        description="Narahubung pendaftaran, alamat asrama, dan kanal media sosial resmi Ribath Roudlotul Qur'an 1."
         image="quran_open"
     />
 
@@ -15,8 +15,8 @@
         <div class="container">
             <x-section-heading
                 eyebrow="Informasi Kontak"
-                title="Kanal komunikasi yang tersedia dan yang masih menunggu."
-                description="Alamat dan media sosial resmi sudah aktif. Telepon, email, formulir, dan peta belum ditampilkan sampai datanya diterima dari pengurus."
+                title="Hubungi pengurus atau narahubung pendaftaran."
+                description="Silakan hubungi narahubung berikut untuk informasi pendaftaran, kegiatan, dan kehidupan asrama."
             />
 
             <div class="contact-layout">
@@ -32,33 +32,15 @@
                             <div>
                                 <span>Alamat</span>
                                 <p>{{ config('site.contact.address') }}</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="contact-details__icon" aria-hidden="true">
-                                <x-site-icon name="phone" :size="21" />
-                            </span>
-                            <div>
-                                <span>Telepon</span>
-                                <p>{{ config('site.contact.phone') }}</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="contact-details__icon" aria-hidden="true">
-                                <x-site-icon name="phone" :size="21" />
-                            </span>
-                            <div>
-                                <span>WhatsApp</span>
-                                <p>{{ config('site.contact.whatsapp') }}</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="contact-details__icon" aria-hidden="true">
-                                <x-site-icon name="mail" :size="21" />
-                            </span>
-                            <div>
-                                <span>Email</span>
-                                <p>{{ config('site.contact.email') }}</p>
+                                <a
+                                    class="text-link"
+                                    href="https://www.google.com/maps/search/?api=1&query=Pondok+Pesantren+Darul+Ulum+Rejoso+Peterongan+Jombang"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Buka di Google Maps
+                                    <x-site-icon name="arrow-up-right" :size="14" />
+                                </a>
                             </div>
                         </li>
                         <li>
@@ -92,70 +74,22 @@
                         </div>
                     </div>
 
-                    <x-temp-badge text="Telepon & email resmi belum tersedia" />
-                </div>
-
-                <div class="profile-panel contact-form-panel" data-reveal>
-                    <span class="eyebrow">Formulir</span>
-                    <h2>Kirim pesan.</h2>
-                    <p>
-                        Formulir berikut hanya menampilkan rancangan tampilan.
-                        Tidak ada data yang dikirim atau disimpan.
-                    </p>
-
-                    <form class="contact-form" aria-describedby="contact-form-note" novalidate>
-                        <fieldset disabled>
-                            <legend class="sr-only">Formulir kontak tampilan</legend>
-
-                            <div class="form-grid">
-                                <label class="form-field">
-                                    <span>Nama</span>
-                                    <input type="text" name="name" placeholder="[Nama lengkap]">
-                                </label>
-
-                                <label class="form-field">
-                                    <span>Email</span>
-                                    <input type="email" name="email" placeholder="[Alamat email]">
-                                </label>
-
-                                <label class="form-field form-field--full">
-                                    <span>Subjek</span>
-                                    <input type="text" name="subject" placeholder="[Subjek pesan]">
-                                </label>
-
-                                <label class="form-field form-field--full">
-                                    <span>Pesan</span>
-                                    <textarea name="message" rows="5" placeholder="[Isi pesan]"></textarea>
-                                </label>
-                            </div>
-
-                            <button class="btn btn-primary" type="button" disabled>
-                                Kirim Pesan
-                                <x-site-icon name="arrow-right" :size="17" />
-                            </button>
-                        </fieldset>
-                    </form>
-
-                    <div class="form-note" id="contact-form-note">
-                        <x-temp-badge text="Formulir aktif di Tahap 2" />
-                        <p>Formulir ini tidak terhubung ke email, database, atau layanan pengiriman pesan.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="map-placeholder" role="group" aria-label="Placeholder peta lokasi asrama" data-reveal>
-                <span class="map-placeholder__icon" aria-hidden="true">
-                    <x-site-icon name="map-pin" :size="32" />
-                </span>
-                <div>
-                    <span class="eyebrow eyebrow--gold">Peta Lokasi</span>
-                    <h2>Peta resmi akan ditanamkan di sini.</h2>
-                    <p>
-                        Lokasi dan koordinat belum tersedia. Peta tidak ditampilkan
-                        sebelum data lokasi resmi dari pengurus asrama diterima.
+                    <p class="contact-panel__note">
+                        Untuk kunjungan langsung, mohon menghubungi narahubung
+                        pendaftaran terlebih dahulu.
                     </p>
                 </div>
-                <x-temp-badge text="Lokasi belum tersedia" />
+
+                <div class="profile-panel contact-form-panel">
+                    <span class="eyebrow">Narahubung Pendaftaran</span>
+                    <h2>Narahubung pendaftaran.</h2>
+                    <p>
+                        Dua narahubung berikut siap membantu informasi pendaftaran
+                        santri baru dan kegiatan asrama.
+                    </p>
+
+                    <x-registration-contacts />
+                </div>
             </div>
         </div>
     </section>

@@ -177,6 +177,25 @@
         </div>
     </section>
 
+    <section class="section section--cream programs" id="program">
+        <div class="container">
+            <div class="section-toolbar">
+                <x-section-heading
+                    eyebrow="Program"
+                    title="Program unggulan dan program tambahan."
+                    description="Sepuluh program yang membentuk keseharian santri, dari tahfidz dan kajian kitab hingga seni islami dan pengabdian masyarakat."
+                />
+
+                <a class="btn btn-outline section-toolbar__action" href="{{ route('kegiatan') }}#program">
+                    Lihat Semua Program
+                    <x-site-icon name="arrow-right" :size="17" />
+                </a>
+            </div>
+
+            <x-program-catalog />
+        </div>
+    </section>
+
     <section class="section activities" id="kegiatan">
         <div class="container">
             <div class="section-toolbar">
@@ -316,10 +335,9 @@
 
                 <div class="cta-panel__aside">
                     <span class="cta-panel__icon" aria-hidden="true">
-                        <x-site-icon name="sparkle" :size="30" />
+                        <x-site-icon name="phone" :size="30" />
                     </span>
-                    <p>Jadwal dan biaya resmi belum tersedia.</p>
-                    <x-temp-badge text="Menunggu info resmi" />
+                    <p>Hubungi narahubung pendaftaran untuk informasi jadwal dan biaya.</p>
                 </div>
             </div>
         </div>

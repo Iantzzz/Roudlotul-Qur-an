@@ -7,9 +7,21 @@
     <x-page-hero
         title="Pendaftaran"
         eyebrow="Bergabung Bersama"
-        description="Halaman ini menyiapkan gambaran alur pendaftaran. Tanggal, biaya, dan ketentuan resmi belum tersedia."
+        description="Hubungi narahubung pendaftaran untuk informasi jadwal, biaya, dan ketentuan resmi. Tanggal dan biaya masih menunggu ketetapan pengurus."
         image="courtyard"
     />
+
+    <section class="section section--cream">
+        <div class="container">
+            <x-section-heading
+                eyebrow="Narahubung Pendaftaran"
+                title="Hubungi narahubung resmi."
+                description="Silakan hubungi salah satu narahubung berikut untuk informasi pendaftaran santri baru."
+            />
+
+            <x-registration-contacts />
+        </div>
+    </section>
 
     <section class="section">
         <div class="container">
@@ -273,9 +285,12 @@
                 <details class="faq-item" data-reveal>
                     <summary>Bagaimana cara menanyakan informasi lain?</summary>
                     <p>
-                        Silakan gunakan halaman
-                        <a class="text-link" href="{{ route('kontak') }}">Kontak</a>
-                        untuk melihat kanal komunikasi yang sedang disiapkan.
+                        Silakan hubungi narahubung pendaftaran:
+                        @foreach (config('site.registration_contacts') as $contact)
+                            {{ $contact['name'] }} ({{ $contact['phone'] }})@if (! $loop->last) atau @endif
+                        @endforeach.
+                        Kanal lengkap tersedia di halaman
+                        <a class="text-link" href="{{ route('kontak') }}">Kontak</a>.
                     </p>
                 </details>
             </div>
@@ -287,10 +302,10 @@
             <div class="cta-panel" data-reveal>
                 <div class="cta-panel__content">
                     <span class="eyebrow eyebrow--gold">Informasi Resmi</span>
-                    <h2>Menunggu informasi pendaftaran resmi?</h2>
+                    <h2>Butuh informasi pendaftaran?</h2>
                     <p>
-                        Halaman kontak menyiapkan kanal komunikasi sementara.
-                        Informasi pendaftaran akan diperbarui setelah data resmi tersedia.
+                        Narahubung pendaftaran siap membantu pertanyaan tentang
+                        jadwal, biaya, dan ketentuan resmi.
                     </p>
 
                     <div class="button-row">
@@ -306,10 +321,9 @@
 
                 <div class="cta-panel__aside">
                     <span class="cta-panel__icon" aria-hidden="true">
-                        <x-site-icon name="calendar" :size="30" />
+                        <x-site-icon name="phone" :size="30" />
                     </span>
-                    <p>Tanggal, biaya, dan ketentuan resmi belum tersedia.</p>
-                    <x-temp-badge text="Konten sementara" />
+                    <p>Hubungi narahubung pendaftaran untuk informasi terbaru.</p>
                 </div>
             </div>
         </div>

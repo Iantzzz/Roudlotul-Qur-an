@@ -1,9 +1,9 @@
-{{-- Tombol WhatsApp mengambang (gaya web Unair): lingkaran hijau kiri-bawah, tampil di semua ukuran layar. --}}
+{{-- Tombol WhatsApp mengambang: mengarah ke narahubung pendaftaran pertama. --}}
 <a class="wa-float"
-   href="https://wa.me/6285895127566"
+   href="https://wa.me/{{ config('site.registration_contacts.0.wa') }}"
    target="_blank"
    rel="noopener noreferrer"
-   aria-label="Chat WhatsApp +62 858-9512-7566"
-   title="WhatsApp +62 858-9512-7566">
+   aria-label="Chat WhatsApp {{ config('site.registration_contacts.0.name') }} — {{ config('site.registration_contacts.0.phone') }}"
+   title="WhatsApp {{ config('site.registration_contacts.0.name') }} — {{ config('site.registration_contacts.0.phone') }}">
     <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
 </a>

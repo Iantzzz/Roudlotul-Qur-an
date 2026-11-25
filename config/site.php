@@ -16,10 +16,52 @@ return [
 
     'contact' => [
         'address' => 'Lingkungan Pondok Pesantren Darul Ulum, Rejoso, Peterongan, Kabupaten Jombang, Jawa Timur',
-        'phone' => '628589512756',
-        'whatsapp' => '[Nomor WhatsApp belum tersedia]',
-        'email' => '[Alamat email belum tersedia]',
+        'phone' => '0815 6644 6332',
+        'whatsapp' => '0815 6644 6332',
+        'email' => null,
         'hours' => 'Setiap hari, 08.00–16.00 WIB',
+    ],
+
+    'registration_contacts' => [
+        [
+            'name' => 'Ust. Miftah',
+            'role' => 'Narahubung Pendaftaran',
+            'phone' => '0815 6644 6332',
+            'wa' => '6281566446332',
+        ],
+        [
+            'name' => 'Ust. Fathoni',
+            'role' => 'Narahubung Pendaftaran',
+            'phone' => '0856 0197 7556',
+            'wa' => '6285601977556',
+        ],
+    ],
+
+    'programs' => [
+        'unggulan' => [
+            'title' => 'Program Unggulan',
+            'eyebrow' => 'Inti',
+            'description' => 'Pembinaan inti yang menjadi ciri khas asrama.',
+            'items' => [
+                ['title' => "Tahfidz Al-Qur'an", 'text' => 'Bimbingan hafalan dan murajaah dengan target yang terukur.'],
+                ['title' => 'Kajian Kitab', 'text' => 'Kajian kitab kuning dan tafsir untuk memperdalam pemahaman agama.'],
+                ['title' => 'Pembinaan Akhlak', 'text' => 'Pembiasaan adab, disiplin, dan tanggung jawab dalam keseharian.'],
+                ['title' => 'Muhadhoroh', 'text' => 'Latihan public speaking, kepemimpinan, dan kepercayaan diri.'],
+                ['title' => 'Kaligrafi', 'text' => 'Keterampilan menulis indah dan apresiasi seni Islam.'],
+            ],
+        ],
+        'tambahan' => [
+            'title' => 'Program Tambahan',
+            'eyebrow' => 'Pendukung',
+            'description' => 'Kegiatan pendukung yang menumbuhkan kreativitas, kebersamaan, dan pengabdian.',
+            'items' => [
+                ['title' => 'Sholawat Banjari', 'text' => 'Kesenian sholawat untuk menumbuhkan cinta kepada Rasulullah SAW.'],
+                ['title' => "Seni Baca Al-Qur'an", 'text' => "Penguatan tajwid, lagu, dan adab membaca Al-Qur'an."],
+                ['title' => 'Rebana', 'text' => 'Latihan musik islami dan kekompakan tim.'],
+                ['title' => 'Hadrah', 'text' => 'Seni hadrah sebagai media dakwah dan kebersamaan.'],
+                ['title' => 'Pengabdian Masyarakat', 'text' => "Kegiatan sosial dan pengajaran Al-Qur'an di masyarakat."],
+            ],
+        ],
     ],
 
     'socials' => [

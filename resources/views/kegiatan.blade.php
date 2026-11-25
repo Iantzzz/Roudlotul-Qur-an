@@ -11,12 +11,24 @@
         image="kegiatan_hero"
     />
 
+    <section class="section section--cream programs" id="program">
+        <div class="container">
+            <x-section-heading
+                eyebrow="Program"
+                title="Program unggulan dan program tambahan."
+                description="Sepuluh program yang menjadi bagian dari pembinaan santri di Ribath Roudlotul Qur'an 1."
+            />
+
+            <x-program-catalog detailed />
+        </div>
+    </section>
+
     <section class="section">
         <div class="container">
             <x-section-heading
-                eyebrow="Program & Kegiatan"
-                title="Ruang belajar yang tertata dalam beberapa kelompok."
-                description="Kegiatan berikut dirangkum dari dokumentasi resmi ribath di YouTube, Instagram, dan TikTok."
+                eyebrow="Kegiatan Rutin"
+                title="Ritme kegiatan dari harian hingga tahunan."
+                description="Jadwal kegiatan yang berlangsung di ribath, dirangkum dari dokumentasi resmi di YouTube, Instagram, dan TikTok."
             />
 
             <div class="program-frequencies">

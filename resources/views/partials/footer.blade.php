@@ -16,8 +16,6 @@
             </a>
 
             <p>{{ config('site.brand.description') }}</p>
-
-            <x-temp-badge text="Situs dalam penyempurnaan" />
         </div>
 
         <div class="footer-column">
@@ -38,19 +36,16 @@
                     <x-site-icon name="map-pin" :size="18" />
                     <span>{{ config('site.contact.address') }}</span>
                 </li>
-                <li>
+                <li class="footer-contact__group">
                     <x-site-icon name="phone" :size="18" />
-                    @if (str_starts_with((string) config('site.contact.phone'), '['))
-                        <span>{{ config('site.contact.phone') }}</span>
-                    @else
-                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', (string) config('site.contact.phone')) }}">
-                            {{ config('site.contact.phone') }}
-                        </a>
-                    @endif
-                </li>
-                <li>
-                    <x-site-icon name="mail" :size="18" />
-                    <span>{{ config('site.contact.email') }}</span>
+                    <div class="footer-contact__group-body">
+                        <span class="footer-contact__label">Narahubung</span>
+                        @foreach (config('site.registration_contacts') as $contact)
+                            <a class="footer-contact__person" href="https://wa.me/{{ $contact['wa'] }}" rel="noopener noreferrer" target="_blank">
+                                {{ $contact['name'] }} — {{ $contact['phone'] }}
+                            </a>
+                        @endforeach
+                    </div>
                 </li>
                 <li>
                     <x-site-icon name="clock" :size="18" />
@@ -84,6 +79,6 @@
 
     <div class="container footer-bottom">
         <p>&copy; {{ date('Y') }} {{ config('site.brand.name') }}. Hak cipta dilindungi.</p>
-        <p>Galeri, sejarah, visi-misi, dan pendaftaran masih menunggu data resmi.</p>
+        <p>Ribath Roudlotul Qur'an 1 · Pondok Pesantren Darul Ulum, Jombang.</p>
     </div>
 </footer>

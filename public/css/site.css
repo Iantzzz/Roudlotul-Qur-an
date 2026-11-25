@@ -2329,7 +2329,8 @@ body.lightbox-open {
 
 .contact-layout {
     display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
     gap: 1rem;
     margin-top: 2rem;
 }
@@ -2413,6 +2414,15 @@ body.lightbox-open {
 
 .contact-panel > .temp-badge {
     margin-top: 1.4rem;
+}
+
+.contact-panel__note {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.7;
 }
 
 .contact-form-panel > p {
@@ -2705,6 +2715,37 @@ body.lightbox-open {
     flex-shrink: 0;
     margin-top: 0.15rem;
     color: var(--gold-400);
+}
+
+.footer-contact > li > span {
+    text-wrap: pretty;
+}
+
+.footer-contact__group {
+    margin-top: 0.3rem;
+}
+
+.footer-contact__group-body {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.footer-contact__label {
+    color: var(--gold-300);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.footer-contact__person {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.footer-contact__person:hover {
+    color: var(--gold-300);
 }
 
 .social-list {
@@ -3794,3 +3835,197 @@ a.social-link:hover {
         box-shadow: var(--shadow-sm);
     }
 }
+
+/* ==========================================================================
+   23. Program Catalog & Registration Contacts
+   ========================================================================== */
+
+.program-catalog {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.program-catalog__group {
+    padding: clamp(1.5rem, 3vw, 2.2rem);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold-500);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.program-catalog__eyebrow {
+    display: block;
+    color: #8a6a2b;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.program-catalog__group h3 {
+    margin: 0.45rem 0 0.65rem;
+    color: var(--green-950);
+    font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+    line-height: 1.15;
+}
+
+.program-catalog__header p {
+    max-width: 50ch;
+    min-height: 2.9rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.75;
+}
+
+.program-list {
+    display: grid;
+    gap: 0;
+    margin-top: 1.35rem;
+}
+
+.program-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.7rem;
+    align-items: start;
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.program-item:first-child {
+    border-top: 0;
+}
+
+.program-item__icon {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--cream-100);
+    color: var(--green-700);
+}
+
+.program-item h4 {
+    margin: 0;
+    color: var(--green-950);
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.program-item p {
+    margin: 0.25rem 0 0;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.65;
+}
+
+.contact-people {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.4rem;
+}
+
+.contact-person {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--cream-50);
+}
+
+.contact-person__icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid var(--line-gold);
+    border-radius: 50%;
+    background: var(--cream-100);
+    color: var(--green-700);
+}
+
+.contact-person__role {
+    display: block;
+    color: var(--muted);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.contact-person h3 {
+    margin: 0.1rem 0 0.15rem;
+    color: var(--green-950);
+    font-size: 1.15rem;
+    line-height: 1.2;
+}
+
+.contact-person__phone {
+    color: var(--green-800);
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--line-gold);
+    text-underline-offset: 3px;
+}
+
+.contact-person__phone:hover {
+    color: var(--gold-500);
+    text-decoration-color: currentColor;
+}
+
+.contact-person__action {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    background: var(--green-900);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color var(--transition), transform var(--transition);
+}
+
+.contact-person__action:hover {
+    background: var(--green-700);
+    transform: translateY(-1px);
+}
+
+.contact-form-panel__note {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.72rem;
+}
+
+@media (max-width: 860px) {
+    .program-catalog {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .contact-person {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .contact-person__action {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+}
+
