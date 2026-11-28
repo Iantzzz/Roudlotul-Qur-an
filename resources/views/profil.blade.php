@@ -306,17 +306,14 @@
                     <h3>Misi</h3>
                     <ul class="check-list">
                         <li>
-                            <x-site-icon name="check" :size="17" />
-                            Melaksanakan pengembangan kualitas iman dan taqwa.
+                            <x-site-icon name="check" :size="17" /><span>Melaksanakan pengembangan kualitas iman dan taqwa.</span>
                         </li>
                         <li>
-                            <x-site-icon name="check" :size="17" />
-                            Melaksanakan pengembangan kualitas ibadah dan sosial keagamaan.
+                            <x-site-icon name="check" :size="17" /><span>Melaksanakan pengembangan kualitas ibadah dan sosial keagamaan.</span>
                         </li>
                         <li>
-                            <x-site-icon name="check" :size="17" />
-                            Melaksanakan pengembangan kualitas sikap perilaku yang baik
-                            (akhlaq&nbsp;al-karimah).
+                            <x-site-icon name="check" :size="17" /><span>Melaksanakan pengembangan kualitas sikap perilaku yang baik
+                            (akhlaq&nbsp;al-karimah).</span>
                         </li>
                     </ul>
                 </article>
