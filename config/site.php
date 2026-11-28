@@ -32,8 +32,8 @@ return [
         [
             'name' => 'Ust. Miftah',
             'role' => 'Narahubung Pendaftaran',
-            'phone' => '0815 6644 6332',
-            'wa' => '6281566446332',
+            'phone' => '0815 5544 5352',
+            'wa' => '6281555445352',
         ],
         [
             'name' => 'Ust. Fathoni',
