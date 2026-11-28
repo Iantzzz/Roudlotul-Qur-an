@@ -1677,7 +1677,16 @@ h4 {
 .profile-panels {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
+}
+
+.profile-panels--visi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profile-panel--visi .profile-panel__quote {
+    font-size: clamp(1.55rem, 2vw, 1.85rem);
+    line-height: 1.3;
 }
 
 .profile-panel {
@@ -1726,6 +1735,50 @@ h4 {
 
 .profile-panel .check-list li {
     font-size: 0.82rem;
+}
+
+.profile-panel--wide {
+    grid-column: 1 / -1;
+}
+
+.profile-panel--wide > p {
+    max-width: 65ch;
+}
+
+.profile-panel__quote:last-child {
+    margin-bottom: 0;
+}
+
+.goal-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem 1.5rem;
+    margin: 1.3rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: goal;
+}
+
+.goal-list li {
+    position: relative;
+    padding-left: 2rem;
+    color: var(--muted);
+    font-size: 0.84rem;
+    line-height: 1.75;
+    counter-increment: goal;
+    text-wrap: pretty;
+}
+
+.goal-list li::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--green-700);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.55;
+    content: counter(goal, lower-alpha) ".";
 }
 
 .profile-panel .temp-badge {
@@ -3326,6 +3379,10 @@ a.social-link:hover {
     }
 
     .profile-panels {
+        grid-template-columns: 1fr;
+    }
+
+    .goal-list {
         grid-template-columns: 1fr;
     }
 

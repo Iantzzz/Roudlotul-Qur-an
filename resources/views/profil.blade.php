@@ -21,7 +21,7 @@
                 @endif
                 <a href="#profil-singkat">Profil Singkat</a>
                 <a href="#sejarah">Sejarah</a>
-                <a href="#visi-misi">Visi &amp; Misi</a>
+                <a href="#visi-misi">Visi, Misi &amp; Tujuan</a>
                 <a href="#kepengurusan">Kepengurusan</a>
                 <a href="#nilai">Nilai-nilai</a>
             </div>
@@ -279,26 +279,23 @@
         <div class="container">
             <div class="section-toolbar">
                 <x-section-heading
-                    eyebrow="Arah Asrama"
-                    title="Visi dan misi yang menjadi arah bersama."
-                    description="Rumusan resmi visi dan misi belum tersedia. Teks pada bagian ini tidak mewakili pernyataan resmi asrama."
-                    :temporary="true"
+                    eyebrow="Arah Madrasah"
+                    title="Visi, misi, dan tujuan."
+                    description="Rumusan resmi Madrasah Diniyah Takmiliyah Roudlotul Qur’an Tingkat Awwaliyah."
                 />
             </div>
 
-            <div class="profile-panels">
-                <article class="profile-panel" data-reveal>
+            <div class="profile-panels profile-panels--visi">
+                <article class="profile-panel profile-panel--visi" data-reveal>
                     <span class="profile-panel__icon" aria-hidden="true">
-                        <x-site-icon name="sparkle" :size="24" />
+                        <x-site-icon name="quran" :size="24" />
                     </span>
 
                     <h3>Visi</h3>
-                    <p class="profile-panel__quote">[Isi visi resmi asrama]</p>
-                    <p>
-                        Visi resmi akan dicantumkan setelah rumusan dari pengurus
-                        asrama tersedia.
+                    <p class="profile-panel__quote">
+                        Mewujudkan santri yang beriman kepada Allah SWT.,
+                        berilmu agama, berakhlaqul karimah, dan berwawasan global.
                     </p>
-                    <x-temp-badge text="Visi belum tersedia" />
                 </article>
 
                 <article class="profile-panel" data-reveal>
@@ -310,22 +307,38 @@
                     <ul class="check-list">
                         <li>
                             <x-site-icon name="check" :size="17" />
-                            [Butir misi resmi 1]
+                            Melaksanakan pengembangan kualitas iman dan taqwa.
                         </li>
                         <li>
                             <x-site-icon name="check" :size="17" />
-                            [Butir misi resmi 2]
+                            Melaksanakan pengembangan kualitas ibadah dan sosial keagamaan.
                         </li>
                         <li>
                             <x-site-icon name="check" :size="17" />
-                            [Butir misi resmi 3]
-                        </li>
-                        <li>
-                            <x-site-icon name="check" :size="17" />
-                            [Butir misi resmi 4]
+                            Melaksanakan pengembangan kualitas sikap perilaku yang baik
+                            (akhlaq&nbsp;al-karimah).
                         </li>
                     </ul>
-                    <x-temp-badge text="Misi belum tersedia" />
+                </article>
+
+                <article class="profile-panel profile-panel--wide" data-reveal>
+                    <span class="profile-panel__icon" aria-hidden="true">
+                        <x-site-icon name="book" :size="24" />
+                    </span>
+
+                    <h3>Tujuan</h3>
+                    <p>
+                        Adapun tujuan Madrasah Diniyah Takmiliyah Roudlotul Qur’an
+                        Tingkat Awwaliyah merupakan jabaran dari visi dan misi
+                        madrasah agar komunikatif dan bisa diukur, sebagai berikut:
+                    </p>
+
+                    <ol class="goal-list">
+                        <li>Dapat mengamalkan ajaran agama sebagai hasil dari proses pembelajaran dan kegiatan pembiasaan</li>
+                        <li>Mampu menerapkan akhlaq al-karimah dalam kehidupan sehari-hari</li>
+                        <li>Menjadi madrasah pelopor dan penggerak di lingkungan masyarakat&nbsp;sekitar</li>
+                        <li>Menjadi madrasah yang diminati masyarakat</li>
+                    </ol>
                 </article>
             </div>
         </div>
